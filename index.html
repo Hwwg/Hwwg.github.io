@@ -159,7 +159,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/06/PHP%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0/">PHPçš„ç¬¬ä¸€æ¬¡å­¦ä¹?</a>
+      <a class="article-title" href="/2020/10/06/PHP%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0/">PHP莽拧鈥灻ぢ糕偓忙卢隆氓颅娄盲鹿?</a>
     </h1>
   
 
@@ -172,10 +172,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="首先是PHP的基本语法："><a href="#首先是PHP的基本语法：" class="headerlink" title="首先是PHP的基本语法："></a>首先是PHP的基本语法：</h1><p>//<?php
-// php代码
+        <h1 id="棣栧厛鏄疨HP鐨勫熀鏈娉曪細"><a href="#棣栧厛鏄疨HP鐨勫熀鏈娉曪細" class="headerlink" title="棣栧厛鏄疨HP鐨勫熀鏈娉曪細"></a>棣栧厛鏄疨HP鐨勫熀鏈娉曪細</h1><p>//<?php
+// php浠ｇ爜
 //?>  </p>
-<p>下面举个例子</p>
+<p>涓嬮潰涓句釜渚嬪瓙</p>
 <p>//<!DOCTYPE hTML></p>
 <html>
 <body>
@@ -187,8 +187,8 @@
    // <!html>
 //</!doctype>
 
-<h2 id="PHP的变�"><a href="#PHP的变�" class="headerlink" title="PHP的变�?"></a>PHP的变�?</h2><p>感觉PHP和C有挺多共同之处的</p>
-<p>PHP 有四种不同的变量作用域：</p>
+<h2 id="PHP鐨勫彉閲"><a href="#PHP鐨勫彉閲" class="headerlink" title="PHP鐨勫彉閲?"></a>PHP鐨勫彉閲?</h2><p>鎰熻PHP鍜孋鏈夋尯澶氬叡鍚屼箣澶勭殑</p>
+<p>PHP 鏈夊洓绉嶄笉鍚岀殑鍙橀噺浣滅敤鍩燂細</p>
 <ul>
 <li><p>local</p>
 </li>
@@ -197,25 +197,25 @@
 <li><p>static</p>
 </li>
 <li><p>parameter</p>
-<p>local指的是，在函数里面被声明的变量是局部变量，就只能在函数内部访问�?</p>
-<p>而global的指令发出后，在函数外被定义的变量，可以到函数内被使用：</p>
+<p>local鎸囩殑鏄紝鍦ㄥ嚱鏁伴噷闈㈣澹版槑鐨勫彉閲忔槸灞€閮ㄥ彉閲忥紝灏卞彧鑳藉湪鍑芥暟鍐呴儴璁块棶銆?</p>
+<p>鑰実lobal鐨勬寚浠ゅ彂鍑哄悗锛屽湪鍑芥暟澶栬瀹氫箟鐨勫彉閲忥紝鍙互鍒板嚱鏁板唴琚娇鐢細</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$x = <span class="number">5</span>;</span><br><span class="line">$y = <span class="number">10</span>;</span><br><span class="line">$z = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span>$x,$y,$z;</span><br><span class="line">    $z = $x + $y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line"><span class="keyword">echo</span> $z;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-<p>输出的结果是15<br>而static命令意思是，当一个变量被施加了static的命令以后，该值发生变化后，在下一次运算时，此时该变量的值已经改变成发生变化的值�?</p>
+<p>杈撳嚭鐨勭粨鏋滄槸15<br>鑰宻tatic鍛戒护鎰忔€濇槸锛屽綋涓€涓彉閲忚鏂藉姞浜唖tatic鐨勫懡浠や互鍚庯紝璇ュ€煎彂鐢熷彉鍖栧悗锛屽湪涓嬩竴娆¤繍绠楁椂锛屾鏃惰鍙橀噺鐨勫€煎凡缁忔敼鍙樻垚鍙戠敓鍙樺寲鐨勫€笺€?</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">static</span> $x=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> $x . <span class="string">&quot; &quot;</span>;</span><br><span class="line">    $x++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>输出的结果是 0 1 2 3</p>
-<p>若为</p>
+<p>杈撳嚭鐨勭粨鏋滄槸 0 1 2 3</p>
+<p>鑻ヤ负</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $x=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> $x . <span class="string">&quot; &quot;</span>;</span><br><span class="line">    $x++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>输出的结果是0 0 0 0�?</p>
-<p>parameter这个意思还不是很熟悉，等后续遇到再来补充�?</p>
-<h3 id="接下来是输出指令"><a href="#接下来是输出指令" class="headerlink" title="接下来是输出指令"></a>接下来是输出指令</h3><p> 输出指令主要是echo和print</p>
-<p>主要区别应该就是，echo输出一句话可一个分割成很多�?””””””</p>
-<p>而print 要输出一句话 只能一次性完�?”</p>
-<p>今天就先到这里吧，有点困了哈�?</p>
+<p>杈撳嚭鐨勭粨鏋滄槸0 0 0 0銆?</p>
+<p>parameter杩欎釜鎰忔€濊繕涓嶆槸寰堢啛鎮夛紝绛夊悗缁亣鍒板啀鏉ヨˉ鍏呫€?</p>
+<h3 id="鎺ヤ笅鏉ユ槸杈撳嚭鎸囦护"><a href="#鎺ヤ笅鏉ユ槸杈撳嚭鎸囦护" class="headerlink" title="鎺ヤ笅鏉ユ槸杈撳嚭鎸囦护"></a>鎺ヤ笅鏉ユ槸杈撳嚭鎸囦护</h3><p> 杈撳嚭鎸囦护涓昏鏄痚cho鍜宲rint</p>
+<p>涓昏鍖哄埆搴旇灏辨槸锛宔cho杈撳嚭涓€鍙ヨ瘽鍙竴涓垎鍓叉垚寰堝娈?””””””</p>
+<p>鑰宲rint 瑕佽緭鍑轰竴鍙ヨ瘽 鍙兘涓€娆℃€у畬鎴?”</p>
+<p>浠婂ぉ灏卞厛鍒拌繖閲屽惂锛屾湁鐐瑰洶浜嗗搱鍝?</p>
 
       
 
