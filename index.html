@@ -152,6 +152,107 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-PHP学习第一课" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: PHP学习第一课<br>date: 2020-10-05 22:31:04<br>tags:<br>    -PHP</p>
+<p>已经断断续续学了几天的PHP，今天做点笔记吧</p>
+<h1 id="首先-是PHP的基本语法："><a href="#首先-是PHP的基本语法：" class="headerlink" title="首先 是PHP的基本语法："></a>首先 是PHP的基本语法：</h1><?php
+// php代码
+?><pre><code>             //这个是PHP的基本格式</code></pre>
+<p>下面举个例子：</p>
+<!DOCTYPE hTML>
+<html>
+<body>
+    <h1>My first PHP page</h1>
+    <?php
+echo"Hello world!"
+?>
+    </body>
+    <!html>
+</!doctype>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接下来聊一下PHP的变量，感觉和C还是有很多共同之处的。<br>其中的PHP 变量作用域</p>
+<p>变量的作用域是脚本中变量可被引用/使用的部分。</p>
+<p>PHP 有四种不同的变量作用域：</p>
+<ul>
+<li><p>local</p>
+</li>
+<li><p>global</p>
+</li>
+<li><p>static</p>
+</li>
+<li><p>parameter</p>
+<p>其中一开始让我比较难理解的就是static，但是我想了一下，还是把这四个都复述一遍吧<br>首先是local指的是，在函数里面被声明的变量是局部变量，就只能在函数内部访问</p>
+<p>而global指令，就可以让你在一个函数里面，访问函数外的变量，举个例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$x = <span class="number">5</span>;</span><br><span class="line">$y = <span class="number">10</span>;</span><br><span class="line">$z = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span>$x,$y,$z;</span><br><span class="line">    $z = $x + $y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line"><span class="keyword">echo</span> $z;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>这个的输出结果是15，也就是说，xyz一开始是在函数外的就是function test（）外的，那么想引用这些xyz在这个函数内使用，就需要添加global命令。</p>
+<p>接下来是static指令：我的理解是，比如说一个x被赋了值=0，接下来有算数表达式，他变成了1，那么再写下来的算法，他就是以1去进行计算，而不再是用0去进行计算</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">static</span> $x=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> $x . <span class="string">&quot; &quot;</span>;</span><br><span class="line">    $x++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line">test();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个的结果是 0 1 2 3<br>一开始不是很懂这个指令的原因是，在C中，如果是循环输出指令，那么就肯定是沿用前面x的值，也就是说x的值发生改变后，C已经自动保存了这个X的值，下次再使用的时候，就会直接被沿用了，相反的是，要保持这个值不被改变，要另加一个const的命令。</p>
+<p>而paramater指令，其实感觉还不是很熟悉，就等后面遇到再来补充吧哈哈哈</p>
+<p>然后这边有几句话是从别的地方摘抄过来的</p>
+<ul>
+<li><p>1、定义在函数外部的就是全局变量，它的作用域从定义处一直到文件结尾。</p>
+</li>
+<li><p>2、函数内定义的变量就是局部变量，它的作用域为函数定义范围内。</p>
+</li>
+<li><p>3、函数之间存在作用域互不影响。 感觉前面已经讲过了哈哈</p>
+<h3 id="输出指令"><a href="#输出指令" class="headerlink" title="输出指令"></a>输出指令</h3><p>接下来是echo指令和print指令，两个都是输出指令，感觉比较简单</p>
+<p>区别有个地方时，echo可以一整句话可以分段输出，而print只能一整句话一起输出。</p>
+<p>这次的博客就先到这里吧，后面的还没学明白哈哈哈</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/05/PHP%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%B8%80%E8%AF%BE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-my-first-time-to-use-typro" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
