@@ -16,7 +16,7 @@
 <meta property="og:description" content="PHP类型比较PHP变量的比较主要分为两种，就是松散比较：使用两个等号（&#x3D;&#x3D;）比较，只比较值，不比较类型严格比较：用三个等号（&#x3D;&#x3D;&#x3D;）比较，都比较 举个例子 123456789101112131415&lt;?phpif(42 &#x3D;&#x3D; &quot;42&quot;) &amp;#123;    echo &amp;#x27;1、值相等&amp;#x27;;&amp;#125;echo PHP_EOL; &#x2F;&#x2F; 换行符if(42 &#x3D;&#x3D;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-09T15:29:30.000Z">
-<meta property="article:modified_time" content="2020-10-10T09:49:11.817Z">
+<meta property="article:modified_time" content="2020-10-10T09:55:07.059Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="php">
 <meta name="twitter:card" content="summary">
@@ -230,6 +230,18 @@
 
 <p>在这个代码里面输出的都是菜鸟教程</p>
 <p>今天先到这里吧。哈哈哈哈哈</p>
+<h3 id="补充一下组合比较符"><a href="#补充一下组合比较符" class="headerlink" title="补充一下组合比较符"></a>补充一下组合比较符</h3><p>组合比较运算符：可以轻松实现两个变量的比较，当啊然不仅限于数值类数据的比较<br>符号是:&lt;=&gt;<br>语法格式如下：$c=$a&lt;=&gt;$b;<br>解析一下解析如下：</p>
+<ul>
+<li><p>如果 <strong>$a &gt; $b</strong>, 则 <strong>$c</strong> 的值为 <strong>1</strong>。</p>
+</li>
+<li><p>如果 <strong>$a == $b</strong>, 则 <strong>$c</strong> 的值为 <strong>0</strong>。</p>
+</li>
+<li><p>如果 <strong>$a &lt; $b</strong>, 则 <strong>$c</strong> 的值为 <strong>-1</strong>。<br>实例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// 整型</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span> &lt;=&gt; <span class="number">1</span>; <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span> &lt;=&gt; <span class="number">2</span>; <span class="comment">// -1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">2</span> &lt;=&gt; <span class="number">1</span>; <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 浮点型</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1.5</span> &lt;=&gt; <span class="number">1.5</span>; <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1.5</span> &lt;=&gt; <span class="number">2.5</span>; <span class="comment">// -1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">2.5</span> &lt;=&gt; <span class="number">1.5</span>; <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;a&quot;</span> &lt;=&gt; <span class="string">&quot;a&quot;</span>; <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;a&quot;</span> &lt;=&gt; <span class="string">&quot;b&quot;</span>; <span class="comment">// -1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;b&quot;</span> &lt;=&gt; <span class="string">&quot;a&quot;</span>; <span class="comment">// 1</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
 
       
 
