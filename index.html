@@ -152,6 +152,219 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-PHP超级全局变量以及两个循环" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/12/PHP%E8%B6%85%E7%BA%A7%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BB%A5%E5%8F%8A%E4%B8%A4%E4%B8%AA%E5%BE%AA%E7%8E%AF/">PHP超级全局变量以及两个循环</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/12/PHP%E8%B6%85%E7%BA%A7%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BB%A5%E5%8F%8A%E4%B8%A4%E4%B8%AA%E5%BE%AA%E7%8E%AF/" class="archive-article-date">
+  	<time datetime="2020-10-12T15:50:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/12/PHP%E8%B6%85%E7%BA%A7%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BB%A5%E5%8F%8A%E4%B8%A4%E4%B8%AA%E5%BE%AA%E7%8E%AF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-PHP-if-switch-数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/11/PHP-if-switch-%E6%95%B0%E7%BB%84/">PHP if switch 数组</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/11/PHP-if-switch-%E6%95%B0%E7%BB%84/" class="archive-article-date">
+  	<time datetime="2020-10-10T16:41:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天学习的是条件语句</p>
+<h2 id="首先是if语句"><a href="#首先是if语句" class="headerlink" title="首先是if语句"></a>首先是if语句</h2><p>听说PHP的内核是C语言编写的，所以很多都和C有点像，这个if语句也是格式是：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>（条件）</span><br><span class="line">&#123;</span><br><span class="line">   条件成立时要执行的代码;<span class="comment">//这边有个分号，其他地方没有</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>举个例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> $t=<span class="number">22</span>;</span><br><span class="line">  <span class="keyword">if</span>($t&gt;<span class="string">&quot;20&quot;</span>)&#123;</span><br><span class="line">   <span class="keyword">echo</span><span class="string">&quot;hwg is cool&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果是 hwg is cool</p>
+<h3 id="然后是if…else语句"><a href="#然后是if…else语句" class="headerlink" title="然后是if…else语句"></a>然后是if…else语句</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (*条件*)</span><br><span class="line">&#123;</span><br><span class="line">*条件成立时执行的代码;*</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">*条件不成立时执行的代码;</span><br><span class="line">*&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于和C都差不多，我就懒得举例了，待会再下面找几个题目过来试试；</p>
+<h3 id="if…elseif…-else-语句"><a href="#if…elseif…-else-语句" class="headerlink" title="if…elseif….else 语句"></a>if…elseif….else 语句</h3><p>感觉这个是会稍微难一点的</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (条件)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> 条件成立时执行的代码;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">elseif</span> (条件)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">elseif</span> 条件成立时执行的代码;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    条件不成立时执行的代码;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> $t=date(<span class="string">&quot;H&quot;</span>);<span class="comment">//这里的date（&quot;H&quot;）代表的意思是获取当前的小时数</span></span><br><span class="line"><span class="keyword">if</span> ($t&lt;<span class="string">&quot;10&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">echo</span> <span class="string">&quot;have a good morning&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">elseif</span>($t&lt;<span class="string">&quot;20&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">         <span class="keyword">echo</span><span class="string">&quot;have a good dany!&quot;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span></span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;have a good night&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>补充：function data($value) {}<br>如果是date ，那就是用来获取时间的，h 表示小时，并且是12 小时制的；<br>date(‘Y-m-d H:i:s’, time()); // 2015-8-11 9:05:05，第二个参数不传时默认取当前时间戳<br>date(‘Y’) // 年份 2015，大写Y 是4位，小写为2位<br>date(‘m’) // 月份 8<br>date(‘H’) // 小时 9，大写H 是24小时制，小写为12小时制</p>
+<h3 id="switch-case语句"><a href="#switch-case语句" class="headerlink" title="switch case语句"></a>switch case语句</h3><p>和C也差不多，就说一下想让执行到一个case语句就输出，就得</p>
+<p>加break才可以想让他执行完一圈都没得输出，只能在最后输出，就要在最后加default（<strong>default</strong> 语句用于不存在匹配（即没有 case 为真）时执行。）<br>举个例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$favcolor=<span class="string">&quot;red&quot;</span>;</span><br><span class="line"><span class="keyword">switch</span> ($favcolor)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;red&quot;</span>:</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;你喜欢的颜色是红色!&quot;</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;blue&quot;</span>:</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;你喜欢的颜色是蓝色!&quot;</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;green&quot;</span>:</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;你喜欢的颜色是绿色!&quot;</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;你喜欢的颜色不是 红, 蓝, 或绿色!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果是 你喜欢的颜色是红色！</p>
+<h3 id="接下来再来讲一下之前提过的数组"><a href="#接下来再来讲一下之前提过的数组" class="headerlink" title="接下来再来讲一下之前提过的数组"></a>接下来再来讲一下之前提过的数组</h3><p>首先是<strong>array（）函数</strong>可以用于创建函数<br>格式是</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>();</span><br></pre></td></tr></table></figure>
+
+<p>在PHP中，有三种类型的数在 PHP 中，有三种类型的数组：</p>
+<ul>
+<li><strong>数值数组</strong> - 带有数字 ID 键的数组<br>有两种创建数值数组的方法：</li>
+</ul>
+<p>第一种方法是自动分配ID键；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$phone=<span class="keyword">array</span>(<span class="string">&quot;vivo&quot;</span>,<span class="string">&quot;iphone&quot;</span>,<span class="string">&quot;hauwei&quot;</span>);<span class="comment">//这样的结果是，vivo会自动变成$phone[0]以此类推</span></span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，<strong>数组的ID创建是从0开始的</strong></p>
+<p>第二种方法是直接创建</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$phone[<span class="number">0</span>]=<span class="string">&quot;vivo&quot;</span>;</span><br><span class="line">$phone[<span class="number">1</span>]=<span class="string">&quot;iphone&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>下面运行下实例:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$phone=<span class="keyword">array</span>(<span class="string">&quot;vivo&quot;</span>,<span class="string">&quot;iphone&quot;</span>,<span class="string">&quot;huawei&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;I like&quot;</span> . $phone[<span class="number">0</span>] . <span class="string">&quot;,&quot;</span> .$phone[<span class="number">1</span>] . <span class="string">&quot;,&quot;</span>.$phone[<span class="number">2</span>].<span class="string">&quot;.&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span><span class="comment">//输出的结果是我喜欢vivo，iphon，huawei。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>关联数组</strong>-带有制定的键的数组，每个键关联一个值</p>
+<p>通俗点说就是，你要给三个变量都赋予一个相同属性的值，就可以直接用关联数组<br>比如说</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$age=<span class="keyword">array</span>(<span class="string">&quot;Peter&quot;</span>=&gt;<span class="string">&quot;35&quot;</span>,<span class="string">&quot;Ben&quot;</span>=&gt;<span class="string">&quot;37&quot;</span>,<span class="string">&quot;Joe&quot;</span>=&gt;<span class="string">&quot;43&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样的话，每个人都被赋予了年龄这个属性值<br>举个例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$age=<span class="keyword">array</span>(<span class="string">&quot;Peter&quot;</span>=&gt;<span class="string">&quot;35&quot;</span>,<span class="string">&quot;Ben&quot;</span>=&gt;<span class="string">&quot;37&quot;</span>,<span class="string">&quot;Joe&quot;</span>=&gt;<span class="string">&quot;43&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;Peter is &quot;</span> . $age[<span class="string">&#x27;Peter&#x27;</span>] . <span class="string">&quot; years old.&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span><span class="comment">//输出的结果是peter is 35years old.</span></span><br></pre></td></tr></table></figure>
+
+<p>这里有提到一个<strong>获取数组的长度-count()函数</strong><br>count()函数用于返回数组的长度（元素的数量）<br>直接放个例子吧</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$cars=<span class="keyword">array</span>(<span class="string">&quot;Volvo&quot;</span>,<span class="string">&quot;BMW&quot;</span>,<span class="string">&quot;Toyota&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> count($cars);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出的结果是3，原来，这个count输出的是array这个函数数组中所包含的<strong>元素数量</strong></p>
+<h3 id="遍历数组"><a href="#遍历数组" class="headerlink" title="遍历数组"></a>遍历数组</h3><p>遍历并打印<strong>数值数组</strong>中的所有值，可以使用for循环。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$phone=<span class="keyword">array</span>(<span class="string">&quot;vivo&quot;</span>,<span class="string">&quot;iphone&quot;</span>,<span class="string">&quot;huawei&quot;</span>);</span><br><span class="line">$arraylenth=count($iphone);<span class="comment">//这边的count（$iphone）就可以直接数出iphone的数组元素长度了</span></span><br><span class="line"><span class="keyword">for</span>($x=<span class="number">0</span>;$x&lt;$arraylength;x++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> $phone[$x]；</span><br><span class="line">    <span class="keyword">echo</span> &lt;<span class="string">&quot;br&quot;</span>&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出的结果是 vivo iphone huawei<br>遍历并打印<strong>关联数组</strong><br>可以使用foreach循环，这里就需要说明一下一下foreach循环了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> ($array <span class="keyword">as</span> $value)</span><br><span class="line">&#123;</span><br><span class="line">    要执行代码;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> ($array <span class="keyword">as</span> $key =&gt; $value)</span><br><span class="line">&#123;</span><br><span class="line">    要执行代码;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两个都是foreach循环<br>第一个是，用官方的话来说是，没进行一次循环，当前数组元素的值就会被赋值给$value变量（数组指针会逐一往下移动），在进行下一次循环时，将会看到数组中的键与值<br>我的理解是，（把概念打一遍，突然感觉自己的想法就是概念的想法？），数组的<strong>值</strong>都会被<strong>按顺序</strong>以value变量为载体输出</p>
+<p>而第二个是，用官方的话来说，每一次循环，当前数组元素的键与值就都会被赋值给 $key 和 $value 变量（数字指针会逐一地移动），在进行下一次循环时，你将看到数组中的下一个键与值。<br>我的理解是，他是在上一种的基础上，多增加了一个$key变量，然后将数组的序号或者代称以key的形式输出，，然后另一个value效果和上一个一样就不说了。<br><strong>然后这个key和value是可以替换成其他字母的</strong></p>
+<p>例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$age=<span class="keyword">array</span>(<span class="string">&quot;hwg&quot;</span> =&gt;<span class="string">&quot;20&quot;</span>,<span class="string">&quot;hsb&quot;</span>=&gt;<span class="string">&quot;21&quot;</span>,<span class="string">&quot;wjs&quot;</span>=&gt;<span class="string">&quot;19&quot;</span>);</span><br><span class="line"><span class="keyword">foreach</span>($age <span class="keyword">as</span> $value)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> $value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$age=<span class="keyword">array</span>(<span class="string">&quot;hwg&quot;</span> =&gt;<span class="string">&quot;20&quot;</span>,<span class="string">&quot;hsb&quot;</span>=&gt;<span class="string">&quot;21&quot;</span>,<span class="string">&quot;wjs&quot;</span>=&gt;<span class="string">&quot;19&quot;</span>);</span><br><span class="line"><span class="keyword">foreach</span>($age <span class="keyword">as</span> $name =&gt; $old)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;name=&quot;</span>.$name .<span class="string">&quot;, old=&quot;</span> . $old;<span class="comment">//echo输出多个值，中间记得要用.连接</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP数组排序"><a href="#PHP数组排序" class="headerlink" title="PHP数组排序"></a>PHP数组排序</h3><ul>
+<li>sort() - 对数组进行升序排列</li>
+<li>rsort() - 对数组进行降序排列</li>
+<li>asort() - 根据关联数组的值，对数组进行升序排列</li>
+<li>ksort() - 根据关联数组的键，对数组进行升序排列</li>
+<li>arsort() - 根据关联数组的值，对数组进行降序排列</li>
+<li>krsort() - 根据关联数组的键，对数组进行降序排列</li>
+</ul>
+<p>列举其中一个就好</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$cars=<span class="keyword">array</span>(<span class="string">&quot;Volvo&quot;</span>,<span class="string">&quot;BMW&quot;</span>,<span class="string">&quot;Toyota&quot;</span>);</span><br><span class="line">sort($cars);<span class="comment">//其中的sort可以替换</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出的结果是按照元素的字母升序排列的</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/11/PHP-if-switch-%E6%95%B0%E7%BB%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-php运算符-字符串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -644,6 +857,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">php</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -653,10 +870,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">php</a>
               </li>
             
             <div class="clearfix"></div>
