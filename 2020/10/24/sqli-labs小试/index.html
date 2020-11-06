@@ -15,12 +15,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="这个是第二次写这篇博客，我没想到居然忘记保存了，泪目。。 sql注入首先我觉得可能要先理解一下什么是sql注入sql注入 指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。 sql注入的类型1.字符型注入2.数字型注入 less11.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="file:///C:/Users/10452/AppData/Roaming/Tencent/Users/1045225639/QQ/WinTemp/RichOle_SWI6JYW8S2J0Z]M[%(~QXV.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106204440.png">
 <meta property="article:published_time" content="2020-10-24T07:14:35.000Z">
-<meta property="article:modified_time" content="2020-10-31T16:39:57.953Z">
+<meta property="article:modified_time" content="2020-11-06T12:44:54.214Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="file:///C:/Users/10452/AppData/Roaming/Tencent/Users/1045225639/QQ/WinTemp/RichOle_SWI6JYW8S2J0Z]M[%(~QXV.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106204440.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -180,7 +180,15 @@
 <h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>首先我觉得可能要先理解一下什么是sql注入<br><strong>sql注入</strong></p>
 <p>指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的<br>查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。</p>
 <p><strong>sql注入的类型</strong><br>1.字符型注入2.数字型注入</p>
-<h4 id="less1"><a href="#less1" class="headerlink" title="less1"></a>less1</h4><p><strong>1</strong>.根据这个题目中的get-error based-single quotes，我们就可以知道这题是单引号引起的字符型输入，所以我们直接输入?id=1。<br><strong>2</strong>.接下来我们输入一个单引号’<img src="file:///C:\Users\10452\AppData\Roaming\Tencent\Users\1045225639\QQ\WinTemp\RichOle_SWI6JYW8S2J0Z]M[%(~QXV.png" alt="img"></p>
+<h4 id="less1"><a href="#less1" class="headerlink" title="less1"></a>less1</h4><p><strong>1</strong>.根据这个题目中的get-error based-single quotes，我们就可以知道这题是单引号引起的字符型输入，所以我们直接输入?id=1。<br><strong>2</strong>.接下来我们输入一个单引号’<br><strong>3</strong>.可以发现，网页开始报错了内容是</p>
+<p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘’1’’ LIMIT 0,1’ at line 1<br>SELECT * FROM users WHERE id=’1’’ LIMIT 0,1  在这个当中单引号被包括进去了，但是却报错了，而当我尝试其他符号的时候，发现是可以正常显示的。接着我们用and 1=1 和and1=2来测试，</p>
+<p><strong>这里补充一个知识点， and 1=1代表永恒为真， and 1=2 代表永恒为假 我们判断有没有注入的时候可以利用这点来判断，如果页面不一样，就代表我们的语句生效了，存在注入点!</strong></p>
+<p>接下来我们需要知道查询表的字段数，我们才能利用<strong>union+select查询我们所需要的信息</strong><br><strong>因为 select （），（），（）， 有几个括号是要和该表的字段数所对应，</strong><br>在这里我们需要引入一个<strong>order by</strong>命令<br>在这里 order by 的作用是用来查询字段数，当你order by （一个数字）的时候，如果有这么多字段数，那么输出结果就不会报错，如果没有，就会报错<br>而我们通常会将<strong>order by 结合二分法</strong>这个时候就可以很快的查询到字段数（核心是猜）</p>
+<p>知道字段数吼，并且知道我们就可以利用注入点，添加一些命令语句，获得我们想要的信息。</p>
+<p>然后这里需要了解一个<strong>union</strong>命令 ：</p>
+<p> <strong>两个要联合的SQL语句 字段个数必须一样，而且字段类型要一致</strong></p>
+<p>这个union命令可以拼接语句，使得将两个select语句联合起来使用，这个时候我们可以让前面那个select为假使用不了，这样后面的语句就可以使用了。 </p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106204440.png"></p>
 
       
 

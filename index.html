@@ -176,7 +176,15 @@
 <h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>首先我觉得可能要先理解一下什么是sql注入<br><strong>sql注入</strong></p>
 <p>指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的<br>查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。</p>
 <p><strong>sql注入的类型</strong><br>1.字符型注入2.数字型注入</p>
-<h4 id="less1"><a href="#less1" class="headerlink" title="less1"></a>less1</h4><p><strong>1</strong>.根据这个题目中的get-error based-single quotes，我们就可以知道这题是单引号引起的字符型输入，所以我们直接输入?id=1。<br><strong>2</strong>.接下来我们输入一个单引号’<img src="file:///C:\Users\10452\AppData\Roaming\Tencent\Users\1045225639\QQ\WinTemp\RichOle_SWI6JYW8S2J0Z]M[%(~QXV.png" alt="img"></p>
+<h4 id="less1"><a href="#less1" class="headerlink" title="less1"></a>less1</h4><p><strong>1</strong>.根据这个题目中的get-error based-single quotes，我们就可以知道这题是单引号引起的字符型输入，所以我们直接输入?id=1。<br><strong>2</strong>.接下来我们输入一个单引号’<br><strong>3</strong>.可以发现，网页开始报错了内容是</p>
+<p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘’1’’ LIMIT 0,1’ at line 1<br>SELECT * FROM users WHERE id=’1’’ LIMIT 0,1  在这个当中单引号被包括进去了，但是却报错了，而当我尝试其他符号的时候，发现是可以正常显示的。接着我们用and 1=1 和and1=2来测试，</p>
+<p><strong>这里补充一个知识点， and 1=1代表永恒为真， and 1=2 代表永恒为假 我们判断有没有注入的时候可以利用这点来判断，如果页面不一样，就代表我们的语句生效了，存在注入点!</strong></p>
+<p>接下来我们需要知道查询表的字段数，我们才能利用<strong>union+select查询我们所需要的信息</strong><br><strong>因为 select （），（），（）， 有几个括号是要和该表的字段数所对应，</strong><br>在这里我们需要引入一个<strong>order by</strong>命令<br>在这里 order by 的作用是用来查询字段数，当你order by （一个数字）的时候，如果有这么多字段数，那么输出结果就不会报错，如果没有，就会报错<br>而我们通常会将<strong>order by 结合二分法</strong>这个时候就可以很快的查询到字段数（核心是猜）</p>
+<p>知道字段数吼，并且知道我们就可以利用注入点，添加一些命令语句，获得我们想要的信息。</p>
+<p>然后这里需要了解一个<strong>union</strong>命令 ：</p>
+<p> <strong>两个要联合的SQL语句 字段个数必须一样，而且字段类型要一致</strong></p>
+<p>这个union命令可以拼接语句，使得将两个select语句联合起来使用，这个时候我们可以让前面那个select为假使用不了，这样后面的语句就可以使用了。 </p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106204440.png"></p>
 
       
 
@@ -244,7 +252,8 @@
 <h2 id="选择数据库"><a href="#选择数据库" class="headerlink" title="选择数据库"></a>选择数据库</h2><p>1.利用 use（数据库名字）</p>
 <h2 id="修改数据库"><a href="#修改数据库" class="headerlink" title="修改数据库"></a>修改数据库</h2><p><strong>1.修改数据库的输入数据类型</strong><br>格式：alter table （表名） modify （要修改的内容）<br><strong>2.增添数据库中的一个输入项</strong><br>格式：alter table  （表名）add  （要增加的内容）<br><strong>3.更改原本的数据库项目名字</strong><br>格式： alter table （表名）change column（要修改的） （修改结果）（数据类型）<br><strong>4.修改表名</strong><br>格式：alter table （原本表名） rename （现在想要的表名）<br>这两个都是属于结构设计范畴的。</p>
 <h2 id="mysql的增删改查"><a href="#mysql的增删改查" class="headerlink" title="mysql的增删改查"></a>mysql的增删改查</h2><p><strong>首先是它们的语句命令</strong></p>
-<p>增:insert<br>删:delete<br>改：update<br>查:SELECT或者show<br>实例</p>
+<p>增:insert<br>删:delete<br>改：update<br>查:SELECT或者show<br><strong>格式</strong><br>向所有字段插入：insert into 表名（字段1，字段2，字段3……）values(值1,值2，值3……)；<br>向指定字段插入:insert into 表名（指定字段集合） valuse（指定字段值）;</p>
+<p>实例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create table test(id int, name varchar(40),sex varchar(4),birthday date);&#x2F;&#x2F;新建一个表</span><br><span class="line">insert into test(id,name,sex,birthday)&#x2F;&#x2F;增加数据（插入数据）</span><br><span class="line">values(1，&#39;zhangsan&#39;，&#39;male&#39;,&#39;2001-08-06&#39;);</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">update test set sex&#x3D;female;&#x2F;&#x2F;所有员工性别更改为女性</span><br><span class="line">update test set sex &#x3D; female where name &#x3D;&#39;zhangsan&#39;;&#x2F;&#x2F;更改张三这个员工的性别</span><br></pre></td></tr></table></figure>
@@ -253,10 +262,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">delete from test where name&#x3D;&#39;zhangsan&#39;;&#x2F;&#x2F;删除表中张三的记录</span><br><span class="line">delete from test;&#x2F;&#x2F;删除表中所有的记录</span><br><span class="line">truncate table test;&#x2F;&#x2F;使用truncate删除表中记录</span><br></pre></td></tr></table></figure>
 
 <p><strong>查询表数据</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select id,name,sex,birthday from test;&#x2F;&#x2F;从表中获取全部数据</span><br><span class="line">select name, birthday from test;&#x2F;&#x2F;从表中获取姓名和生日的信息</span><br><span class="line">select birthday from test where sex&#x3D;male；&#x2F;&#x2F;获取性别为男性的生日</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>格式</strong>：select   *或者【字段名】 from 表名；<br><strong>查询所有字段和部分字段。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select id,name,sex,birthday from test;&#x2F;&#x2F;从表中获取全部数据</span><br><span class="line">select name, birthday from test;&#x2F;&#x2F;从表中获取姓名和生日的信息</span><br><span class="line">select birthday from test where sex&#x3D;male；&#x2F;&#x2F;获取性别为男性的生日</span><br></pre></td></tr></table></figure>
 
-<p><strong>修改表数据</strong><br>这边是修改，这边说一下where这个函数的意思：where可以指定你想更换的数据行。</p>
-<p><strong>新建一个表格</strong><br>插入数据insert</p>
+<p><strong>使用distinct去除重复数据</strong><br>select distinct 字段名 from 表名；<br><strong>使用limit指定查询结果的行数</strong><br>select 字段名 from drom 表名 limit  n；<br>实例<br>select *from stu limit 1;</p>
+<p><strong>使用order by 对结果进行排序</strong><br>order by 字段名  ASC/DESC</p>
+<p><strong>修改表数据</strong><br>语法：update 表名 set 字段1=值，字段2=值 ；<br>插入数据insert</p>
 
       
 
