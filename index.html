@@ -184,7 +184,25 @@
 <p>然后这里需要了解一个<strong>union</strong>命令 ：</p>
 <p> <strong>两个要联合的SQL语句 字段个数必须一样，而且字段类型要一致</strong></p>
 <p>这个union命令可以拼接语句，使得将两个select语句联合起来使用，这个时候我们可以让前面那个select为假使用不了，这样后面的语句就可以使用了。 </p>
-<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106204440.png"></p>
+<p>这个时候使用 ?id=1’ and 0 union select 1,2,3 –+ 就可以发现页面变成<img src="C:\Users\10452\AppData\Roaming\Tencent\Users\1045225639\QQ\WinTemp\RichOle\0MZNBL~}KH$N3[WXC94CGZ0.png" alt="img" style="zoom: 50%;" /></p>
+<p>这个样子，说明字段2代表的是登录名一栏，字段3代表的是密码一栏</p>
+<p>接下来，我们要做的就是让可以显示的这几栏我们想要的信息：<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212818.png" alt="img" style="zoom:50%;" /></p>
+<p>当我们输入select 1,databse (),3 –+的时候  我们就可以得知其中数据库的名字，为security</p>
+<p>紧接着，我们就可以再利用select 查询这个库名里面的表名<br>接下来我们在union后面添加 select 1,group_concat(table_name),3 from information _schema.tables where table schema =’security’ –+  那这个时候</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212703.png" alt="img" style="zoom:50%;" />就出现了这个数据库中的所有表名，</p>
+<p>接下来我们知道了库名，知道了表名，就可以去找表中的字段名了<br>差找字段名的语句是这样的 select 1，group_concat（column_name）,3 from information_schema.columns where table_schema=’security’ and where table_column=’emalis’ –+</p>
+<p>根据这段语句，我们就可以获得emalis这个表中的字段名</p>
+ <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106214209.png" alt="img" style="zoom:50%;" />
+
+<p>含有一个id 一个email_id 这个时候我们就爆一下字段名</p>
+<p>这个时候我们使用 select 1,email_id,3 from emails –+ 就可以知道这个字段名下的数据<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106215030.png" alt="img" style="zoom:50%;" /></p>
+<p>这样就大功告成了</p>
+<h4 id="这个时候补充一些知识："><a href="#这个时候补充一些知识：" class="headerlink" title="这个时候补充一些知识："></a>这个时候补充一些知识：</h4><p>mysql5.0版本之后 会在数据库中存放一个information_schema的数据库，在该库，我们需要记住三个表名，分别是schemata，tables，colums</p>
+<p>在schemata表中存储该用户创建的所有数据库的库名，在该表中 记录数据库库名的字段名为：schema_name</p>
+<p>tables中存储该用户创建的所有数据的库名和表名，在这个表中记录数据库库名和表名的字段名分别为 table_schema和table_name</p>
+<p>columns表存储该用户创建的所有数据库的库名，表名和字段名，在该表中记录数据库库名，表名和字段名的字段名为table_schema,table_name,column_name;</p>
+<h4 id="group-concat（）函数"><a href="#group-concat（）函数" class="headerlink" title="group_concat（）函数"></a>group_concat（）函数</h4><p>功能：将group by产生的同一个分组中的值连接起来，返回一个字符串结果。</p>
+<p>在我们这题中我们是用group_concat(column_name)意思是将这个表中所有字段名连接起来并返回数据。<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wang-yaz/p/10862627.html">https://www.cnblogs.com/wang-yaz/p/10862627.html</a><br>这个是参考链接</p>
 
       
 
@@ -263,7 +281,7 @@
 
 <p><strong>查询表数据</strong></p>
 <p><strong>格式</strong>：select   *或者【字段名】 from 表名；<br><strong>查询所有字段和部分字段。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select id,name,sex,birthday from test;&#x2F;&#x2F;从表中获取全部数据</span><br><span class="line">select name, birthday from test;&#x2F;&#x2F;从表中获取姓名和生日的信息</span><br><span class="line">select birthday from test where sex&#x3D;male；&#x2F;&#x2F;获取性别为男性的生日</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select id,name,sex,birthday from test;&#x2F;&#x2F;从表中获取全部数据</span><br><span class="line">select name, birthday from test;&#x2F;&#x2F;从表中获取姓名和生日的信息</span><br><span class="line">select birthday from test where sex&#x3D;male；&#x2F;&#x2F;获取性别为男性的生日</span><br><span class="line">select 数字，数字，数字，数字........;&#x2F;&#x2F;可以查询指定字段的数据</span><br><span class="line">select 要查询的字段名 from 库名.表名；</span><br><span class="line">select 要查询的字段名 from 库名.表名 where 已知条件的字段名&#x3D;&#39;已知条件的值&#39;；</span><br><span class="line">select 要查询的字段名 from 库名.表名 where 已知条件1的字段名&#x3D;&#39;已知条件1的值&#39; and 已知条件2的字段名&#x3D;&#39;已知条件2的值&#39;</span><br></pre></td></tr></table></figure>
 
 <p><strong>使用distinct去除重复数据</strong><br>select distinct 字段名 from 表名；<br><strong>使用limit指定查询结果的行数</strong><br>select 字段名 from drom 表名 limit  n；<br>实例<br>select *from stu limit 1;</p>
 <p><strong>使用order by 对结果进行排序</strong><br>order by 字段名  ASC/DESC</p>
