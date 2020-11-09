@@ -15,16 +15,20 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="这个是第二次写这篇博客，我没想到居然忘记保存了，泪目。。 sql注入首先我觉得可能要先理解一下什么是sql注入sql注入 指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。 sql注入的类型1.字符型注入2.数字型注入">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109170235.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109172114.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109172944.png">
 <meta property="og:image" content="c:/Users/10452/AppData/Roaming/Tencent/Users/1045225639/QQ/WinTemp/RichOle/0MZNBL~%7DKH$N3[WXC94CGZ0.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212818.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212703.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106214209.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106215030.png">
 <meta property="article:published_time" content="2020-10-24T07:14:35.000Z">
-<meta property="article:modified_time" content="2020-11-06T14:06:33.835Z">
+<meta property="article:modified_time" content="2020-11-09T10:43:22.114Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/10452/AppData/Roaming/Tencent/Users/1045225639/QQ/WinTemp/RichOle/0MZNBL~%7DKH$N3[WXC94CGZ0.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -184,6 +188,22 @@
 <h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>首先我觉得可能要先理解一下什么是sql注入<br><strong>sql注入</strong></p>
 <p>指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的<br>查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。</p>
 <p><strong>sql注入的类型</strong><br>1.字符型注入2.数字型注入                       <a id="more"></a></p>
+<h3 id="这是一个写到第三关的补充"><a href="#这是一个写到第三关的补充" class="headerlink" title="这是一个写到第三关的补充"></a>这是一个写到第三关的补充</h3><p>我在想为什么加入一个单引号或者‘）就可以实现注入，就可以进行操作，在思考一番过后，我发现是这样的：<br>就拿第一关来说吧</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png" alt="img"></p>
+<p>当我输入的是?id=1’的时候，看这个错误代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> use near &#39;&#39;1&#39;&#39; LIMIT 0,1&#39; at line 1</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;1&#39;&#39; LIMIT 0,1&#x2F;&#x2F;这个是我在文件里面加入的提示sql执行的语句</span><br></pre></td></tr></table></figure>
+
+<p>当我输入and1=1后<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109170235.png" style="zoom:50%;" /></p>
+<p>可以发现他的错误提示是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> use near &#39;and1&#x3D;1&#39; LIMIT 0,1&#39; at line 1</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;1&#39;and1&#x3D;1&#39; LIMIT 0,1</span><br></pre></td></tr></table></figure>
+
+<p>这个时候其实我就想到<br><strong>1   **  ‘’之间的语句会被执行 ‘’’，三个引号之间可以执行两个语句<br>**2</strong>      我们看第一个错误和第二个错误后面语句  一个是  ‘’1’’ LIMIT 0,1’ ，说明他的报错是</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109172114.png" alt="img" style="zoom:50%;" />
+
+<p>是这样引起的 无法识别 我们一开始添加的1 ‘ 里面的这个单引号，所以将1 ‘ 当成一个整体报错了，但是  当我们，在后面加一个 and 1=1 这个语句的时候是’and1=1’ LIMIT 0,1’       我们将它补充完整，应该是</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109172944.png" alt="img" style="zoom:50%;" />
+
+<p>这么理解，就是但是此时 ‘1’是可以被识别正确数据，错误的是在后面 多了一个limit0,1   因为没有一个语句是<br>‘and1=1’ LIMIT 0,1’  这样的，所以我们此时应该把后面的limit0,1注释掉，这个时候我们就要用到–+，或者其他符号，我这里就主要用–+吧，有个问题需要说一下 –+ 不会注释掉后面的引号。<br>这边也有另外一种方法可以达到这个效果 就是闭合引号  我们直接把语句更改为 and ‘1’=’1 这样也可以的，一开始的’1’的后面那个引号就会到and ‘1’=’1’这个后面，其实前面也是到那个后面，只不过我为了划分语句所以就这样区分了整体，顺便把单引号也这样区分了。<br><strong>3</strong>     这些知识该怎么迁移转换呢，我在第三关再说，因为第三关的和第一关又有些不同。</p>
 <h4 id="less1"><a href="#less1" class="headerlink" title="less1"></a>less1</h4><p><strong>1</strong>.根据这个题目中的get-error based-single quotes，我们就可以知道这题是单引号引起的字符型输入，所以我们直接输入?id=1。<br><strong>2</strong>.接下来我们输入一个单引号’<br><strong>3</strong>.可以发现，网页开始报错了内容是</p>
 <p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘’1’’ LIMIT 0,1’ at line 1<br>SELECT * FROM users WHERE id=’1’’ LIMIT 0,1  在这个当中单引号被包括进去了，但是却报错了，而当我尝试其他符号的时候，发现是可以正常显示的。接着我们用and 1=1 和and1=2来测试，</p>
 <p><strong>这里补充一个知识点， and 1=1代表永恒为真， and 1=2 代表永恒为假 我们判断有没有注入的时候可以利用这点来判断，如果页面不一样，就代表我们的语句生效了，存在注入点!</strong></p>
@@ -195,8 +215,8 @@
 <p>这个时候使用 ?id=1’ and 0 union select 1,2,3 –+ 就可以发现页面变成<img src="C:\Users\10452\AppData\Roaming\Tencent\Users\1045225639\QQ\WinTemp\RichOle\0MZNBL~}KH$N3[WXC94CGZ0.png" alt="img" style="zoom: 50%;" /></p>
 <p>这个样子，说明字段2代表的是登录名一栏，字段3代表的是密码一栏</p>
 <p>接下来，我们要做的就是让可以显示的这几栏我们想要的信息：<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212818.png" alt="img" style="zoom:50%;" /></p>
-<p>当我们输入select 1,databse (),3 –+的时候  我们就可以得知其中数据库的名字，为security</p>
-<p>紧接着，我们就可以再利用select 查询这个库名里面的表名<br>接下来我们在union后面添加 select 1,group_concat(table_name),3 from information _schema.tables where table schema =’security’ –+  那这个时候</p>
+<p>当我们输入select 1,database (),3 –+的时候  我们就可以得知其中数据库的名字，为security</p>
+<p>紧接着，我们就可以再利用select 查询这个库名里面的表名<br>接下来我们在union后面添加 select 1,group_concat(table_name),3 from information _schema.tables where table_schema =’security’ –+  那这个时候</p>
 <p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212703.png" alt="img" style="zoom:50%;" />就出现了这个数据库中的所有表名，</p>
 <p>接下来我们知道了库名，知道了表名，就可以去找表中的字段名了<br>差找字段名的语句是这样的 select 1，group_concat（column_name）,3 from information_schema.columns where table_schema=’security’ and where table_column=’emalis’ –+</p>
 <p>根据这段语句，我们就可以获得emalis这个表中的字段名</p>
@@ -303,6 +323,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/11/07/sqlilabs1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          sqlilabs1
+        
+      </div>
+    </a>
   
   
     <a href="/2020/10/20/mysql%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" id="article-nav-older" class="article-nav-link-wrap">
@@ -432,11 +461,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">php</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">php</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
