@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020/11 | Hexo</title>
+  <title>sqlilabs2 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2020/11/index.html">
+  <meta name="description" content="sqlilabs第五关这次的和之前四关就很不一样了   这个you are in 就很尴尬，除了报错，不然都是you are in。。。。所以要怎么办呢这个时候就要知道什么叫盲注了盲注就是在 sql 注入过程中，sql 语句执行的选择后，选择的数据不能回显 到前端页面。此时，我们需要利用一些方法进行判断或者尝试，这个过程称之为盲注 盲注有三类•基于布尔 SQL 盲注•基于时间的 SQL 盲注 •基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlilabs2">
+<meta property="og:url" content="http://example.com/2020/11/09/sqlilabs2/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="sqlilabs第五关这次的和之前四关就很不一样了   这个you are in 就很尴尬，除了报错，不然都是you are in。。。。所以要怎么办呢这个时候就要知道什么叫盲注了盲注就是在 sql 注入过程中，sql 语句执行的选择后，选择的数据不能回显 到前端页面。此时，我们需要利用一些方法进行判断或者尝试，这个过程称之为盲注 盲注有三类•基于布尔 SQL 盲注•基于时间的 SQL 盲注 •基">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109193832.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109201708.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109204923.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109205105.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109205401.png">
+<meta property="article:published_time" content="2020-11-09T11:31:39.000Z">
+<meta property="article:modified_time" content="2020-11-09T13:14:08.080Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109193832.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,76 +160,186 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-sqlilabs2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      sqlilabs2
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/09/sqlilabs2/" class="archive-article-date">
+
+        
+        <a href="/2020/11/09/sqlilabs2/" class="archive-article-date">
   	<time datetime="2020-11-09T11:31:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/09/sqlilabs2/">sqlilabs2</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="sqlilabs第五关"><a href="#sqlilabs第五关" class="headerlink" title="sqlilabs第五关"></a>sqlilabs第五关</h3><p>这次的和之前四关就很不一样了</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109193832.png" alt="img" style="zoom:50%;" />
 
-        <div class="article-info info-on-right">
-          
-          
+<p>这个you are in 就很尴尬，除了报错，不然都是you are in。。。。<br>所以要怎么办呢<br>这个时候就要知道什么叫盲注了<br><strong>盲注</strong>就是在 sql 注入过程中，sql 语句执行的选择后，选择的数据不能回显 到前端页面。此时，我们需要利用一些方法进行判断或者尝试，这个过程称之为盲注</p>
+<h4 id="盲注有三类"><a href="#盲注有三类" class="headerlink" title="盲注有三类"></a>盲注有三类</h4><p>•基于布尔 SQL 盲注<br>•基于时间的 SQL 盲注<br> •基于报错的 SQL 盲注<br>先从布尔sql盲注说起吧</p>
+<h4 id="首先是sql注入截取字符串常用函数"><a href="#首先是sql注入截取字符串常用函数" class="headerlink" title="首先是sql注入截取字符串常用函数"></a>首先是sql注入截取字符串常用函数</h4><p><strong>首先是mid（）函数</strong><br><strong>此函数为截取字符串的一部分</strong><br><strong>语法</strong>：MID（column_name,start,[length]）</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109201708.png" alt="img" style="zoom: 67%;" />
 
+<p>eg： str=”123456” mid(str,2,1)  结果为2</p>
+<p>例子：</p>
+<p>（1）MID(DATABASE(),1,1)&gt;’a’,查看数据库名第一位，MID(DATABASE(),2,1)查看数据库名第二位，依次查看各位字符。</p>
+<p>（2）MID((SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE  table_schema=0xxxxxxx LIMIT 0,1),1,1)&gt;’a’此处column_name参数可以为sql语句，可自行构造sql语句进行注入。</p>
+<p><strong>substr()函数</strong><br>  Substr()和substring()函数实现的功能是一样的，均为截取字符串。<br>string substring(string, start, length)<br>string substr(string, start, length)<br><strong>参数描述同mid()函数</strong>，第一个参数为要处理的字符串，start为开始位置，length为截取的长度。<br>例子：<br>(1) substr(DATABASE(),1,1)&gt;’a’,查看数据库名第一位，substr(DATABASE(),2,1)查看数据库名第二位，依次查看各位字符。<br>(2) substr((SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE T table_schema=0xxxxxxx LIMIT 0,1),1,1)&gt;’a’此处string参数可以为sql语句，可自行构造sql语句进行注入</p>
+<p><strong>Left()函数</strong></p>
+<p>Left()得到字符串左部指定个数的字符</p>
+<p>Left ( string, n )    string为要截取的字符串，n为长度。</p>
+<p>Sql用例：</p>
+<p>(1) left(database(),1)&gt;’a’,查看数据库名第一位，left(database(),2)&gt;’ab’,查看数据库名前二位。</p>
+<p>(2) 同样的string可以为自行构造的sql语句。</p>
+<p> 同时也要介绍<strong>ORD()函数</strong>，此函数为返回第一个字符的ASCII码，经常与上面的函数进行组合使用。</p>
+<p>例如ORD(MID(DATABASE(),1,1))&gt;114 意为检测database()的第一位ASCII码是否大于114，也即是‘r’<br>资料来源：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lcamry/p/5504374.html">https://www.cnblogs.com/lcamry/p/5504374.html</a></p>
+<p><strong>length()函数</strong><br>可以用来判断字符数<br>eg：length(database())&gt;5,这个数据库的名称是否大于五个字符<br>资料先放着吧，感觉还是要运用了记忆力会比较深<br>然后回到题目来：<br>此时我们使用length判断数据库名称的长短<br>使用指令and length(database())&gt;=8 画面返回</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109204923.png" alt="img" style="zoom:50%;" />
+
+<p>但是当我 为and length (database())&gt;9的时候<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109205105.png" alt="img" style="zoom:50%;" /></p>
+<p>返回了这玩意，说明是错的，也就是这个数据库的字符数是8，想一下我就觉得是security。<br>我们接下来去试试</p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>这里有一种方法是利用 substr(database(),1,1)=’s’  这个函数来一个个试</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109205401.png" alt="img" style="zoom:50%;" />
+
+<p>发现是可以的，说明第一个字母就是s，然后接下来继续去试，发现就是security</p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>这里有一种方法是利用</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/09/sqlilabs2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/07/sqlilabs1/" class="archive-article-date">
-  	<time datetime="2020-11-07T15:53:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/11/07/sqlilabs1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">sqlilabs1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/07/sqlilabs1/">sqlilabs1</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -242,8 +362,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

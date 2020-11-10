@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106214209.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106215030.png">
 <meta property="article:published_time" content="2020-10-24T07:14:35.000Z">
-<meta property="article:modified_time" content="2020-11-09T10:43:22.114Z">
+<meta property="article:modified_time" content="2020-11-09T11:27:05.223Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png">
@@ -218,7 +218,7 @@
 <p>当我们输入select 1,database (),3 –+的时候  我们就可以得知其中数据库的名字，为security</p>
 <p>紧接着，我们就可以再利用select 查询这个库名里面的表名<br>接下来我们在union后面添加 select 1,group_concat(table_name),3 from information _schema.tables where table_schema =’security’ –+  那这个时候</p>
 <p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212703.png" alt="img" style="zoom:50%;" />就出现了这个数据库中的所有表名，</p>
-<p>接下来我们知道了库名，知道了表名，就可以去找表中的字段名了<br>差找字段名的语句是这样的 select 1，group_concat（column_name）,3 from information_schema.columns where table_schema=’security’ and where table_column=’emalis’ –+</p>
+<p>接下来我们知道了库名，知道了表名，就可以去找表中的字段名了<br>差找字段名的语句是这样的 select 1,group_concat(column_name),3 from information_schema.columns where table_schema=’security’ and table_name=’emails’–+<br>也可以直接是 select 1,group_concat(column_name),3 from information_schema.columns where  table_name=’emails’–+   </p>
 <p>根据这段语句，我们就可以获得emalis这个表中的字段名</p>
  <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106214209.png" alt="img" style="zoom:50%;" />
 
