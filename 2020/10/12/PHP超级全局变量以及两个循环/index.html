@@ -16,7 +16,7 @@
 <meta property="og:description" content="首先是PHP的超级全局变量首先是超级全局变量的定义:意味着它们在一个脚本的全部作用于中都可用，不需要特别说明，就可以在函数及类中使用。 第一个是$GLOBALS这个其实在之前有介绍过了，不过这次的格式可能比较不一样直接拿例子了： 123456789101112&lt;?php $x &#x3D; 75; $y &#x3D; 25;function addition() &amp;#123;     $GLOBALS[&amp;#x2">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-12T15:50:03.000Z">
-<meta property="article:modified_time" content="2020-10-14T11:25:39.901Z">
+<meta property="article:modified_time" content="2020-11-14T12:05:03.148Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
@@ -180,7 +180,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$x = <span class="number">75</span>; </span><br><span class="line">$y = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addition</span>(<span class="params"></span>) </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    $GLOBALS[<span class="string">&#x27;z&#x27;</span>] = $GLOBALS[<span class="string">&#x27;x&#x27;</span>] + $GLOBALS[<span class="string">&#x27;y&#x27;</span>]; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">addition(); </span><br><span class="line"><span class="keyword">echo</span> $z; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>输出结果是 100<br><strong>第二个是$_SERVER</strong><br>这是一个包含了很多信息的数组，这个数组中的项目由web服务器创建。 <a id="more"></a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/php/php-superglobals.html%E5%9C%A8%E8%BF%99%E4%B8%AA%E9%93%BE%E6%8E%A5%E4%B8%AD%EF%BC%8C%E5%8C%85%E5%90%AB%E4%BA%86$_SERVER%E5%8F%98%E9%87%8F%E4%B8%AD%E7%9A%84%E9%87%8D%E8%A6%81%E5%85%83%E7%B4%A0">https://www.runoob.com/php/php-superglobals.html在这个链接中，包含了$_SERVER变量中的重要元素</a></p>
-<p>下面整理了几个个人感觉常用命令<br>*<em>$_SERVER[‘REMOTE_ADDR’] //当前用户 IP**<br>**$_SERVER[‘SERVER_ADDR’]</em>//当前运行脚本所在的服务器的IP地址**<br><strong>$_SERVER[‘SERVER_PROTOCOL’]//请求页面页面时的通信协议的名称和版本</strong><br><strong>$_SERVER[‘REQUEST_METHOD’]// 访问页面使用的请求方法；例如，”GET”, “HEAD”，”POST”，”PUT”</strong><br>这边去看了一下这些指令的区别：<br>首先是get和post</p>
+<p>下面整理了几个个人感觉常用命令<br>*<em>$_SERVER[‘REMOTE_ADDR’] //当前用户 IP**<br>**$_SERVER[‘SERVER_ADDR’]</em>//当前运行脚本所在的服务器的IP地址**<br><strong>$_SERVER[‘SERVER_PROTOCOL’]//请求页面页面时的通信协议的名称和版本</strong><br><strong>$_SERVER[‘REQUEST_METHOD’]// 访问页面使用的请求方法；例如，”GET”, “HEAD”，”POST”，”PUT”</strong><br>这边去看了一下这些指令的区别：<br>首先是<strong>get和post</strong></p>
 <ol>
 <li>get是从服务器上获取数据，post是向服务器传送数据。</li>
 <li>get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTP post机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。</li>
@@ -441,15 +441,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">php</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MYSQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,6 +454,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MYSQL</a>
               </li>
             
             <div class="clearfix"></div>
