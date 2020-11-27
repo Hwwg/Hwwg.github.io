@@ -6,20 +6,40 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>PHP超级全局变量以及两个循环 | Hexo</title>
+  <title>sqlilabs5 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="首先是PHP的超级全局变量首先是超级全局变量的定义:意味着它们在一个脚本的全部作用于中都可用，不需要特别说明，就可以在函数及类中使用。 第一个是$GLOBALS这个其实在之前有介绍过了，不过这次的格式可能比较不一样直接拿例子了： 123456789101112&lt;?php $x &#x3D; 75; $y &#x3D; 25;function addition() &amp;#123;     $GLOBALS[&amp;#x2">
+  <meta name="description" content="第十七关这一关和其他的就不太一样，比如说标题是update query所以这里 我们需要修改表中的数据修改表中数据我们使用的是 update语法是：update test set sex&#x3D;female;&#x2F;&#x2F;所有员工性别更改为女性update test set sex &#x3D; female where name &#x3D;’zhangsan’;&#x2F;&#x2F;更改张三这个员工的性别 看了下这题的是这样的   当我在user">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP超级全局变量以及两个循环">
-<meta property="og:url" content="http://example.com/2020/10/12/PHP%E8%B6%85%E7%BA%A7%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BB%A5%E5%8F%8A%E4%B8%A4%E4%B8%AA%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:title" content="sqlilabs5">
+<meta property="og:url" content="http://example.com/2020/11/20/sqlilabs5/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="首先是PHP的超级全局变量首先是超级全局变量的定义:意味着它们在一个脚本的全部作用于中都可用，不需要特别说明，就可以在函数及类中使用。 第一个是$GLOBALS这个其实在之前有介绍过了，不过这次的格式可能比较不一样直接拿例子了： 123456789101112&lt;?php $x &#x3D; 75; $y &#x3D; 25;function addition() &amp;#123;     $GLOBALS[&amp;#x2">
+<meta property="og:description" content="第十七关这一关和其他的就不太一样，比如说标题是update query所以这里 我们需要修改表中的数据修改表中数据我们使用的是 update语法是：update test set sex&#x3D;female;&#x2F;&#x2F;所有员工性别更改为女性update test set sex &#x3D; female where name &#x3D;’zhangsan’;&#x2F;&#x2F;更改张三这个员工的性别 看了下这题的是这样的   当我在user">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-12T15:50:03.000Z">
-<meta property="article:modified_time" content="2020-11-14T12:05:03.148Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214428.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214500.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214459.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120215444.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201124170535.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201124200820.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126202802.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126202952.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126203920.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126204339.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127160030.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127174132.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127174452.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180149.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180335.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180427.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180621.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127181147.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127221343.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127224654.png">
+<meta property="article:published_time" content="2020-11-20T11:20:26.000Z">
+<meta property="article:modified_time" content="2020-11-27T16:40:29.928Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214428.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -155,51 +175,107 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-PHP超级全局变量以及两个循环" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-sqlilabs5" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      PHP超级全局变量以及两个循环
+      sqlilabs5
     </h1>
   
 
         
-        <a href="/2020/10/12/PHP%E8%B6%85%E7%BA%A7%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BB%A5%E5%8F%8A%E4%B8%A4%E4%B8%AA%E5%BE%AA%E7%8E%AF/" class="archive-article-date">
-  	<time datetime="2020-10-12T15:50:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-12</time>
+        <a href="/2020/11/20/sqlilabs5/" class="archive-article-date">
+  	<time datetime="2020-11-20T11:20:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="首先是PHP的超级全局变量"><a href="#首先是PHP的超级全局变量" class="headerlink" title="首先是PHP的超级全局变量"></a>首先是PHP的超级全局变量</h3><p>首先是<strong>超级全局变量的定义</strong>:意味着它们在一个脚本的全部作用于中都可用，不需要特别说明，就可以在函数及类中使用。</p>
-<p><strong>第一个是$GLOBALS</strong><br>这个其实在之前有介绍过了，不过这次的格式可能比较不一样<br>直接拿例子了：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$x = <span class="number">75</span>; </span><br><span class="line">$y = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addition</span>(<span class="params"></span>) </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    $GLOBALS[<span class="string">&#x27;z&#x27;</span>] = $GLOBALS[<span class="string">&#x27;x&#x27;</span>] + $GLOBALS[<span class="string">&#x27;y&#x27;</span>]; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">addition(); </span><br><span class="line"><span class="keyword">echo</span> $z; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+        <h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>这一关和其他的就不太一样，比如说标题是update query<br>所以这里 我们需要修改表中的数据<br>修改表中数据我们使用的是 update<br><strong>语法是</strong>：<br>update test set sex=female;//所有员工性别更改为女性<br>update test set sex = female where name =’zhangsan’;//更改张三这个员工的性别</p>
+<p>看了下这题的是这样的<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214428.png" alt="img" style="zoom:67%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214500.png" alt="img"><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120214459.png" alt="img"></p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120215444.png" alt="img" style="zoom:67%;" />
+当我在username里面随便输了admin 他就说我成功的更改了我的密码，再结合源码，猜测这里是 在我输入账号以后，他会连接到存放我这个账号的字符段，然后将那边的密码更换成我现在输的
+然后，在username无论我输那个单引号的何种组合情况，都没有反应，结合源码，我发现这里有个PHP的安全命令
+**addslashes()与stripslashes()函数**
 
-<p>输出结果是 100<br><strong>第二个是$_SERVER</strong><br>这是一个包含了很多信息的数组，这个数组中的项目由web服务器创建。 <a id="more"></a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/php/php-superglobals.html%E5%9C%A8%E8%BF%99%E4%B8%AA%E9%93%BE%E6%8E%A5%E4%B8%AD%EF%BC%8C%E5%8C%85%E5%90%AB%E4%BA%86$_SERVER%E5%8F%98%E9%87%8F%E4%B8%AD%E7%9A%84%E9%87%8D%E8%A6%81%E5%85%83%E7%B4%A0">https://www.runoob.com/php/php-superglobals.html在这个链接中，包含了$_SERVER变量中的重要元素</a></p>
-<p>下面整理了几个个人感觉常用命令<br>*<em>$_SERVER[‘REMOTE_ADDR’] //当前用户 IP**<br>**$_SERVER[‘SERVER_ADDR’]</em>//当前运行脚本所在的服务器的IP地址**<br><strong>$_SERVER[‘SERVER_PROTOCOL’]//请求页面页面时的通信协议的名称和版本</strong><br><strong>$_SERVER[‘REQUEST_METHOD’]// 访问页面使用的请求方法；例如，”GET”, “HEAD”，”POST”，”PUT”</strong><br>这边去看了一下这些指令的区别：<br>首先是<strong>get和post</strong></p>
-<ol>
-<li>get是从服务器上获取数据，post是向服务器传送数据。</li>
-<li>get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTP post机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。</li>
-<li>对于get方式，服务器端用Request.QueryString获取变量的值，对于post方式，服务器端用Request.Form获取提交的数据。</li>
-<li>get传送的数据量较小，不能大于2KB。post传送的数据量较大，一般被默认为不受限制。但理论上，IIS4中最大量为80KB，IIS5中为100KB。</li>
-<li>get安全性非常低，post安全性较高。</li>
-</ol>
-<p>还有一个更详细 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28586791/answer/767316172">https://www.zhihu.com/question/28586791/answer/767316172</a><br>等以后遇到需要更深入了解时，再去回顾。<br>**&amp;<em>SERVER[‘HTTPS’]:如果脚本是通过HTTPS协议被访问，则被设为一个非空的值**<br><strong>&amp;_SERVER[‘REMOTE_HOST’]:浏览当前页面的用户的主机名，DNS反向解析不依懒于用户的REMOTE_ADDR</strong><br><strong>&amp;_SERVER[‘REMOTE_PORT’]:用户机器上连接到WEB服务器所使用的端口号</strong><br><strong>&amp;_SERVER[‘SCRIPT_URI’]:URI用来指定要访问的页面</strong><br>**&amp;_SERVER[‘PHP_SELF’]:**当前执行脚本的文件名，与 document root 有关。例如，在地址为 <a href="http://example.com/test.php/foo.bar">http://example.com/test.php/foo.bar</a> 的脚本中使用 $_SERVER[‘PHP_SELF’] 将得到 /test.php/foo.bar。__FILE_</em> 常量包含当前(例如包含)文件的完整路径和文件名。 从 PHP 4.3.0 版本开始，如果 PHP 以命令行模式运行，这个变量将包含脚本名。之前的版本该变量不可用。</p>
-<p><strong>第三个是$_REQUEST</strong></p>
-<p>PHP $_REQUEST 用于收集HTML表单提交的数据。</p>
-<p>以下实例显示了一个输入字段（input）及提交按钮(submit)的表单(form)。 当用户通过点击 “Submit” 按钮提交表单数据时, 表单数据将发送至<form>标签中 action 属性中指定的脚本文件。 在这个实例中，我们指定文件来处理表单数据。如果你希望其他的PHP文件来处理该数据，你可以修改该指定的脚本文件名。 然后，我们可以使用超级全局变量 $_REQUEST 来收集表单中的 input 字段数据:(官方理解)</p>
-<p>这便<strong>补充一下</strong>：REQUEST：具有$_POST[]$_GET[]的功能，但是$_REQUEST[]会比较慢。通过post和get方法提交的所有数据都可以通过$REQUEST数组获得</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&lt;!DOCTYPE html&gt;</span><br><span class="line">&#x2F;&#x2F;&lt;html&gt;</span><br><span class="line">&#x2F;&#x2F;&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&lt;form method&#x3D;&quot;post&quot; action&#x3D;&quot;&lt;?php echo $_SERVER[&#39;PHP_SELF&#39;];?&gt;&quot;&gt;</span><br><span class="line">&#x2F;&#x2F;Name: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;fname&quot;&gt;</span><br><span class="line">&#x2F;&#x2F;&lt;input type&#x3D;&quot;submit&quot;&gt;</span><br><span class="line">&#x2F;&#x2F;&lt;&#x2F;form&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">$name &#x3D; htmlspecialchars($_REQUEST[&#39;fname&#39;]); </span><br><span class="line">echo $name; </span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201124170535.png" alt="img"></p>
+<p>这边自定义了一个函数 check_input函数，里面出现了<strong>substr</strong>、<strong>get_magic_quotes_gpc</strong>、<strong>stripslashes</strong>这几个函数：</p>
+<p><strong>get_magic_quotes_gpc()函数</strong><br>get_magic_quotes_gpc()函数取得PHP环境配置的变量magic_quotes_gpc(GPC, Get/Post/Cookie)值。返回0表示本功能关闭，返回1表示本功能打开<br>当magic_quotes_gpc打开时，所有的’(单引号)、”(双引号)、(反斜杠)和NULL(空字符)会自动转为含有反斜杠的溢出字符。<strong>所以我们在账号一栏输入的单引号等的数据没有效果的原因就在这里</strong></p>
+<p><strong>addslashes()与stripslashes()函数</strong><br>addslashes(string)函数返回在预定义字符之前添加反斜杠\的字符串：</p>
+<ul>
+<li>单引号 ’</li>
+<li>双引号 “</li>
+<li>反斜杠 \</li>
+<li>空字符 NULL</li>
+</ul>
+<p>该函数可用于为存储在数据库中的字符串以及数据库查询语句准备字符串。</p>
+<p>注意：默认地，PHP对所有的GET、POST和COOKIE数据自动运行addslashes()。所以不应对已转义过的字符串使用addslashes()，因为这样会导致双层转义。遇到这种情况时可以使用函数get_magic_quotes_gpc()进行检测。<br><strong>stripslashes(string)函数删除由addslashes()函数添加的反斜杠。</strong></p>
+<p><strong>substr函数</strong><br>substr(string,start[,length])<br>参数 描述<br>string 必需，规定要返回其中一部分的字符串<br>start 必需，规定在字符串的何处开始<br>正数：在字符串的指定位置开始<br>负数：在从字符串结尾开始的指定位置开始<br>0：在字符串中的第一个字符处开始<br>length 可选，要返回的字符数。如果省略，则返回剩余文本<br>正数：从start参数所在的位置返回的长度<br>负数：从字符串末端返回的长度<br><strong>这里补充一下我的理解</strong>：这个substr的意思是截取字符段，也就是截取你输入的数据前几位这样，然后将截取的数据进行过滤操作，即加入反斜杠操作</p>
+<p><strong>ctype_digit()函数</strong><br>ctype_digit(string)函数检查字符串中每个字符是否都是十进制数字，若是则返回TRUE，否则返回FALSE。</p>
+<p><strong>mysql_real_escape_string()函数</strong><br>mysql_real_escape_string(string,connection)<br>参数 描述<br>string 必需，规定要转义的字符串<br>connection 可选，规定MySQL连接。如果未规定，则使用上一个连接</p>
+<p>mysql_real_escape_string()函数转义 SQL 语句中使用的字符串中的特殊字符：</p>
+<ul>
+<li><p>\x00</p>
+</li>
+<li><p>\n</p>
+</li>
+<li><p>\r</p>
+</li>
+<li><p>\</p>
+</li>
+<li><p>’</p>
+</li>
+<li><p>“</p>
+</li>
+<li><p>\x1a<br>**知道这个点后 ，那就说明我们无法通过在账号一栏注入 **</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201124200820.png" alt="img"></p>
+<p>然后我们看这个密码这一栏有个引号，所以我们这就意味着我们可以在密码一栏通过密码来注入<br>我们在账号一栏输入admin以后，接着在密码一栏输入我们的注入语句 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin&#39;and updatexml(1,concat(&#39;~&#39;,(select database()),&#39;~&#39;),1) -- </span><br></pre></td></tr></table></figure>
 
-<p><strong>PHP$_POST和PHP$_GET</strong><br>PHP $_POST 被广泛应用于收集表单数据，在HTML form标签的指定该属性：”method=”post”<br>就是上面个实例，展示一下GET<br>在测试当中  按了那个</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&lt;html&gt;</span><br><span class="line">&#x2F;&#x2F;&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&lt;?php </span><br><span class="line">&#x2F;&#x2F;echo &quot;Study &quot; . $_GET[&#39;subject&#39;] . &quot; @ &quot; . $_GET[&#39;web&#39;];</span><br><span class="line">&#x2F;&#x2F;?&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&lt;&#x2F;body&gt;</span><br><span class="line">&#x2F;&#x2F;&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">123&#39;and updatexml(1,concat(&#39;~&#39;,(select table_name from information_schema.tables where table_schema&#x3D;&#39;security&#39; limit 0,1),&#39;~&#39;),1) -- </span><br></pre></td></tr></table></figure>
 
-<p>会出现一个GET test的按钮，点一下 就会发送subject 和web的参数</p>
-<p>感觉这片很水，可能是因为我html还没学，等我学完了再回来补充拓展</p>
+<h3 id="那么我们如何绕过这个过滤呢？"><a href="#那么我们如何绕过这个过滤呢？" class="headerlink" title="那么我们如何绕过这个过滤呢？"></a><strong>那么我们如何绕过这个过滤呢？</strong></h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42181428/article/details/105061424?utm_medium=distribute.pc_relevant.none-task-blog-OPENSEARCH-3.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-OPENSEARCH-3.control">https://blog.csdn.net/qq_42181428/article/details/105061424?utm_medium=distribute.pc_relevant.none-task-blog-OPENSEARCH-3.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-OPENSEARCH-3.control</a> 这个博客里面倒是说了个方法，但是用在这里好像不太合适，因为其实我们注意到他有一个substr函数，只截取了前15个字符，所以当我输入的语句超过15个的时候，后面的代码就自动被抛弃了。<br>记得拓展学习SqlParameter</p>
+</li>
+</ul>
+<h2 id="第-十八关"><a href="#第-十八关" class="headerlink" title="第 十八关"></a>第 十八关</h2><p>这个关卡好像有点不太一样，先来看看源码：</p>
+<p>![E_{358QK8A23J%N`T0Q%2LM](<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126202559.png">https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126202559.png</a>)</p>
+<p>可以看到在这一关，对于uname和passwd依旧做了addslashes()函数处理，所以想再这里注入不太可能<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126202802.png" alt="img"></p>
+<p>并且在输出uname和passwd的时候也没有单引号等字符的出现，所以想在这里注入是不可能的了<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126202952.png" alt="img"></p>
+<p>看这里 获取了uagent和IP 这个是干啥的？</p>
+<p>HTTP_USER_AGENT：返回HTTP头部的USER_AGENT（user_agent的内容包含发出请求的用户信息）<br>REMOTE_ADDR:：返回http头部IP地址<br>接下来我们再来看看这些源代码 到底哪里可以让我们注入<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126203920.png" alt="img">找到了一个insert语句 这里发现 后面有个引号，要是我们在里面输入我们的命令，是不是就可以获得我们需要的信息了？那我们该如何更改呢——burp suit 抓包工具，因为 我们从前面的$servent可以看出 这里是需要返回http头部的信息，所以。。。。懂的都懂<br>试一下：</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201126204339.png" alt="img" style="zoom:67%;" />
+
+<p>猜猜我发现了啥，这有个user_agent，OK 让我们吧大致思路理顺一下：一开始我们需要返回http发出请求的用户信息，如果我们将这个用户信息更改完我们的指令，那其实就是这样的<br>$uagent=$servent[‘这里就是我们的注入语句’]<br>然后这个查询语句会被代入到sql中执行，我们尝试一下<br>将user-Agent替换成以下语句<br>现在user-Agent这个语句的最后添加一个单引号，看看是否报错<br>结果是会报错的，所以我们可以直接在burp suit里面添加我们的注入语句<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127160030.png" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;or extractvalue(1,concat(&#39;~&#39;,database(),&#39;~&#39;)),1,1) # </span><br></pre></td></tr></table></figure>
+
+
+<p>这里<strong>说说我的思路</strong>：因为我们前面知道，这个注入点是在insert语句当中的，我一开始没输入后面的，1,1导致出现错误提示：就是和insert前面插入值不对应的情况，他insert插入了三个值，所以我们这里也需要有三个值 然后#号注释掉后面的内容，然后至于后面的1加不加引号都无所谓，因为1无论加不加引号都是合法数据，但是 如果要加引号 一定要严格按照insert语句的格式 比如1 左右两边就要加 不然就会报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#39;or extractvalue(1,concat(&#39;~&#39;,database(),&#39;~&#39;)),&#39;1&#39;,&#39;1&#39;) # </span><br><span class="line">&#39;or extractvalue(1,concat(&#39;~&#39;,(select table_name from information_schema.tables where table_schema&#x3D;&#39;security&#39; limit 0,1),&#39;~&#39;)),1,1) #</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是爆表 爆字符段了<br>让我们愉快的进入<strong>19关</strong>吧<br>这关和18关差不多就是注入的位置现在在Referer</p>
+<h1 id="第20关"><a href="#第20关" class="headerlink" title="第20关"></a>第20关</h1><p>这里我们先看看源码吧<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127174132.png" alt="img" style="zoom:67%;" /><br>依旧做了过滤操作，所以不能在账号密码这里操作<br>我们发现他和前几关不一样的时候这里又获取了一个cookie数据<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127174452.png" alt="img" style="zoom:67%;" /></p>
+<p><strong>什么是cookie？</strong><br>Cookie，有时也用其复数形式 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Cookies/187064">Cookies</a>。类型为“<strong>小型文本文件</strong>”，是某些网站为了辨别用户身份，进行<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Session/479100">Session</a>跟踪而储存在用户本地终端上的数据（通常经过加密），由用户<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AE%A2%E6%88%B7%E7%AB%AF/101081">客户端</a>计算机暂时或永久保存的信息<br><strong>cookie是什么?有什么作用?</strong><br>cookies的作用主要是，当你访问了某些网页，并且对网页的一些设置进行修改，cookies就能跟踪并记录到这些修改，当你下一次访问这个网页的时候，这个网页会分析你电脑上的cookies，进而采取措施像你返回更符合你个性化的网页;<br>而且，你自动保存的内容也是被记录在cookie当中的，当然，目前大部分广告的定位基础也是基于cookies的，比如你此前访问了大量的健身类网站，cookies记录了你的访问行为，广告主就能够根据你的访问行为，向你推送健身类的广告</p>
+<p>感觉这个就有点危险呀，好像可以利用cookies做点什么不得了的东西？？？</p>
+<p>我们继续往下看<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180149.png" alt="img"></p>
+<p>有点熟悉，我们好像可以利用这个cookee试试，这个时候我们依旧使用burp suit抓个包<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180335.png" alt="img" style="zoom:67%;" /></p>
+<p>第一次没看到cookie的数据 我们再点一次forward<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180427.png" alt="img" style="zoom:67%;" /></p>
+<p>这一次就有了  接下来让我们试试加个引号<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127180621.png" alt="img"></p>
+<p>出现了报错，然后我们再试试and 1=1 和and 1=2 </p>
+<p>不一样，报错了 ，所以这里存在注入点 接下来就是常规操作了  我们应该是要利用报错注入<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127181147.png" alt="img"><br>成功 代码是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39; and extractvalue(1,concat(&#39;~&#39;,database(),&#39;~&#39;)) #</span><br></pre></td></tr></table></figure>
+
+<p>这里 我就在想为什么我要要按两次forward才能截取到含有cooKies的包呢？<br>让我们回去看看源代码<br>学到这里 有必要先总结一下几个常见函数，之前只是模模糊糊的概念：<br><strong>1.mysqli_query() 函数</strong>执行某个针对数据库的查询。<br><strong>2.mysqli_fetch_array() 函数</strong>从结果集中取得一行作为关联数组，或数字数组，或二者兼有。（取出我们输入的那一行账号密码）<br><strong>3.setcookie() 函数</strong>向客户端发送一个 HTTP cookie。cookie 是由服务器发送到浏览器的变量。cookie 通常是服务器嵌入到用户计算机中的小文本文件。每当计算机通过浏览器请求一个页面，就会发送这个 cookie。cookie 的名称指定为相同名称的变量。例如，如果被发送的 cookie 名为 “name”，会自动创建名为 $user 的变量，包含 cookie 的值。必须在任何其他输出发送前对 cookie 进行赋值。如果成功，则该函数返回 true，否则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setcookie(name,value,expire,path,domain,secure)</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127221343.png" alt="img" style="zoom:67%;" />
+
+<p><strong>header（）跳转函数</strong><br>header(“Location:”)作为php的转向语句，接下来就跳转打开新页面，并且如果后面没有紧跟exit的话 他是会继续执行的只不过不会返回到页面上，要求header前没有任何输出。<br>这就是为什么我们要连续按两次forward的原因了。<br>接下来的语句好像也没啥<br>其实在这一关中还可以使用union拼接select语句<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201127224654.png" alt="img" style="zoom:67%;" /><br>从这个途中我们不难发现 其实username password都是从cookee中获取的，然后我们之前也知道cookee那里存在注入点想要让我们需要的数据直接在username和paswrd这里输出，接下来我们就可以order by 然后 union select 拼接语句查询了，思路就跟之前的一样。</p>
+<h3 id="第21关"><a href="#第21关" class="headerlink" title="第21关"></a>第21关</h3><p>不知道为啥我21关和22关是没有的但是我看了一下题目，是上传文件的题目 然后查了一下  果然还是要一句话木马，然后需要利用burp suit</p>
 
       
 
@@ -229,17 +305,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -290,7 +355,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/10/12/PHP%E8%B6%85%E7%BA%A7%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BB%A5%E5%8F%8A%E4%B8%A4%E4%B8%AA%E5%BE%AA%E7%8E%AF/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/20/sqlilabs5/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -304,18 +369,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/10/14/PHP%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          PHP函数
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/10/11/PHP-if-switch-%E6%95%B0%E7%BB%84/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">PHP if switch 数组</div>
+    <a href="/2020/11/19/sqlilabs4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">sqlilabs4</div>
       <i class="icon-circle-right"></i>
     </a>
   
