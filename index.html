@@ -152,6 +152,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-sqlilabs7" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/03/sqlilabs7/">sqlilabs7</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/03/sqlilabs7/" class="archive-article-date">
+  	<time datetime="2020-12-03T09:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第29关"><a href="#第29关" class="headerlink" title="第29关"></a>第29关</h1><p>首先研究一下源代码<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203183137.png" alt="img" style="zoom:67%;" /><br>首先是这个<br>$_SERVER[‘QUERY_STRING’]<br>作用：获取？后面的值<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mitang/p/3874291.html">https://www.cnblogs.com/mitang/p/3874291.html</a> 学习链接<br>然后去查阅了一下资料，这关原来是有两个服务器在共同作用<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203205202.png" alt="img"></p>
+<p>一个是Apache另一个是Tomcat  所以我的理解是，tomcat先对接受的数据进行过滤处理然后再交由apache（PHP），但其实我们可以看出<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203211120.png" alt="img" style="zoom:67%;" /><br>在这个里面，也就是看看是否带数字，如果是的话就把这个数据传递给Apache，没有怎么进行过滤的感觉呀？<br>原来使我们理解错了，这个的意思是：从get的id里面匹配以整数结尾的数据，如果我们在这个id 中插入我们的注入语句，那么匹配就会返回false，因为不是以整数结尾，这个过滤很强啊，相当于一个waf那么我们该如何绕过呢？</p>
+<p><strong>HPP（HTTPParameterPollution）</strong><br>利用这个在前面那张图中，我们得知tomcat是取第一个数据，apache是取第二个数据，并且apache才是处理我们数据并且输出的服务器，所以我们可以构造两个数据，让tomcat只取得第一个合法数据，而第二个危险语句就让apache处理，达到我们的注入效果。<br>接下来构建payload：<br>?id=1&amp;?id=-2’union select 1,database(),3 –+<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203214846.png" alt="img" style="zoom:67%;" /><br>即可成功绕过</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/03/sqlilabs7/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-sqlilabs6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -733,82 +798,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/20/mysql%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PHP魔术常量以及命名空间" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/18/PHP%E9%AD%94%E6%9C%AF%E5%B8%B8%E9%87%8F%E4%BB%A5%E5%8F%8A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">PHP魔术常量以及命名空间</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/18/PHP%E9%AD%94%E6%9C%AF%E5%B8%B8%E9%87%8F%E4%BB%A5%E5%8F%8A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" class="archive-article-date">
-  	<time datetime="2020-10-18T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="PHP魔术常量-trait"><a href="#PHP魔术常量-trait" class="headerlink" title="PHP魔术常量-trait"></a>PHP魔术常量-trait</h2><p>其他魔术常量都比较简单，就不具体展开了<br>主要说说trait<br>1.trait的功能和class的功能是很接近的，都可以定义一个类，并赋予方法<br>2.但是如果你要让这个类被中的方法被继承使用，那么就需要使用trait<br>举个例子
-        
-          <a class="article-more-a" href="/2020/10/18/PHP%E9%AD%94%E6%9C%AF%E5%B8%B8%E9%87%8F%E4%BB%A5%E5%8F%8A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/18/PHP%E9%AD%94%E6%9C%AF%E5%B8%B8%E9%87%8F%E4%BB%A5%E5%8F%8A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">展开全文 >></a>
         </p>
       
 
