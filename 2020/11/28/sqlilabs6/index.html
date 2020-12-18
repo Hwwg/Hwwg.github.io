@@ -46,7 +46,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203122737.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203124541.png">
 <meta property="article:published_time" content="2020-11-27T16:56:50.000Z">
-<meta property="article:modified_time" content="2020-12-08T14:02:20.101Z">
+<meta property="article:modified_time" content="2020-12-11T10:30:11.763Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="sql注入">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,9 @@
 
 <p>OK  利用报错注入成功</p>
 <h2 id="第22关"><a href="#第22关" class="headerlink" title="第22关"></a>第22关</h2><p>这一题和上一题又有点不一样，题目说是基于双引号的注入<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201130190241.png" alt="img"><br>但我们从这个语句可以发现，他不是直接在select里面添加双引号 而定义一个$cookee1 并且这个cookee1=”$cookee”<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201130190900.png" alt="img"><br>其实按照php的语法上面那个其实可以等价为下面那个，但是我不知道他为啥要这样操作？更安全吗？<br>然后就直接把上一题的单引号和括号换成双引号就行，其他的没啥区别</p>
-<h2 id="23关"><a href="#23关" class="headerlink" title="23关"></a>23关</h2><p>23关 又回到了以前熟悉的界面 但是好像跟之前的有不太一样，因为加了单引号报错 加了双引号和and1=1 and1=2 却不报错 让我们再来研究一下源码<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201130195221.png" alt="img"><br>这里介绍一个函数<br><strong>preg_replace</strong>替换函数<br>preg_replace 函数执行一个正则表达式的搜索和替换。<br><strong>语法</strong>：<br>preg_replace(要替换的东西，替换成啥东西，哪个里面的东西需要替换);<br>知道这个以后我们不难发现，再上面这个代码中 我们的注释符需要替换。 那么注释符被替换我们该如何实现注入呢？<br>我们要回归<strong>使用注释符的本质</strong>：没加注释符前后面的语句因为没有闭合所以会报错，所以我们加了注释符直接让其消失就好了，而现在没了注释符，我们就需要将语句闭合起来，使其不报错，叫做<strong>单引号闭合绕过</strong>这个其实之前遇到过 加了超级多引号，我看太麻烦就没去试，今天看来不得不试了！！！<br>在之前更正的原理中，我们知道了闭合单引号的真相，所以这关现在就显得很简单了<br><strong>有个问题</strong>：为啥order by 在这里好像不管怎么放置都是错误的，这就很纳闷了？？因为单引号闭合后里面的数据变成字符串了，但是order by 需要的是数据<br><strong>payload：</strong>?id=-1’union select 1,database(),’3 这个时候数据库就出来了<br><strong>payload：</strong>?id=-1’union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=’security’ or’1=1<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201130213549.png" alt="img" style="zoom:67%;" /></p>
+<h2 id="23关"><a href="#23关" class="headerlink" title="23关"></a>23关</h2><p>23关 又回到了以前熟悉的界面 但是好像跟之前的有不太一样，因为加了单引号报错 加了双引号和and1=1 and1=2 却不报错 让我们再来研究一下源码<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201130195221.png" alt="img"><br>这里介绍一个函数<br><strong>preg_replace</strong>替换函数<br>preg_replace 函数执行一个正则表达式的搜索和替换。<br><strong>语法</strong>：<br>preg_replace(要替换的东西，替换成啥东西，哪个里面的东西需要替换);<br>知道这个以后我们不难发现，再上面这个代码中 我们的注释符需要替换。 那么注释符被替换我们该如何实现注入呢？<br>我们要回归<strong>使用注释符的本质</strong>：没加注释符前后面的语句因为没有闭合所以会报错，所以我们加了注释符直接让其消失就好了，而现在没了注释符，我们就需要将语句闭合起来，使其不报错，叫做<strong>单引号闭合绕过</strong>这个其实之前遇到过 加了超级多引号，我看太麻烦就没去试，今天看来不得不试了！！！<br>在之前更正的原理中，我们知道了闭合单引号的真相，所以这关现在就显得很简单了<br><strong>有个问题</strong>：为啥order by 在这里好像不管怎么放置都是错误的，这就很纳闷了？？order by 后面加数字，加字段名都是可以的，但是字段名是不可以带引号的，意思是让这个列排序，但是因为单引号闭合后里面的数字变成字符串了这就产生了语法错误。</p>
+<p>更本质的说法是：不只order by，凡是字符串但又不能加引号的位置都不能参数化；包括sql关键字、库名表名字段名函数名等等<br>来自46关的一个补充纠错</p>
+<p><strong>payload：</strong>?id=-1’union select 1,database(),’3 这个时候数据库就出来了<br><strong>payload：</strong>?id=-1’union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=’security’ or’1=1<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201130213549.png" alt="img" style="zoom:67%;" /></p>
 <h2 id="第24关"><a href="#第24关" class="headerlink" title="第24关"></a>第24关</h2><p>这关就和之前的很不一样了<br>查阅资料后 知道一件事：<strong>SQL注入一般分为两类：一阶SQL注入（普通SQL注入），二阶SQL注入</strong><br><strong>什么是二阶注入</strong>：<br>1.构造带有注入语句的危险payload1数据，在http请求中提交到服务器当中，该数据会被服务器存储到数据库当中<br>2.当我们要修改该payload1数据的时候，程序在检索存储payload1的数据库的时候将会造成SQL注入，如果攻击成功，在第二次响应中返回结果<br>3.也称为存储型注入，将可能造成sql注入的语句存储到数据库中，当再次调用该数据的时候，就可能发生SQL注入。<br>先来看看源码<br>先从index.php看起：一开始就是一个session_start()函数<br><strong>seession</strong>：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengxijia2012/article/details/73437376">https://blog.csdn.net/zhengxijia2012/article/details/73437376</a><br>谈谈我的理解，为什么我们一开始cookies可以在多个页面保存使用，就是因为有这个session函数发挥作用<br>然后在其他源码中，我们不难发现，基本上每个数据都有过滤操作，但是我发现 在pass_change的时候，他的username是没有过滤操作的<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201201115020.png" alt="img"><br>如上，在下面的update语句中 username是直接从数据库被调用的，这就意味着我们可能可以通过这个数据进行注入（二阶注入），如果我们要利用这点，也就是说我们必须有数据是带有危险字符的存储在数据库当中，那么接下来，我们需要在数据库中构建这样一个数据，从上面的代码中我们发现他的username是用单引号闭合的，所以我们需要构建一个单引号注入的数据——admin’# ，这里有个<strong>问题</strong>：不是被转义了吗，为啥在数据中还会以单引号的形式存在，这是因为转义只是暂时的，存储以后还是以单引号的形式存在的<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201201004552.png" alt="img" style="zoom:67%;" /></p>
 <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201201004553.png" alt="img" style="zoom:67%;" /> 
 
@@ -265,7 +267,7 @@ OK  绕过成功  然后我们只需要用order by 查询字符段数目，然�
 <h2 id="第28关"><a href="#第28关" class="headerlink" title="第28关"></a>第28关</h2><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201203124541.png" alt="img" style="zoom:67%;" />
 
 <p>感觉还是需要使用linux系统进行操作会比较方便一些，用括号的方式进行闭合太累了<br>28a关也和这个差不多</p>
-<p>小结一下：<br>1.最近做的都是被过滤的题目，要如何绕过过滤方法也就是这几种似乎也没啥好说的了–<br>2.然后源代码的学习挺有用的，感觉看源代码对于整个过程会更了解一些，然后注入的过程也更有感触了。</p>
+<p>小结一下：<br>1.最近做的都是被过滤的题目，要如何绕过过滤方法也就是这几种似乎也没啥好说的了–<br>2.然后源代码的学习挺有用的，感觉看源代码对于整个过程会更了解一些，然后注入的过程也更有感触了。<br>参考链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/forforever/p/13764024.html">https://www.cnblogs.com/forforever/p/13764024.html</a></p>
 
       
 
@@ -515,6 +517,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">bugku</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">typro</a>
               </li>
              
@@ -528,6 +534,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">sql注入</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件上传</a>
               </li>
             
             <div class="clearfix"></div>
