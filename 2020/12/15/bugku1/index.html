@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>bugku1&amp;攻防世界 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="web8 就给了个这个 啥也无，所以就要想该如何获得flag, 我们看到**$_REQUEST()函数** 他既可以接受get也可以接收post数据，所以 在这里，他的意思是获得一个hello的数据，所以我们就需要所以 我们在URL里面输入的时候就需要输入?hello&#x3D;多少 然后这个多少会被代入到eval里面执行而我们对eval这个函数也不陌生了，他是将你输入的字符串转化为PHP代码来执行，但是两">
+  <meta name="description" content="web8 就给了个这个 啥也无，所以就要想该如何获得flag, 我们看到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bugku1&amp;攻防世界">
 <meta property="og:url" content="http://example.com/2020/12/15/bugku1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="web8 就给了个这个 啥也无，所以就要想该如何获得flag, 我们看到**$_REQUEST()函数** 他既可以接受get也可以接收post数据，所以 在这里，他的意思是获得一个hello的数据，所以我们就需要所以 我们在URL里面输入的时候就需要输入?hello&#x3D;多少 然后这个多少会被代入到eval里面执行而我们对eval这个函数也不陌生了，他是将你输入的字符串转化为PHP代码来执行，但是两">
+<meta property="og:description" content="web8 就给了个这个 啥也无，所以就要想该如何获得flag, 我们看到">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201215180338.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201215213959.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201216182318.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201218200955.png">
 <meta property="article:published_time" content="2020-12-15T09:58:19.000Z">
-<meta property="article:modified_time" content="2020-12-18T13:02:27.388Z">
+<meta property="article:modified_time" content="2020-12-18T13:10:43.917Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="bugku">
 <meta name="twitter:card" content="summary">
@@ -195,7 +195,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201215180338.png" alt="img"></p>
-<p>就给了个这个 啥也无，所以就要想该如何获得flag, 我们看到<br>**$_REQUEST()函数** 他既可以接受get也可以接收post数据，所以 在这里，他的意思是获得一个hello的数据，所以我们就需要所以 我们在URL里面输入的时候就需要输入?hello=多少 然后这个多少会被代入到eval里面执行<br>而我们对<strong>eval</strong>这个函数也不陌生了，他是将你输入的字符串转化为PHP代码来执行，但是两段命令之间需要用分号来隔开，而在这题中，他的flag似乎是包含在flag.php的文件夹中的，要获取flag就需要输出这个文件夹的内容：<br>构建payload：<a target="_blank" rel="noopener" href="http://114.67.246.176:10770/?hello=1);print_r(file(&quot;./flag.php&quot;)">http://114.67.246.176:10770/?hello=1);print_r(file(&quot;./flag.php&quot;)</a><br>为什么可以使用print_r和var_dump而不使用echo呢？<br>原因：前两个还可以输出复杂的数组类型 而echo仅能输出变量或字符串</p>
+<p>就给了个这个 啥也无，所以就要想该如何获得flag, 我们看到   <a id="more"></a><br><strong>$_REQUEST()函数</strong> 他既可以接受get也可以接收post数据，所以 在这里，他的意思是获得一个hello的数据，所以我们就需要所以 我们在URL里面输入的时候就需要输入?hello=多少 然后这个多少会被代入到eval里面执行<br>而我们对<strong>eval</strong>这个函数也不陌生了，他是将你输入的字符串转化为PHP代码来执行，但是两段命令之间需要用分号来隔开，而在这题中，他的flag似乎是包含在flag.php的文件夹中的，要获取flag就需要输出这个文件夹的内容：<br>构建payload：<a target="_blank" rel="noopener" href="http://114.67.246.176:10770/?hello=1);print_r(file(&quot;./flag.php&quot;)">http://114.67.246.176:10770/?hello=1);print_r(file(&quot;./flag.php&quot;)</a><br>为什么可以使用print_r和var_dump而不使用echo呢？<br>原因：前两个还可以输出复杂的数组类型 而echo仅能输出变量或字符串</p>
 <p>12.18日看完黑盾被赛前培训思考：</p>
 <h2 id="web9"><a href="#web9" class="headerlink" title="web9"></a>web9</h2><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201215213959.png" alt="img" style="zoom:67%;" />
 在这题当中，我们看了一下代码 首先用了一个正则表达式，意思是如果在提交上来的值中包含不是字母或者数字的东西，将会被args error，那么我们在看下面<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201215214300.png" alt="img" style="zoom: 50%;" />
