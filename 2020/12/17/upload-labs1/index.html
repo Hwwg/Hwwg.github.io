@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210119234308.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210105224221.png">
 <meta property="article:published_time" content="2020-12-17T10:31:40.000Z">
-<meta property="article:modified_time" content="2021-01-20T03:50:14.450Z">
+<meta property="article:modified_time" content="2021-01-20T03:54:57.113Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="文件上传">
 <meta name="twitter:card" content="summary">
@@ -260,7 +260,7 @@
 
 <h3 id="upload-labs3"><a href="#upload-labs3" class="headerlink" title="upload-labs3"></a>upload-labs3</h3><h4 id="黑名单"><a href="#黑名单" class="headerlink" title="黑名单"></a>黑名单</h4><p><strong>基于黑名单验证：只针对黑名单中没有的后缀名，文件才能上传成功。</strong><br>从这里开始 我们就进入了黑名单的关卡：<br>看看代码吧<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201231010952.png" alt="img" style="zoom:67%;" /><br>因为已经写过一遍我就大概说一下：<br>他是定义一组后缀名，然后对于传输过去的文件，经过删除文件名末尾的点，从文件的点开始向后截取，<br>以及将文件名全部转化成小写，最后移除旁边的空格。<br>其中strrchr()函数的作用就是搜素并窃取搜索点及以后的位置<br>他禁用了挺多的类型的后缀的但是，我们还可以使用其他后缀进行绕过<br><strong>phtml,php3,php4,php5,pht</strong></p>
 <h2 id="upload-labs-4"><a href="#upload-labs-4" class="headerlink" title="upload-labs 4"></a>upload-labs 4</h2><p>在这一关中 将很多php的拓展形式都过滤了<br>这个时候我们需要引进一个.htaccess文件<br><strong>作用</strong>：<br>htaccess文件时Apache服务器中的一个配置文件，负责相关目录下网页配置，可以帮我们实现网页301重定向，自定义404错误页面，改变文件扩展名等功能，其中.htaccess文件内容:<strong>SetHandler application/x-httpd-php</strong>设置当前目录所有文件都使用PHP解析，无论上传任何文件，只要符合php语言代码规范，就会被当做php文件执行。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/cmzhuang/article/details/53537591%EF%BC%88%E6%B7%B1%E5%B1%82%E7%90%86%E8%A7%A3%E5%8D%9A%E5%AE%A2%EF%BC%89">https://blog.csdn.net/cmzhuang/article/details/53537591（深层理解博客）</a></p>
-<p><strong>上传.htaccess文件</strong><br>文件内容如下：<br>SetHandler application/x-httpd-php<br><strong>PS：</strong>这里需要将上传的文件不用前缀 即.htaccess<br>**指定文件进行php的转化：<br>在写入.htaccess的时候，我们可以</p>
+<p><strong>上传.htaccess文件</strong><br>文件内容如下：<br>SetHandler application/x-httpd-php<br><strong>PS：</strong>这里需要将上传的文件不用前缀 即.htaccess<br>指定文件进行php的转化：<br>在写入.htaccess的时候，我们可以</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shuaige&quot;&gt;</span><br><span class="line">SetHandler application&#x2F;x-httpd-php</span><br><span class="line">&lt;&#x2F;FilesMatch&gt;</span><br></pre></td></tr></table></figure>
 
 <p>写出这段代码，注意到开头”shuaige”意为含有文件内含有shuaige的文件都会被解析为php文件<br>这里要使用这个.htaccess要记得去apache里面配置一下</p>
@@ -504,7 +504,7 @@ https://www.anquanke.com/post/id/219107#h2-14
   
   
     <a href="/2020/12/17/sqlmap%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">sqlmap脚本编写学习</div>
+      <div class="article-nav-title">sqlmap学习</div>
       <i class="icon-circle-right"></i>
     </a>
   
