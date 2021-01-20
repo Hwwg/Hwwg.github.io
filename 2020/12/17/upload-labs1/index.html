@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210119234308.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210105224221.png">
 <meta property="article:published_time" content="2020-12-17T10:31:40.000Z">
-<meta property="article:modified_time" content="2021-01-20T03:54:57.113Z">
+<meta property="article:modified_time" content="2021-01-20T03:56:11.984Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="文件上传">
 <meta name="twitter:card" content="summary">
@@ -217,7 +217,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="文件上传漏洞原理"><a href="#文件上传漏洞原理" class="headerlink" title="文件上传漏洞原理"></a>文件上传漏洞原理</h1><h4 id="成因"><a href="#成因" class="headerlink" title="成因"></a>成因</h4><p>1.服务器配置不当会导致任意文件上传<br>2.web应用开放了文件上传的功能，并对上传的文件没有进行足够的限制和过滤<br>3.web应用开放了文件上传功能，虽然在开发时加入了一定的过滤功能，但并不严格，可以被绕过<br>4.上传文件时如果服务端代码未对客户端上传的文件进行严格的验证和过滤，就容易造成可以上传任意文件的情况，包括上传脚本文件（asp、aspx、php、jsp等格式的文件）。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/84593150">https://blog.csdn.net/qq_36119192/article/details/84593150</a><br>上面这个是关于那几个后缀的文件的说明</p>
+        <h1 id="文件上传漏洞原理"><a href="#文件上传漏洞原理" class="headerlink" title="文件上传漏洞原理"></a>文件上传漏洞原理</h1><h4 id="成因"><a href="#成因" class="headerlink" title="成因"></a>成因</h4><p>1.服务器配置不当会导致任意文件上传<br>2.web应用开放了文件上传的功能，并对上传的文件没有进行足够的限制和过滤<br>3.web应用开放了文件上传功能，虽然在开发时加入了一定的过滤功能，但并不严格，可以被绕过<br>4.上传文件时如果服务端代码未对客户端上传的文件进行严格的验证和过滤，就容易造成可以上传任意文件的情况，包括上传脚本文件（asp、aspx、php、jsp等格式的文件）。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/84593150">https://blog.csdn.net/qq_36119192/article/details/84593150</a><br>上面这个是关于那几个后缀的文件的说明                            <a id="more"></a></p>
 <h4 id="产生条件"><a href="#产生条件" class="headerlink" title="产生条件"></a>产生条件</h4><p>1.web服务器要开启文件上传功能，并且上传API（接口）对外开放，即web用户可以访问；<br>2.web用户对目标目录具有可写权限，甚至具有执行权限，一般情况下，web目录都具有执行权限；<br>3.我们上传的文件在服务器的系统环境里能够正常运行，即web容器能够解析我们上传的脚本，不论脚本以什么样的形式存在。</p>
 <h4 id="危害"><a href="#危害" class="headerlink" title="危害"></a>危害</h4><p>恶意的脚本文件，又被称为webshell，webshell脚本称为一种网页后门，webshell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件、执行系统命令等<br><strong>导图</strong></p>
 <p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210105224221.png" alt="img"><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2435?spm=5176.12901015.0.i12901015.74b5525csqU5p2">https://xz.aliyun.com/t/2435?spm=5176.12901015.0.i12901015.74b5525csqU5p2</a></p>
