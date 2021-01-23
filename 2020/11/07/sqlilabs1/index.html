@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="在第二关中 我首先用and 1&#x3D;1 和and1&#x3D;2 得到的结果是不一致，说明我们的语句可以被注入使用,也即存在注入点：   接下来我们就要利用这个注入点输入语句了  这个是我们加个‘发现是和上一题是不一样的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlilabs1">
+<meta property="og:url" content="http://example.com/2020/11/07/sqlilabs1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在第二关中 我首先用and 1&#x3D;1 和and1&#x3D;2 得到的结果是不一致，说明我们的语句可以被注入使用,也即存在注入点：   接下来我们就要利用这个注入点输入语句了  这个是我们加个‘发现是和上一题是不一样的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201107235914.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201108002635.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109174647.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109181733.png">
+<meta property="article:published_time" content="2020-11-07T15:53:55.000Z">
+<meta property="article:modified_time" content="2020-12-08T14:02:54.465Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="sql注入">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201107235914.png"><title>sqlilabs1 | Hexo</title><link ref="canonical" href="http://example.com/2020/11/07/sqlilabs1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"Copy","copySuccess":"Copy Success","copyError":"Copy Error"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">sqlilabs1</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2020-11-07</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2020-12-08</span></span></div></header><div class="post-body"><p>在第二关中 我首先用and 1=1 和and1=2 得到的结果是不一致，说明我们的语句可以被注入使用,也即存在注入点：</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201107235914.png" alt="img" style="zoom:50%;" />
+
+<p>接下来我们就要利用这个注入点输入语句了  这个是我们加个‘发现是和上一题是不一样的  <a id="more"></a></p>
+<p>输入单引号，根据报错信息确定咱们输入的内容被原封不动的带入到数据库中，也可叫做<strong>数字型注入</strong>，</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201108002635.png" alt="img"></p>
+<p>这个时候我们发现第二关相比第一关少了一个单引号，所以我们这题我们就无须加单引号，直接写查询代码就可以了（看看我们上面执行的and其实也就可以知道了）</p>
+<p>这个时候我们还是用order by 查询他的字段数，可以发现，依旧为3；<br>然后我们使用union联合select</p>
+<p>在这里发现一个神奇的事情，是不是用–+注释掉后面都可以，没啥区别</p>
+<p>这边有一点我需要再明确的：<br><strong>我们是先获得数据库database()的名字，在通过数据库的名字后查询表名table_name，再知道表名之后，查询字段名column_name</strong><br>后面和前面的第一关是很类似的，就不详细说</p>
+
+        <h3 id="接下来是第三关"   >
+          <a href="#接下来是第三关" class="heading-link"><i class="fas fa-link"></i></a>接下来是第三关</h3>
+      <p>当我输入and 1=1 或者是 and1=2的时候，页面没有任何区别，所以这个和第二关不太一样，此时我们再尝试一下输入单引号 页面变成如下</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109174647.png" alt="img" style="zoom:50%;" />
+
+<p>从错误报告中我们可以知道</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use near &#39;&#39;1&#39;&#39;) LIMIT 0,1&#39; at line 1</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;(&#39;1&#39;&#39;) LIMIT 0,1</span><br></pre></td></tr></table></div></figure>
+
+<p>这个时候我们发现 在输入单引号后，后面多了一个括号，</p>
+<p>我们把use的那条补充完整，应该是<strong>use near ‘(‘1’’) LIMIT 0,1’ at line 1</strong><br>这个时候我们可以推测出这次的程序如果要执行代码应该是要（’执行内容’），所以我们尝试一下在’后面加一个括号，让整个语句变成<strong>use near  ‘(‘1’)’ ‘)  limit’  **让我尝试一下   发现他是变成这样的：<br>use near ‘’) LIMIT 0,1’ at line 1  就像我在第一关说的，（’1’） 因为已经是合法数据，所以就没出现了，符合我的猜想，我一开始说要执行代码需要</strong>（’内容’）<strong>这个格式，<br>所以我接下来便输入了：<br>?id=1’)(‘and1=1’) 并且无论是否加 –+ 都是错误的，所以我就纳闷啊，为啥呢，后来发现是要（’’）这个形式没错<br>但是，我们将语句还原回去一下</strong>use near ‘(‘(‘1’)and1=1’)’** 此时我们就可以发现其实and1=1 是（’’）这个形式了<br>在后面加上注释符，即可<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109181733.png" alt="img" style="zoom:50%;" /></p>
+<p>此时我们发现，存在注入点，接下来就和前两题应该没什么区别了吧<br>让我尝试一波<br>此时有点小无语，<strong>因为没有让前面的id为假</strong>，导致我一直输出dumb，我还在想哪里出错了，无语了<br>和之前的没啥区别，就不说了哈哈哈哈<br>补充一下就是 一开始的group_concat(column_name) 这边这个table或者column是不用加s的，需要加的是information_schema.columns这边需要加，这一整个语句中就是这里需要加。<br>好像也没啥要写的，如果有的话再来补充吧</p>
+
+        <h3 id="第四关"   >
+          <a href="#第四关" class="heading-link"><i class="fas fa-link"></i></a>第四关</h3>
+      <p>这个前四关都一模一样啊，我本来想第四关重新写一篇博客水一下，可是一看到题目就知道跟前三篇几乎一模一样吧？唯一不同的是这次是双引号”</p>
+<p>确实一模一样，没啥好说的</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">John Doe</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2020/11/07/sqlilabs1/">http://example.com/2020/11/07/sqlilabs1/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="http://example.com/tags/sql%E6%B3%A8%E5%85%A5/">sql注入</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2020/11/09/sqlilabs2/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">sqlilabs2</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2020/10/24/sqli-labs%E5%B0%8F%E8%AF%95/"><span class="paginator-prev__text">sqli-labs小试</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%98%AF%E7%AC%AC%E4%B8%89%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">
+          接下来是第三关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">
+          第四关</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">27</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>John Doe</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>

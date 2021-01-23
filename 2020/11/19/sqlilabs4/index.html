@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="第十一关       这里开始进入post注入，首先我们需要知道，post是向服务器提交数据 一开始是从需要从这里输入账号密码做完之前的题目 其实就有感觉就是，你输入的东西、比如id、password之类的 最后都会转换成sql语言并发挥作用，在第一关中，我们使用了单引号，并且截图进行分析，而在这一关我们也是如此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlilabs4">
+<meta property="og:url" content="http://example.com/2020/11/19/sqlilabs4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第十一关       这里开始进入post注入，首先我们需要知道，post是向服务器提交数据 一开始是从需要从这里输入账号密码做完之前的题目 其实就有感觉就是，你输入的东西、比如id、password之类的 最后都会转换成sql语言并发挥作用，在第一关中，我们使用了单引号，并且截图进行分析，而在这一关我们也是如此">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119200240.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119200046.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119202406.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119203520.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119203905.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119203936.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119221248.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119221349.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119231226.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119232447.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120123910.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120124940.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120154458.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120162831.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120164344.png">
+<meta property="article:published_time" content="2020-11-19T11:10:25.000Z">
+<meta property="article:modified_time" content="2020-12-08T14:02:34.780Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="sql注入">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119200240.png"><title>sqlilabs4 | Hexo</title><link ref="canonical" href="http://example.com/2020/11/19/sqlilabs4/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"Copy","copySuccess":"Copy Success","copyError":"Copy Error"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">sqlilabs4</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2020-11-19</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2020-12-08</span></span></div></header><div class="post-body">
+        <h2 id="第十一关"   >
+          <a href="#第十一关" class="heading-link"><i class="fas fa-link"></i></a>第十一关</h2>
+      <p>这里开始进入post注入，首先我们需要知道，post是向服务器提交数据<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119200240.png" alt="img" style="zoom: 67%;" /></p>
+<p>一开始是从需要从这里输入账号密码<br>做完之前的题目 其实就有感觉就是，你输入的东西、比如id、password之类的 最后都会转换成sql语言并发挥作用，在第一关中，我们使用了单引号，并且截图进行分析，而在这一关我们也是如此  <a id="more"></a></p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119200046.png" alt="img"></p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119202406.png" alt="img" style="zoom:50%;" />
+在这个当中，我看出 我们的语句好像可以跟之前一样，在1后面的''这两个引号里面似乎可以注入我们想要的命令但其实不行
+
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119203520.png" alt="img"></p>
+<p>输出的确实这样一个语句，这个时候就很奇怪了，为什么单引号里面的内容不会被执行呢？</p>
+<p>我们再来对比一下他和第一关的源码</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119203905.png" alt="img" style="zoom: 67%;" />
+
+
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119203936.png" alt="img" style="zoom:67%;" />
+
+<p>我吐了啊 其实有个很关键的点是，现在我们在这里输入 –+注释功能，其实已经是不起作用的了<br>所以上面为什么不会执行就是因为这个这个原因 ！！！！！！！！！<br>所以这里我们只需要输入–(空格), 或者# 即可注释掉后面的语句<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119221248.png" alt="img" style="zoom:50%;" /></p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119221349.png" alt="img" style="zoom:50%;" />
+
+<p>这样就可以了 我的天哪，我对自己太无语了</p>
+
+        <h4 id="这里整理一下注释的知识点"   >
+          <a href="#这里整理一下注释的知识点" class="heading-link"><i class="fas fa-link"></i></a>这里整理一下注释的知识点</h4>
+      <p>注释手段<br><strong>1</strong>mysql的注释有4 种 ：</p>
+<p>“#” ： # 开头到行尾的都为注释，只能注释一行<br> “– ” （2个减号 一个空格） ： – 开头到行尾都为注释 ， 只能注释一行<br> “/*  xxx <em>/“  : 可以注释多行，但是一定要闭合，不然出错<br> ”/</em>! 数字  代码 */“ : 可以跨行注释，但是一定要闭合，不然出错。<br><strong>2</strong><br>在浏览器url中，#是用来知道浏览器动作（例如锚点），对服务器端没有效果。<br>可以用 # 的url编码 即%23代替。<br>在浏览器中，url中的+解析为空格。<br>在myslq中，–’ 是的 – 与 单引号 连接在一起，不能形成正确的sql语句，而 –空格 则可以。<br>所以在浏览器的url中用 –+ 或–’使服务端能够正确注释sql语句<br>所以 +针对的是在url中的注释！！！</p>
+<p>老规矩 order by 查字段数</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119231226.png" alt="img" style="zoom:50%;" />
+
+<p>字段数是2 所以 接下的操作就很明确了</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201119232447.png" alt="img" style="zoom:50%;" />
+
+<p>接下来就是巩固一下代码的记忆了</p>
+
+        <h3 id="接下来是第12关"   >
+          <a href="#接下来是第12关" class="heading-link"><i class="fas fa-link"></i></a>接下来是第12关</h3>
+      <p>第十二关 我们</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120123910.png" alt="img" style="zoom: 80%;" />
+
+<p>无论输入单引号还是括号都无反应，都没有报错，所以我直接输入了双引号，出现这个报错，所以很明显 我们需要双引号加括号来闭合后面语句，并在其中注入我们的查询语句</p>
+
+        <h3 id="第十三关"   >
+          <a href="#第十三关" class="heading-link"><i class="fas fa-link"></i></a>第十三关</h3>
+      <p>这个关卡其实就是需要盲注了，因为登录成功以后，他是没有登录信息的</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120124940.png" alt="img" style="zoom:80%;" />
+
+<p>接下来就是先布尔盲注</p>
+<p>那就是看有无报错<br>这里我在使用burp suit暴力破解试试<br>发现那个密码字典里面没有emails这个名字，所以就没成功，我觉得可以去找一些字典过来。</p>
+<p>然后这里引入一个新函数<br><strong>updatexml</strong>:<br><strong>作用</strong>：改变文档中符合条件的节点的值，需要注意的是 ，我们在注入中使用这个语句是加了select的，所以并没有对真正的数据进行修改，而是在内存中将取出的数据进行修改然后返回给用户<br><strong>注意</strong>：这个这个函数是针对xml文件进行修改的，然后我们数据库的内容基本上是存放在这个xml文件中的<br><strong>语法</strong>：updatexml(xml_document,xpath_string,new_value)<br>第一个参数：XML_document是String格式，为XML文档对象的名称，文中为Doc<br>第二个参数：XPath_string (Xpath格式的字符串)<br>第三个参数：new_value，String格式，替换查找到的符合条件的数据 </p>
+<p><strong>实例</strong><br>select updatexml(1,concat(‘<del>‘,(SELECT database()),’</del>‘),1) – <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120154458.png" alt="img"></p>
+<p>结果是看报错 是XPATH报错，并且 输出的报错信息，是我们那个concat拼接部分的内容。</p>
+<p><strong>使用理解</strong>：<br>对于这个函数，我想了一下，大概是这样的，updatexml是一个修改函数，他的语法是UPDATEXML (XML_document, XPath_string, new_value); 我们知道中间那个XPath_string是需要符合xpath格式的，所以当我们注入的格式不符合xpath他就会报错，而updatexml（）报错信息是特殊字符、字母以及之后的内容，为了前面后面字母丢失，开头结尾连接特殊字符~， 这样就只有中间我们的查询语句是以结果的形式报出，而且报错的内容是将我们的语句转化过后的<br>后面我又将‘’里面的内容替换了一下，都是会原样输出的，但是如果是字母 则会表现无错，说明这个是合法的，那下次在使用这个语句注入的时候干脆都用字符吧，</p>
+
+        <h3 id="第十四关"   >
+          <a href="#第十四关" class="heading-link"><i class="fas fa-link"></i></a>第十四关</h3>
+      <p>我们就使用extractvalue（）这个函数试试<br><strong>作用：</strong><br>对XML文档进行查询的函数<br><strong>格式</strong><br>extractvalue(xml.frag,xpath_expr)<br><strong>共同点</strong><br>和updatexml的共同点是报错原理：Xpath格式语法书写错误的话，就会报错<br>并且报错的内容也是引号内的，如果是命令则会直接转化<br>直接上操作：</p>
+<p>使用 extractvalue(1,concat(‘<del>‘,(select database()),’</del>‘)) – </p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120162831.png" alt="img" style="zoom:67%;" />
+
+<p>接下来就大同小异了。</p>
+<p><strong>小结</strong>：<br>其实我们使用的这两个函数，都是利用他的报错会将我们的命令语句识别，并输出我们需要的信息。</p>
+
+        <h3 id="第15关"   >
+          <a href="#第15关" class="heading-link"><i class="fas fa-link"></i></a>第15关</h3>
+      <p>这一关没有输出报错信息，所以我们输入 ‘and1=1 –  和’and1=2 –  发现结果其实是不一样的，所以我们可以知道单引号注入。没有报错信息，意味着我们需要时间盲注<br>：admin’ and if(substr(database(),1,1)=’s’,sleep(5),1) –<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201120164344.png" alt="img" style="zoom:50%;" /></p>
+<p>和之前的也没多大区别哈哈</p>
+<p><strong>第十六关</strong>是双引号加括号的</p>
+
+        <h4 id="小结一下："   >
+          <a href="#小结一下：" class="heading-link"><i class="fas fa-link"></i></a>小结一下：</h4>
+      <p>到现在为止遇到的注入点好像就是只有or 1=1–+ </p>
+<p>1.’and 1=1–+ </p>
+<p>2.”and 1=1–+ </p>
+<p>3.)and 1=1–+ </p>
+<p>4.’)and 1=1–+ </p>
+<p>5.”) and 1=1–+ </p>
+<p>6.”))and 1=1–+ </p>
+<p>关于闭合问题的链接<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36896220/article/details/94129125" >https://blog.csdn.net/qq_36896220/article/details/94129125</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>补充知识：<br><strong>在看源码的时候注意到有一个isset()函数</strong><br><strong>作用</strong><br>用于检测变量是否已设置并且非NULL</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">John Doe</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2020/11/19/sqlilabs4/">http://example.com/2020/11/19/sqlilabs4/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="http://example.com/tags/sql%E6%B3%A8%E5%85%A5/">sql注入</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2020/11/20/sqlilabs5/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">sqlilabs5</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2020/11/16/sqlilabs-3/"><span class="paginator-prev__text">sqlilabs 3</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%80%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">
+          第十一关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E6%95%B4%E7%90%86%E4%B8%80%E4%B8%8B%E6%B3%A8%E9%87%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          这里整理一下注释的知识点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%98%AF%E7%AC%AC12%E5%85%B3"><span class="toc-number">1.1.</span> <span class="toc-text">
+          接下来是第12关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%89%E5%85%B3"><span class="toc-number">1.2.</span> <span class="toc-text">
+          第十三关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E5%85%B3"><span class="toc-number">1.3.</span> <span class="toc-text">
+          第十四关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC15%E5%85%B3"><span class="toc-number">1.4.</span> <span class="toc-text">
+          第15关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">
+          小结一下：</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">27</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>John Doe</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>

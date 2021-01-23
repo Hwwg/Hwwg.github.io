@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="这个是第二次写这篇博客，我没想到居然忘记保存了，泪目。。                     sql注入       首先我觉得可能要先理解一下什么是sql注入sql注入 指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。 sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqli-labs小试">
+<meta property="og:url" content="http://example.com/2020/10/24/sqli-labs%E5%B0%8F%E8%AF%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这个是第二次写这篇博客，我没想到居然忘记保存了，泪目。。                     sql注入       首先我觉得可能要先理解一下什么是sql注入sql注入 指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。 sql">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109170235.png">
+<meta property="og:image" content="c:/Users/10452/AppData/Roaming/Tencent/Users/1045225639/QQ/WinTemp/RichOle/0MZNBL~%7DKH$N3[WXC94CGZ0.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212818.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212703.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106214209.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106215030.png">
+<meta property="article:published_time" content="2020-10-24T07:14:35.000Z">
+<meta property="article:modified_time" content="2020-12-17T09:29:14.765Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png"><title>sqli-labs小试 | Hexo</title><link ref="canonical" href="http://example.com/2020/10/24/sqli-labs%E5%B0%8F%E8%AF%95/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"Copy","copySuccess":"Copy Success","copyError":"Copy Error"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">sqli-labs小试</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2020-10-24</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2020-12-17</span></span></div></header><div class="post-body"><p>这个是第二次写这篇博客，我没想到居然忘记保存了，泪目。。</p>
+
+        <h2 id="sql注入"   >
+          <a href="#sql注入" class="heading-link"><i class="fas fa-link"></i></a>sql注入</h2>
+      <p>首先我觉得可能要先理解一下什么是sql注入<br><strong>sql注入</strong></p>
+<p>指的是，web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序事先定义好的<br>查询语句的结尾添加额外的SQL语句，在管理员不知情的情况下事先非法操作，以此实现欺骗数据库服务器执行非授权的命令。</p>
+<p><strong>sql注入的类型</strong><br>1.字符型注入2.数字型注入                       <a id="more"></a></p>
+
+        <h3 id="这是一个写到第三关的补充"   >
+          <a href="#这是一个写到第三关的补充" class="heading-link"><i class="fas fa-link"></i></a>这是一个写到第三关的补充</h3>
+      <p>我在想为什么加入一个单引号或者‘）就可以实现注入，就可以进行操作，在思考一番过后，我发现是这样的：<br>就拿第一关来说吧</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109165739.png" alt="img"></p>
+<p>当我输入的是?id=1’的时候，看这个错误代码：</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> use near &#39;&#39;1&#39;&#39; LIMIT 0,1&#39; at line 1</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;1&#39;&#39; LIMIT 0,1&#x2F;&#x2F;这个是我在文件里面加入的提示sql执行的语句</span><br></pre></td></tr></table></div></figure>
+
+<p>当我输入and1=1后<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201109170235.png" style="zoom:50%;" /></p>
+<p>可以发现他的错误提示是</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> use near &#39;and1&#x3D;1&#39; LIMIT 0,1&#39; at line 1</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;1&#39;and1&#x3D;1&#39; LIMIT 0,1</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="这里是来自第23关的一个更正"   >
+          <a href="#这里是来自第23关的一个更正" class="heading-link"><i class="fas fa-link"></i></a>这里是来自第23关的一个更正</h4>
+      <p><strong>1</strong>所以就又重新思考了一下，加上资料查找：闭合指的是双引号成对存在，所以我们看上面的语句 当我们加入了一个引号的时候，此时的引号一共是有五个的，所以必然存在一个多余的单引号，那么我们需要去掉哪个引号才不会影响我们的语句呢？</p>
+<p>**2.**注释符 会将后面所有内容给注释掉 ,,,所以在这个语句中’’2’and1=1’ LIMIT 0,1’，我们先解析一下， 首尾各有一个引号，切2前面和1后面各有一个引号，这个是’$id’ 在源码中出现的两个引号，而首尾的引号是后来出现的，我们在2后多加了一个单引号后，导致引号之间不配对了，所以出现错误，这个时候我们需要将1后面的单引号，limit，这样2前面的单引号就和我们的插入的但引号配对成功了<br>那么当然也有不注释的方法：就是让所有的引号都找到自己的另一半，也就是说我们在这里多加一个单引号就可以了<br>**1.**这边有几个问题需要说一下，引号内的数据要合法，要保证连贯性，他前后是可以互相拼接的比如’=1’就不行，还有就是引号的闭合好像是有就近原则，我刚才试了一下 发现 ‘1’and 1=1’’这个就不行，可能是因为 最后两个引号直接无数据导致出错了，然后两个引号之间闭合，引号的内容会变成字符串，所以这个时候我们就无法使用order by 来查询字符段数目。因为order by需要的是数字，这个时候我们直接使用 union select尝试即可。</p>
+
+        <h4 id="less1"   >
+          <a href="#less1" class="heading-link"><i class="fas fa-link"></i></a>less1</h4>
+      <p><strong>1</strong>.根据这个题目中的get-error based-single quotes，我们就可以知道这题是单引号引起的字符型输入，所以我们直接输入?id=1。<br><strong>2</strong>.接下来我们输入一个单引号’<br><strong>3</strong>.可以发现，网页开始报错了内容是</p>
+<p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘’1’’ LIMIT 0,1’ at line 1<br>SELECT * FROM users WHERE id=’1’’ LIMIT 0,1  在这个当中单引号被包括进去了，但是却报错了，而当我尝试其他符号的时候，发现是可以正常显示的。接着我们用and 1=1 和and1=2来测试，</p>
+<p><strong>这里补充一个知识点， and 1=1代表永恒为真， and 1=2 代表永恒为假 我们判断有没有注入的时候可以利用这点来判断，如果页面不一样，就代表我们的语句生效了，存在注入点!</strong></p>
+<p>接下来我们需要知道查询表的字段数，我们才能利用<strong>union+select查询我们所需要的信息</strong><br><strong>因为 select （），（），（）， 有几个括号是要和该表的字段数所对应，</strong><br>在这里我们需要引入一个<strong>order by</strong>命令<br>在这里 order by 的作用是用来查询字段数，当你order by （一个数字）的时候，如果有这么多字段数，那么输出结果就不会报错，如果没有，就会报错<br>而我们通常会将<strong>order by 结合二分法</strong>这个时候就可以很快的查询到字段数（核心是猜）</p>
+<p>知道字段数吼，并且知道我们就可以利用注入点，添加一些命令语句，获得我们想要的信息。</p>
+<p>然后这里需要了解一个<strong>union</strong>命令 ：</p>
+<p> <strong>两个要联合的SQL语句 字段个数必须一样，而且字段类型要一致</strong></p>
+<p>这个union命令可以拼接语句，使得将两个select语句联合起来使用，这个时候我们可以让前面那个select为假使用不了，这样后面的语句就可以使用了。 </p>
+<p>这个时候使用 ?id=1’ and 0 union select 1,2,3 –+ 就可以发现页面变成<img src="C:\Users\10452\AppData\Roaming\Tencent\Users\1045225639\QQ\WinTemp\RichOle\0MZNBL~}KH$N3[WXC94CGZ0.png" alt="img" style="zoom: 50%;" /></p>
+<p>这个样子，说明字段2代表的是登录名一栏，字段3代表的是密码一栏</p>
+<p>接下来，我们要做的就是让可以显示的这几栏我们想要的信息：<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212818.png" alt="img" style="zoom:50%;" /></p>
+<p>当我们输入select 1,database (),3 –+的时候  我们就可以得知其中数据库的名字，为security</p>
+<p>紧接着，我们就可以再利用select 查询这个库名里面的表名<br>接下来我们在union后面添加 select 1,group_concat(table_name),3 from information _schema.tables where table_schema =’security’ –+  那这个时候</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106212703.png" alt="img" style="zoom:50%;" />就出现了这个数据库中的所有表名，</p>
+<p>接下来我们知道了库名，知道了表名，就可以去找表中的字段名了<br>差找字段名的语句是这样的 select 1,group_concat(column_name),3 from information_schema.columns where table_schema=’security’ and table_name=’emails’–+<br>也可以直接是 select 1,group_concat(column_name),3 from information_schema.columns where  table_name=’emails’–+   </p>
+<p>根据这段语句，我们就可以获得emalis这个表中的字段名</p>
+ <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106214209.png" alt="img" style="zoom:50%;" />
+
+<p>含有一个id 一个email_id 这个时候我们就爆一下字段名</p>
+<p>这个时候我们使用 select 1,email_id,3 from emails –+ 就可以知道这个字段名下的数据<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20201106215030.png" alt="img" style="zoom:50%;" /></p>
+<p>这样就大功告成了</p>
+
+        <h4 id="这个时候补充一些知识："   >
+          <a href="#这个时候补充一些知识：" class="heading-link"><i class="fas fa-link"></i></a>这个时候补充一些知识：</h4>
+      <p>mysql5.0版本之后 会在数据库中存放一个information_schema的数据库，在该库，我们需要记住三个表名，分别是schemata，tables，colums</p>
+<p>在schemata表中存储该用户创建的所有数据库的库名，在该表中 记录数据库库名的字段名为：schema_name</p>
+<p>tables中存储该用户创建的所有数据的库名和表名，在这个表中记录数据库库名和表名的字段名分别为 table_schema和table_name</p>
+<p>columns表存储该用户创建的所有数据库的库名，表名和字段名，在该表中记录数据库库名，表名和字段名的字段名为table_schema,table_name,column_name;</p>
+
+        <h4 id="group-concat（）函数"   >
+          <a href="#group-concat（）函数" class="heading-link"><i class="fas fa-link"></i></a>group_concat（）函数</h4>
+      <p>功能：将group by产生的同一个分组中的值连接起来，返回一个字符串结果。</p>
+<p>在我们这题中我们是用group_concat(column_name)意思是将这个表中所有字段名连接起来并返回数据。<br><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/wang-yaz/p/10862627.html" >https://www.cnblogs.com/wang-yaz/p/10862627.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>这个是参考链接</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">John Doe</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2020/10/24/sqli-labs%E5%B0%8F%E8%AF%95/">http://example.com/2020/10/24/sqli-labs%E5%B0%8F%E8%AF%95/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2020/11/07/sqlilabs1/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">sqlilabs1</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2020/10/20/mysql%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/"><span class="paginator-prev__text">mysql增删改查</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="toc-number">1.</span> <span class="toc-text">
+          sql注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E5%86%99%E5%88%B0%E7%AC%AC%E4%B8%89%E5%85%B3%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.</span> <span class="toc-text">
+          这是一个写到第三关的补充</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E6%9D%A5%E8%87%AA%E7%AC%AC23%E5%85%B3%E7%9A%84%E4%B8%80%E4%B8%AA%E6%9B%B4%E6%AD%A3"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          这里是来自第23关的一个更正</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#less1"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+          less1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E8%A1%A5%E5%85%85%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">
+          这个时候补充一些知识：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#group-concat%EF%BC%88%EF%BC%89%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.4.</span> <span class="toc-text">
+          group_concat（）函数</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">27</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>John Doe</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
