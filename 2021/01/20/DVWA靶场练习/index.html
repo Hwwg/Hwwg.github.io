@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Brute Force                           low：       暴力破解——burpsuit去跑就行了或者使用sql注入：admin’|| 1&#x3D;’1、admin’#                     medium       使用了mysql_real_escape_string函数进行过滤">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Brute Force                           low：       暴力破解——burpsuit去跑就行了或者使用sql注入：admin’|| 1&#x3D;’1、admin’#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DVWA靶场">
 <meta property="og:url" content="http://example.com/2021/01/20/DVWA%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Tlife">
-<meta property="og:description" content="Brute Force                           low：       暴力破解——burpsuit去跑就行了或者使用sql注入：admin’|| 1&#x3D;’1、admin’#                     medium       使用了mysql_real_escape_string函数进行过滤">
+<meta property="og:description" content="Brute Force                           low：       暴力破解——burpsuit去跑就行了或者使用sql注入：admin’|| 1&#x3D;’1、admin’#">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210121094344.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210121131013.png">
@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210127141930.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210127210525.png">
 <meta property="article:published_time" content="2021-01-20T07:34:25.000Z">
-<meta property="article:modified_time" content="2021-01-28T03:59:40.377Z">
+<meta property="article:modified_time" content="2021-01-28T04:10:42.454Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210121094344.png"><title>DVWA靶场 | Tlife</title><link ref="canonical" href="http://example.com/2021/01/20/DVWA%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
@@ -51,11 +51,11 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></he
       
         <h4 id="low：">
           <a href="#low：" class="heading-link"><i class="fas fa-link"></i></a>low：</h4>
-      <p>暴力破解——burpsuit去跑就行了<br>或者使用sql注入：admin’|| 1=’1、admin’#</p>
+      <p>暴力破解——burpsuit去跑就行了<br>或者使用sql注入：admin’|| 1=’1、admin’#       <a id="more"></a></p>
 
         <h4 id="medium">
           <a href="#medium" class="heading-link"><i class="fas fa-link"></i></a>medium</h4>
-      <p>使用了mysql_real_escape_string函数进行过滤      <a id="more"></a><br>复习一下过滤了啥</p>
+      <p>使用了mysql_real_escape_string函数进行过滤<br>复习一下过滤了啥</p>
 <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210121094344.png" alt="img" style="zoom:67%;">
 回想一下当时是怎么bypass的？ 因为那一关有用gbk进行编码，所以我们可以使用宽字节注入的方式吃掉\
 这里没有看到GBK编码
