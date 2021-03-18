@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="[HCTF 2018]admin       尝试了一下sql注入，发现不行，注册了一个账号找找线索，抓包看看回显，发现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buuctf3">
+<meta property="og:url" content="http://example.com/2021/03/18/buuctf3/index.html">
+<meta property="og:site_name" content="Tlife">
+<meta property="og:description" content="[HCTF 2018]admin       尝试了一下sql注入，发现不行，注册了一个账号找找线索，抓包看看回显，发现">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210318200434.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319001101.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319010311.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319010314.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319010416.png">
+<meta property="article:published_time" content="2021-03-18T11:49:51.000Z">
+<meta property="article:modified_time" content="2021-03-18T17:07:30.481Z">
+<meta property="article:author" content="vague huang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210318200434.png"><title>buuctf3 | Tlife</title><link ref="canonical" href="http://example.com/2021/03/18/buuctf3/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"Copy","copySuccess":"Copy Success","copyError":"Copy Error"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Tlife</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">buuctf3</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-03-18</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-03-19</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">Visited</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+        <h2 id="HCTF-2018-admin">
+          <a href="#HCTF-2018-admin" class="heading-link"><i class="fas fa-link"></i></a>[HCTF 2018]admin</h2>
+      <p>尝试了一下sql注入，发现不行，注册了一个账号找找线索，抓包看看回显，发现<a id="more"></a><br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210318200434.png" alt="img" style="zoom:67%;"><br>不知道是个啥，百度了一下，是一种安全措施，用了防止xss等攻击的。<br><strong>看完wp后，发现自己看的不够仔细，发现更改密码页面有github源码泄露，感觉自己经常被某种思路给束缚住？然后就忘记一些基操,以后要注意点</strong><br>刚看完了wp，确认过眼神，是不会做的题，现在靠印象复现一下思路:</p>
+
+        <h2 id="buy-you-flag">
+          <a href="#buy-you-flag" class="heading-link"><i class="fas fa-link"></i></a>buy you flag</h2>
+      <figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">&#x27;password&#x27;</span>])) &#123;</span><br><span class="line">	$password = $_POST[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line">	<span class="keyword">if</span> (is_numeric($password)) &#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;password can&#x27;t be number&lt;/br&gt;&quot;</span>;</span><br><span class="line">	&#125;<span class="keyword">elseif</span> ($password == <span class="number">404</span>) &#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;Password Right!&lt;/br&gt;&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>抓包<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319001101.png" alt="img" style="zoom:50%;"></p>
+<p>总共更改这些地方，然后有一点没想到，看了wp他说有长度限制，<br>这里需要拓展学习一下strcmp字符串比较绕过，因为他无法比较数组的长度，<strong>所以在money后加个[]即可绕过</strong></p>
+<p>这里有个思路没想清楚:他说有长度限制？这个时候我们应该想的是什么函数能比较长度？然后查询该函数能否被绕过:<br>按照这个思路果然可以找到线索，学习一下！</p>
+
+        <h2 id="CheckIn">
+          <a href="#CheckIn" class="heading-link"><i class="fas fa-link"></i></a>CheckIn</h2>
+      <p>看了一下源码，可以确定的是如要传入一句话木马需要使用<br>&lt;script&gt;写的,刚才看到一个user.ini，感觉需要利用一下这个线索，去百度看看:<br>之前在学文件上传其实就有看到过这个user.ini 我简要讲解一下以及利用方式，这个是一个配置文件，可以动态调整，随改随用，但是权限为user，其中能为我们所用的就是：<br><strong>auto_prepend_file=**文件名<br>这个是可以使user.ini所在目录下的php文件包含某个文件，比如说<br>在user.ini中我配置了</strong>auto_prepend_file=12.gif**在这个目录下有一个index.php，当我打开index.php的时候就自动包含了12.gif，文件包含会自动执行其中php代码。</p>
+<p>所以整体思路就是，先上传user.ini，然后上传12.gif，然后打开index.php页面使用蚁剑连接即可:<br>文件上传绕过只要添加一个图像头就可以，比如GIF98a,一句话木马使用&lt;script&gt;书写方式</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319010311.png" alt="img" style="zoom:67%;">
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319010314.png" alt="img" style="zoom:67%;">
+成功包含
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210319010416.png" alt="img" style="zoom:67%;">
+成功连接
+flag{fe873bd0-b289-495f-8254-ec9f4e68b1e6}拿到flag
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">vague huang</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2021/03/18/buuctf3/">http://example.com/2021/03/18/buuctf3/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/18/buuctf2/"><span class="paginator-prev__text">buuctf2</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">1.</span> <span class="toc-text">
+          [HCTF 2018]admin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buy-you-flag"><span class="toc-number">2.</span> <span class="toc-text">
+          buy you flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CheckIn"><span class="toc-number">3.</span> <span class="toc-text">
+          CheckIn</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/20210123130445.png" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">66</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>vague huang</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">Visitors</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">Views</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/gh/sukkaw/busuanzi@latest/bsz.pure.mini.js" async></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
