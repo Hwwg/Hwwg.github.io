@@ -5882,6 +5882,10 @@ https://www.anquanke.com/post/id/219107#h2-14
 
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>感觉这道题真的收获很多，这边理一下：<br>首先是思路:无字母数字如何getshell？——&gt;如何绕过文件上传限制——&gt;如何绕过open_basedir读取文件</p>
 <p>收获知识点：<br>1.无字母数字获取脚本编写<br>2.PHP7特性下，变量解析的更新<br>3.htaccess+文件包含绕过内容过滤以及exif_imagetype的bypass<br>4.open_basedir+ini_set+chdir绕过open_basedir<br>没有实践的点记录一下：<br>exif_imagetype()以及open_basedir()+ini_set()函数的底层代码跳转过程</p>
+<p>参考：<a href="https://mayi077.gitee.io/2020/02/14/SUCTF-2019-EasyWeb/">https://mayi077.gitee.io/2020/02/14/SUCTF-2019-EasyWeb/</a><br><a href="https://www.cnblogs.com/20175211lyz/p/11488051.html">https://www.cnblogs.com/20175211lyz/p/11488051.html</a></p>
+<p><a href="https://www.jianshu.com/p/6f05923012d7">https://www.jianshu.com/p/6f05923012d7</a></p>
+<p><a href="https://hexo.imagemlt.xyz/post/php-bypass-open-basedir/">https://hexo.imagemlt.xyz/post/php-bypass-open-basedir/</a></p>
+<p><a href="https://skysec.top/2019/04/12/%E4%BB%8EPHP%E5%BA%95%E5%B1%82%E7%9C%8Bopen-basedir-bypass/">https://skysec.top/2019/04/12/%E4%BB%8EPHP%E5%BA%95%E5%B1%82%E7%9C%8Bopen-basedir-bypass/</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -5983,6 +5987,7 @@ https://www.anquanke.com/post/id/219107#h2-14
 <blockquote>
 <p>采用xbm格式X Bit Map，绕过exif_imagetype()方法的检测，上传文件来解析。<br>在计算机图形学中，X Window系统使用X BitMap，一种纯文本二进制图像格式，用于存储X GUI中使用的光标和图标位图。<br>XBM数据由一系列包含单色像素数据的静态无符号字符数组组成，当格式被普遍使用时，XBM通常出现在标题.h文件中，每个图像在标题中存储一个数组。<br>也就是用c代码来标识一个xbm文件，前两个#defines指定位图的高度和宽度【以像素为单位，比如以下xbm文件：<br><code>#define test_width 16</code><br><code>#define test_height 7</code></p>
 </blockquote>
+<p>参考：<a href="https://www.cnblogs.com/20175211lyz/p/11741348.html">https://www.cnblogs.com/20175211lyz/p/11741348.html</a></p>
 ]]></content>
   </entry>
 </search>
