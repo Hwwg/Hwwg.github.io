@@ -6424,7 +6424,7 @@ call：调用不可访问或不存在的方法时调用
   </entry>
   <entry>
     <title>sql注入复习</title>
-    <url>/2021/07/17/buu22/</url>
+    <url>/2021/07/17/sql%E6%B3%A8%E5%85%A5%E5%A4%8D%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近做到sql注入的题目，都没有很敏感了，于是决定要重新复习一下</p>
 <h2 id="sql注入原理"><a href="#sql注入原理" class="headerlink" title="sql注入原理"></a>sql注入原理</h2><p>源码对用户的输入的内容没有进行很好的过滤机制，导致用户输入的内容拼接到sql语句，影响原本sql语句的功能</p>
 <h2 id="sql注入种类："><a href="#sql注入种类：" class="headerlink" title="sql注入种类："></a>sql注入种类：</h2><h3 id="回显注入"><a href="#回显注入" class="headerlink" title="回显注入"></a>回显注入</h3><p>顾名思义，就是输入内容会有回显，我们可以通过回显内容判断是否成功过滤</p>
@@ -6473,6 +6473,11 @@ information又被过滤了--，这个时候就直接猜表名为flag就好了~
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">363636433631363737423631363433383334363133383633333832443631333033353634324433343634333236363244363233343334333132443333363533393338363536353337333036313338363436333744</span><br></pre></td></tr></table></figure>
 
 <p>结果如上，然后hex解码两次即可</p>
+<h3 id="python利用正则表达式快速截取定位内容"><a href="#python利用正则表达式快速截取定位内容" class="headerlink" title="python利用正则表达式快速截取定位内容"></a>python利用正则表达式快速截取定位内容</h3><p>以前就经常在想怎么在一大串的网页回显中截取自己想要的那部分内容，后来看了一下学长的脚本，发现使用正则表达式可以达到这种操作:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">importe re<span class="comment">#引入re库</span></span><br><span class="line">str_txt = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"> if (!mobileVisit) &#123;</span></span><br><span class="line"><span class="string"> googletag.defineSlot &quot;div-gpt-ad-15390086850-0&quot;).addService(googletag.pubads());</span></span><br><span class="line"><span class="string">                 &#125;</span></span><br><span class="line"><span class="string">          &quot;&quot;&quot;</span></span><br><span class="line">comment=re.compile(<span class="string">r&#x27;div-gpt-ad-(.*?)-0&#x27;</span>,re.S)</span><br><span class="line">comment1=comment.findall(str_txt)</span><br><span class="line">print(comment1[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<p>1.使用re正则表达式中的compile函数，在匹配内容的括号中写<strong>（.<em>?）**<br>2.其中.\</em>?代表非贪心算法，表示精准的配对<br>3.在.*?的外面加个括号表示获取括号之间的信息<br>4.在（.*?）两边加上原文本中要匹配信息两旁的信息，例如要想获得字符串“abcdefg”中的cd，就要在（.*?）里面分别加上ab和efg<br>5.compile中使用的第二个参数是re.S，表示正则表达式会将这个字符串作为一个整体，包括”\n“，如果不使用re.S参数，则只在每一行内进行匹配，如果一行没有，就换下一行重新开始，不会跨行<br>6.compile()函数返回的是一个匹配对象，单独使用无意义，需要和</strong>findall()**函数搭配使用，返回的是一个列表<br>————————————————</p>
+<p>参考：<a href="https://blog.csdn.net/weixin_44346972/article/details/106746133">https://blog.csdn.net/weixin_44346972/article/details/106746133</a></p>
 ]]></content>
   </entry>
 </search>
