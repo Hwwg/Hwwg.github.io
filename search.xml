@@ -7726,7 +7726,7 @@ python黑魔法：
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">String pri &#x3D; tartget_url.substring(0, tartget_url.indexOf(&quot;:&quot;));</span><br><span class="line">if (pri.matches(&quot;(?i)file|(?i)gopher|(?i)data&quot;)) &#123;</span><br></pre></td></tr></table></figure>
 
 <p>第一个冒号前不可以是以下三种协议，所以要找一个放在file协议前面，却又不会报错的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url:file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url:file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd</span><br><span class="line">url:file:&#x2F;&#x2F;&#x2F;</span><br><span class="line">url:file:&#x2F;&#x2F;&#x2F;flag</span><br></pre></td></tr></table></figure>
 
 <p>这样就可以了</p>
 ]]></content>
