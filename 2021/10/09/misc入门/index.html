@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="misc入门"><meta name="keywords" content=""><meta name="author" content="vague huang"><meta name="copyright" content="vague huang"><title>misc入门 | Tlife</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.2.0'
+} </script><meta name="generator" content="Hexo 5.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">1.</span> <span class="toc-text">图片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.1.</span> <span class="toc-text">文件头修复</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CRC%E6%A0%A1%E9%AA%8C%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.1.1.</span> <span class="toc-text">CRC校验修复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%AE%BD%E9%AB%98%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.1.2.</span> <span class="toc-text">3.宽高修复</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-LSB%E9%9A%90%E5%86%99"><span class="toc-number">1.2.</span> <span class="toc-text">4.LSB隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AF%B9%E4%BA%8E%E4%B8%A4%E5%BC%A0%E7%9B%B8%E5%90%8C%E5%9B%BE%E7%89%87%E7%9A%84%E9%9A%90%E5%86%99"><span class="toc-number">1.3.</span> <span class="toc-text">5.对于两张相同图片的隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB"><span class="toc-number">1.4.</span> <span class="toc-text">6.文件分离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="toc-number">1.5.</span> <span class="toc-text">7.二维码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.6.</span> <span class="toc-text">8.一些其他常用工具介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E9%9A%90%E5%86%99"><span class="toc-number">2.</span> <span class="toc-text">音频隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%92%88%E5%AF%B9mp3%E6%96%87%E4%BB%B6%E7%9A%84%E9%9A%90%E5%86%99"><span class="toc-number">2.1.</span> <span class="toc-text">1.针对mp3文件的隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%92%88%E5%AF%B9wav%E6%96%87%E4%BB%B6%E7%9A%84%E9%9A%90%E5%86%99"><span class="toc-number">2.2.</span> <span class="toc-text">2.针对wav文件的隐写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%E9%9A%90%E5%86%99"><span class="toc-number">3.</span> <span class="toc-text">视频隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%92%88%E5%AF%B9mp4%E6%96%87%E4%BB%B6%E7%9A%84%E9%9A%90%E5%86%99"><span class="toc-number">3.1.</span> <span class="toc-text">1.针对mp4文件的隐写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E9%9A%90%E5%86%99"><span class="toc-number">4.</span> <span class="toc-text">文本隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-word%E6%96%87%E6%A1%A3%E9%9A%90%E5%86%99"><span class="toc-number">4.1.</span> <span class="toc-text">1.word文档隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-PDF%E9%9A%90%E5%86%99"><span class="toc-number">4.2.</span> <span class="toc-text">2.PDF隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-html%E9%9A%90%E5%86%99"><span class="toc-number">4.3.</span> <span class="toc-text">3.html隐写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9A%90%E5%86%99"><span class="toc-number">5.</span> <span class="toc-text">其他类型的隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-base64%E9%9A%90%E5%86%99"><span class="toc-number">5.1.</span> <span class="toc-text">1.base64隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99"><span class="toc-number">5.2.</span> <span class="toc-text">2.零宽度字符隐写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ntfs%E6%95%B0%E6%8D%AE%E6%B5%81%E9%9A%90%E5%86%99"><span class="toc-number">5.3.</span> <span class="toc-text">3.ntfs数据流隐写</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">vague huang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">156</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">18</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Tlife</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">misc入门</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-10-09</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><h3 id="文件头修复"><a href="#文件头修复" class="headerlink" title="文件头修复"></a>文件头修复</h3><p>常见的图片格式文件头如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JPEG(jpg)</td>
+<td>FFD8FF</td>
+</tr>
+<tr>
+<td>PNG(png)</td>
+<td>89504E47</td>
+</tr>
+<tr>
+<td>GIF(gif)</td>
+<td>47494638</td>
+</tr>
+<tr>
+<td>BMP</td>
+<td>424DC001</td>
+</tr>
+</tbody></table>
+<p>其他更多类型的文件头请看<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23100787/article/details/79040925">https://blog.csdn.net/qq_23100787/article/details/79040925</a></p>
+<p>方法：以16进制的方式打开文件，在文件最开始添加相应的文件头</p>
+<h4 id="CRC校验修复"><a href="#CRC校验修复" class="headerlink" title="CRC校验修复"></a>CRC校验修复</h4><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211009105034.jpeg" alt="img" style="zoom:67%;">
+
+<h4 id="3-宽高修复"><a href="#3-宽高修复" class="headerlink" title="3.宽高修复"></a><strong>3.宽高修复</strong></h4><p>对于png格式的图片，宽高的数据位置如图片所展示的那样</p>
+<p><img src="https://image.3001.net/images/20210320/1616208064_605560c025598e02e7b91.jpg!small" alt="img"></p>
+<p>如果遇到简单一点的题目，可以直接尝试修改宽高，这里建议一般选择修改<strong>高度</strong>，一点点的改动即可。如果随意修改宽度一般都是会造成图像错误的。</p>
+<blockquote>
+<p>一个简单的检测宽高是否有误的方法：在Windows下能打开的图片在linux下不能打开，就说明可能是宽高存在问题</p>
+</blockquote>
+<p>最正确的方法则是通过crc值爆破宽高，给出大佬的脚本（记不得是哪里找到的了）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python</span><br><span class="line">#-*- coding:UTF-8 -*-</span><br><span class="line">import binascii</span><br><span class="line">import struct</span><br><span class="line">import os</span><br><span class="line">crcbp &#x3D; open(&quot;flag.png&quot;,&quot;rb&quot;).read()#填文件名</span><br><span class="line">for i in range(1024):</span><br><span class="line">    for j in range(1024):</span><br><span class="line">        data &#x3D; crcbp[12:16] + struct.pack(&#39;&gt;i&#39;,i) + struct.pack(&#39;&gt;i&#39;,j) + crcbp[24:29]</span><br><span class="line">        crc32 &#x3D; binascii.crc32(data) &amp; 0xffffffff</span><br><span class="line">        if crc32 &#x3D;&#x3D; 0x4d614986 :#此处填CRC值</span><br><span class="line">            print (i);</span><br><span class="line">            print (j);</span><br><span class="line">            print (hex(i),hex(j))</span><br></pre></td></tr></table></figure>
+
+<p>爆破出来后修改即可。</p>
+<p>对于<strong>jpg</strong>格式的图片也存在宽高隐写，有师傅写的很详细了，此处不再赘述。有需要的朋友请移步：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010391191/article/details/80811813">https://blog.csdn.net/u010391191/article/details/80811813</a></p>
+<h3 id="4-LSB隐写"><a href="#4-LSB隐写" class="headerlink" title="4.LSB隐写"></a>4.LSB隐写</h3><p>有关该隐写方式的原理网上已经有很多文章写过了，此处简单说一下做题方法。</p>
+<p>工具：stegsolve（需要java环境）</p>
+<p>用该工具打开图片后，点击<img src="https://image.3001.net/images/20210320/1616209932_6055680c923adb2cadca5.png!small?1616209932678" alt="1616209932_6055680c923adb2cadca5.png!small?1616209932678">然后按照如下图片点击<img src="https://image.3001.net/images/20210320/1616210229_6055693533f311bdd67e9.png!small?1616210229611" alt="1616210229_6055693533f311bdd67e9.png!small?1616210229611">最后点击preview。有时候点preview没用，需要点击最下面的save text或者save bin才能得出结果。这张图只是给出了示例，具体做题的时候可以多试一下和其他按键的组合。</p>
+<p>还有一个比较简单的方法，用<strong>zsteg</strong>工具，需要kali里面在线安装：gem install zsteg</p>
+<p>使用命令格式：zsteg filename</p>
+<h3 id="5-对于两张相同图片的隐写"><a href="#5-对于两张相同图片的隐写" class="headerlink" title="5.对于两张相同图片的隐写"></a>5.对于两张相同图片的隐写</h3><p><strong>1.盲水印</strong></p>
+<p>两张相同的图片首先考虑盲水印。使用方法及脚本移步<a target="_blank" rel="noopener" href="https://github.com/chishaxie/BlindWaterMark">https://github.com/chishaxie/BlindWaterMark</a></p>
+<p><strong>2.组合进行不同运算（and、or、xor等）</strong></p>
+<p>还是用stegsolve，点击<img src="https://image.3001.net/images/20210320/1616210657_60556ae10459af20228c1.png!small?1616210657114" alt="1616210657_60556ae10459af20228c1.png!small?1616210657114">之后会再让你打开一张图片，此时需要注意两张图片的打开<strong>顺序</strong>不同，运算的结果也不同，实际操作中就需要各位来回试一下了</p>
+<h3 id="6-文件分离"><a href="#6-文件分离" class="headerlink" title="6.文件分离"></a>6.文件分离</h3><p>常用工具：binwalk、formost、dd</p>
+<p><strong>binwalk</strong>：可快速分辨文件是否由多个文件合并而成，并将文件进行分离。如果分离成功会在目标文件的目录。</p>
+<p>分析文件：binwalk filename</p>
+<p>分离文件：binwalk -e filename</p>
+<p><strong>formost</strong>命令：formost filename -o 输出的目录名</p>
+<p>因本人较懒，所以用了一个师傅说的方法，在用formost分离文件时很方便（不用敲命令）。参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39368007/article/details/91129628">https://blog.csdn.net/qq_39368007/article/details/91129628</a></p>
+<p><strong>dd</strong>：当文件自动分离出错或者因为其他原因无法自动分离时使用</p>
+<p><img src="https://image.3001.net/images/20210320/1616211319_60556d771acf19840fa03.jpg!small" alt="img">ps：如果一个工具分离不出来一定要多试几种，因为每种工具分离方法都有所差别，难免会出现分离不出来的情况。</p>
+<h3 id="7-二维码"><a href="#7-二维码" class="headerlink" title="7.二维码"></a>7.二维码</h3><p><strong>取反色</strong></p>
+<p>有一道题就是将二维码颜色取反再扫描得出结果，记不得是哪里的了。具体操作可以用windows自带的画图工具，打开图片然后点击主页的选择<img src="https://image.3001.net/images/20210320/1616227603_6055ad138ab71dcb1211d.png!small?1616227603841" alt="1616227603_6055ad138ab71dcb1211d.png!small?1616227603841">选中图片后右键选择反色<img src="https://image.3001.net/images/20210320/1616227637_6055ad354400e7dcbc8d7.png!small?1616227637530" alt="1616227637_6055ad354400e7dcbc8d7.png!small?1616227637530">当你发现二维码的三个定位点是白色的时候，就说明需要进行反色操作了</p>
+<h3 id="8-一些其他常用工具介绍"><a href="#8-一些其他常用工具介绍" class="headerlink" title="8.一些其他常用工具介绍"></a>8.一些其他常用工具介绍</h3><p>针对jpg格式图片的隐写：</p>
+<p><a target="_blank" rel="noopener" href="http://steghide.sourceforge.net/download.php"><strong>steghide</strong></a></p>
+<p><strong>用法</strong>：</p>
+<p>隐藏文件<br>steghide embed -cf [图片或wav文件载体] -ef [待隐藏文件]<br>steghide embed -cf 1.jpg -ef 1.txt</p>
+<p>查看图片中嵌入的文件信息<br>steghide info 1.jpg</p>
+<p>提取图片中隐藏的文件<br>steghide extract -sf 1.jpg</p>
+<blockquote>
+<p>stegdetect（可检测通过JSteg,JPHide,OutGuess,Invisible,F5,oppendX,Camouflage等隐写工具隐藏的信息）</p>
+</blockquote>
+<p><strong>用法</strong>：</p>
+<blockquote>
+<p>stegdetect xxx.jpg</p>
+<p>stegdetect -s 敏感度 xxx.jpgexi</p>
+<p>stegbreak（爆破密码）<br>stegbreak.exe -r rules.ini -f password.txt p -c hide.jpg</p>
+</blockquote>
+<p><strong>jphide</strong></p>
+<ul>
+<li><img src="https://image.3001.net/images/20210320/1616211928_60556fd847b8890e476d8.png!small" alt="img">silenteye（下面会有一定的介绍，用法基本一致）</li>
+</ul>
+<h2 id="音频隐写"><a href="#音频隐写" class="headerlink" title="音频隐写"></a>音频隐写</h2><h3 id="1-针对mp3文件的隐写"><a href="#1-针对mp3文件的隐写" class="headerlink" title="1.针对mp3文件的隐写"></a><strong>1.针对mp3文件的隐写</strong></h3><p>将分别介绍以下工具：Audacity、MP3Stego</p>
+<p><a target="_blank" rel="noopener" href="https://audacity.en.softonic.com/">Audacity</a></p>
+<p>一般得到题目文件，打开听到有杂音首选用这个工具打开。简单的题目就是在原音频中加入了一段摩斯密码，通过这个工具可以直接看出来</p>
+<p><img src="https://image.3001.net/images/20210320/1616218195_605588537af8362ba567f.png!small" alt="img">然后解密即可。</p>
+<p>难一点的题目则是对音频进行频谱分析，比如这篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/vhkjhwbs/article/details/103036133%E8%B0%88%E5%88%B0%E7%9A%84lookme%E5%92%8C%E7%94%A8%E7%9C%BC%E7%9D%9B%E5%8E%BB%E5%80%BE%E5%90%AC%E8%BF%99%E4%B8%A4%E9%81%93%E9%A2%98%E3%80%82">https://blog.csdn.net/vhkjhwbs/article/details/103036133谈到的lookme和用眼睛去倾听这两道题。</a></p>
+<p>MP3Stego</p>
+<p>如果mp3 文件听上去没有什么奇怪的地方，那么就试试用这个工具。教程：<a target="_blank" rel="noopener" href="https://blog.csdn.net/myloveprogrmming/article/details/52641916">https://blog.csdn.net/myloveprogrmming/article/details/52641916</a></p>
+<p>用这个工具会输入密码，有时候题目没有特别提示就可以试试弱口令，有时候甚至就是题目名字。</p>
+<h3 id="2-针对wav文件的隐写"><a href="#2-针对wav文件的隐写" class="headerlink" title="2.针对wav文件的隐写"></a>2.针对wav文件的隐写</h3><p>工具：silenteye</p>
+<p><img src="https://image.3001.net/images/20210320/1616218647_60558a175fc225d11a3cb.png!small" alt="img"></p>
+<p>将文件拖到里面点击decode</p>
+<p><img src="https://image.3001.net/images/20210320/1616219110_60558be69cb4a29f9b5b0.png!small?1616219110893" alt="1616219110_60558be69cb4a29f9b5b0.png!small?1616219110893">简单的题目此时再点右下角的decode就能出结果，稍微绕点的就还需要<img src="https://image.3001.net/images/20210320/1616218742_60558a76a44a76b41701c.png!small?1616218743088" alt="1616218742_60558a76a44a76b41701c.png!small?1616218743088">勾选这里输入密码，或者选择正确的type，看出题人的心思了~</p>
+<p><img src="https://image.3001.net/images/20210320/1616218784_60558aa0c70f5b6d4606f.png!small?1616218784960" alt="1616218784_60558aa0c70f5b6d4606f.png!small?1616218784960"></p>
+<p>当然，这个工具还能对<strong>bmp、jpg</strong>格式的隐写文件进行解密</p>
+<h2 id="视频隐写"><a href="#视频隐写" class="headerlink" title="视频隐写"></a>视频隐写</h2><h3 id="1-针对mp4文件的隐写"><a href="#1-针对mp4文件的隐写" class="headerlink" title="1.针对mp4文件的隐写"></a>1.针对mp4文件的隐写</h3><p>工具：ffmpeg（一套可以用来记录、转换数字音频、视频，并能将其转化为流的开源计算机程序。）</p>
+<p>详细使用教程介绍：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Allyli0022/article/details/78355248">https://blog.csdn.net/Allyli0022/article/details/78355248</a></p>
+<p>一般在题目中会插入一些图片，由于一下就闪过了所以需要用这个工具按帧提取出来，简单的题目往往这样就能做出来了。</p>
+<h2 id="文本隐写"><a href="#文本隐写" class="headerlink" title="文本隐写"></a>文本隐写</h2><h3 id="1-word文档隐写"><a href="#1-word文档隐写" class="headerlink" title="1.word文档隐写"></a>1.word文档隐写</h3><p>白色文字</p>
+<p>由于一般word文档都是白色为底色，所以如果文本字体设置的是白色，就看不出来有东西，这个时候可以试试<strong>ctrl+a</strong>，全选文字</p>
+<p><img src="https://image.3001.net/images/20210320/1616222817_60559a617585519deeeaa.png!small?1616222817668" alt="1616222817_60559a617585519deeeaa.png!small?1616222817668"></p>
+<p>再把颜色改成其他颜色，就能看出来被隐藏的文字了</p>
+<p><strong>隐藏文字选项</strong></p>
+<p>在文本出右键鼠标，字体选项中有一处隐藏文字选项<img src="https://image.3001.net/images/20210320/1616222980_60559b04517f08d9681bd.png!small?1616222980656" alt="1616222980_60559b04517f08d9681bd.png!small?1616222980656">取消勾选后被隐藏的文字就出现了<img src="https://image.3001.net/images/20210320/1616222937_60559ad95afa4b0ecc0f0.png!small?1616222937529" alt="1616222937_60559ad95afa4b0ecc0f0.png!small?1616222937529"></p>
+<h3 id="2-PDF隐写"><a href="#2-PDF隐写" class="headerlink" title="2.PDF隐写"></a>2.PDF隐写</h3><p>wbs43open（可用于PDF、bmp等文件的隐写）</p>
+<p><img src="https://image.3001.net/images/20210320/1616223111_60559b879a5b8bb7bff13.png!small" alt="1616223111_60559b879a5b8bb7bff13.png!small"></p>
+<p>点击continue后会出现encode和decode，解密就选decode，然后第三步就选择文件类型和文件</p>
+<p><img src="https://image.3001.net/images/20210320/1616223176_60559bc85ad7d38896b5a.png!small" alt="1616223176_60559bc85ad7d38896b5a.png!small"></p>
+<p>第四步步设置密码，可以置空</p>
+<p><img src="https://image.3001.net/images/20210320/1616223637_60559d9519ea72fcbf03a.png!small" alt="1616223637_60559d9519ea72fcbf03a.png!small"></p>
+<p>第五步设置解密之后文件的存储路径及文件名</p>
+<p><img src="https://image.3001.net/images/20210320/1616223715_60559de338f52f5b9799b.png!small" alt="1616223715_60559de338f52f5b9799b.png!small"></p>
+<p>接下来第六步完成就行啦</p>
+<p>要出这种类型的隐写题同样用这个工具也行。</p>
+<h3 id="3-html隐写"><a href="#3-html隐写" class="headerlink" title="3.html隐写"></a>3.html隐写</h3><p>即snow隐写，需要告诉key，解密网站<a target="_blank" rel="noopener" href="http://fog.misty.com/perry/ccs/snow/snow/snow.html">http://fog.misty.com/perry/ccs/snow/snow/snow.html</a></p>
+<h2 id="其他类型的隐写"><a href="#其他类型的隐写" class="headerlink" title="其他类型的隐写"></a>其他类型的隐写</h2><h3 id="1-base64隐写"><a href="#1-base64隐写" class="headerlink" title="1.base64隐写"></a>1.base64隐写</h3><p>Tr0y师傅的文章讲解的很详细，在这里就不过多介绍了，请移步<a target="_blank" rel="noopener" href="https://www.tr0y.wang/2017/06/14/Base64steg/">https://www.tr0y.wang/2017/06/14/Base64steg/</a></p>
+<h3 id="2-零宽度字符隐写"><a href="#2-零宽度字符隐写" class="headerlink" title="2.零宽度字符隐写"></a>2.零宽度字符隐写</h3><p>零宽度字符是一些不可见的，不可打印的字符。本文不做更多介绍，更详细的内容请移步<a target="_blank" rel="noopener" href="http://www.ga1axy.top/index.php/archives/20/">http://www.ga1axy.top/index.php/archives/20/</a></p>
+<h3 id="3-ntfs数据流隐写"><a href="#3-ntfs数据流隐写" class="headerlink" title="3.ntfs数据流隐写"></a>3.ntfs数据流隐写</h3><blockquote>
+<p>NTFS（New Technology File System）是Windows NT内核的系列操作系统支持的、一个特别为网络和磁盘配额、文件加密等管理安全特性设计的磁盘格式，提供长文件名、数据保护和恢复，能通过目录和文件许可实现安全性，并支持跨越分区。 –《百度百科》</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo abcdefg&gt;&gt;123.txt:222.txt</span><br></pre></td></tr></table></figure>
+
+<p>该条命令创建的是单独的NTFS流文件，系统不可见的同时我们无法通过普通方法看到</p>
+<p><img src="https://image.3001.net/images/20210320/1616225534_6055a4feb5b26c242be4a.png!small?1616225534943" alt="1616225534_6055a4feb5b26c242be4a.png!small?1616225534943">此时有两种方法，一种是命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">notepad 123.txt:222.txt &#x2F;&#x2F;这个命令只有自己已经知道NTFS流文件名的时候使用，局限性很大，同时失败几率大	</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20210320/1616225700_6055a5a42a3daec335e68.png!small?1616225700447" alt="1616225700_6055a5a42a3daec335e68.png!small?1616225700447"></p>
+<p>另一种方法是用工具：NtfsStreamsEditor（右键以管理员身份运行）</p>
+<p><img src="https://image.3001.net/images/20210320/1616225578_6055a52a4b4eeeb8fc64b.png!small?1616225578565" alt="1616225578_6055a52a4b4eeeb8fc64b.png!small?1616225578565"></p>
+<p>点击快速查看</p>
+<p><img src="https://image.3001.net/images/20210320/1616225643_6055a56bf3e0864995ec3.png!small?1616225644260" alt="1616225643_6055a56bf3e0864995ec3.png!small?1616225644260"></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">vague huang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/10/09/misc入门/">http://example.com/2021/10/09/misc入门/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/10/09/V-N2020/"><i class="fa fa-chevron-left">  </i><span>V&amp;N2020</span></a></div><div class="next-post pull-right"><a href="/2021/10/08/2021%E9%B9%A4%E5%9F%8E%E6%9D%AF/"><span>2021鹤城杯</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2021 By vague huang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
