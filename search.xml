@@ -7252,7 +7252,7 @@ save_path为novalue则表示存储在默认的/tmp或/var/lib/php/session目录�
 
 ##### 2.php7.0 filter新特性（伪协议）
 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file&#x3D;php:&#x2F;&#x2F;filter&#x2F;string.strip_tags&#x2F;resource&#x3D;&#x2F;etc&#x2F;passwd</span><br><span class="line">php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;mybackdoor.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file&#x3D;php:&#x2F;&#x2F;filter&#x2F;string.strip_tags&#x2F;resource&#x3D;&#x2F;etc&#x2F;passwd</span><br><span class="line">php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;mybackdoor.php</span><br><span class="line">php:&#x2F;&#x2F;filter&#x2F;convert.iconv.ASCII.UCS-2BE&#x2F;resource&#x3D;index.php</span><br></pre></td></tr></table></figure>
 
 会造成一个segment fault，导致临时文件不会被删除
 
@@ -8426,7 +8426,12 @@ python黑魔法：
 <p>但是很奇怪，用这个生成的payload打不通，于是我们来比对看看是哪里出了问题,测试了一下，原来问题出在http头的书写过程中</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$target = <span class="string">&quot;http://127.0.0.1/flag.php&quot;</span>;</span><br><span class="line">        $post_string = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        $headers = <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">&#x27;X-Forwarded-For: 127.0.0.1&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Cookie: PHPSESSID=abcd&#x27;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        $a = <span class="keyword">new</span> SoapClient(<span class="literal">null</span>,<span class="keyword">array</span>(<span class="string">&#x27;location&#x27;</span> =&gt; $target,</span><br><span class="line">            <span class="string">&#x27;user_agent&#x27;</span>=&gt;<span class="string">&quot;eki\r\nContent-Type: application/x-www-form-urlencoded\r\n&quot;</span>.join(<span class="string">&quot;\r\n&quot;</span>,$headers).<span class="string">&quot;\r\nContent-Length: &quot;</span>.(<span class="keyword">string</span>)strlen($post_string).<span class="string">&quot;\r\n\r\n&quot;</span>.$post_string,</span><br><span class="line">            <span class="string">&#x27;uri&#x27;</span>      =&gt; <span class="string">&quot;aaab&quot;</span>));</span><br><span class="line">        <span class="keyword">$this</span>-&gt;_adapter = $a;</span><br></pre></td></tr></table></figure>
 
-<h2 id="套娃"><a href="#套娃" class="headerlink" title="套娃"></a>套娃</h2>]]></content>
+<h2 id="ALL-INFO-YOU-WANT"><a href="#ALL-INFO-YOU-WANT" class="headerlink" title="ALL_INFO_YOU_WANT"></a>ALL_INFO_YOU_WANT</h2><p>这种解法比较签到，是常规思路，这题的定位本来就是个白给的题目，所以就没改掉日志</p>
+<p>由 http 回包 header 得知是 NGINX，直接：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">all_info_u_want.php?file&#x3D;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br></pre></td></tr></table></figure>
+
+<p>但是因为 url 会被 url 编码，可以把一句话木马写在 User-Agent，另外记得一定要闭合不然 php 执行会出错，包含即可 RCE<br><strong>找flag新语句：通过文件内容找flag</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F;etc -name &quot;*&quot; | xargs grep &quot;flag&#123;&quot;</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>jsp内存马</title>
@@ -8437,5 +8442,190 @@ python黑魔法：
     <title>电子取证</title>
     <url>/2021/10/09/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>NSSCTF-phar反序列化</title>
+    <url>/2021/10/13/NSSCTF-phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>buu-misc</title>
+    <url>/2021/10/13/buu-missc/</url>
+    <content><![CDATA[<p>忘记保存了，无语了，所以直接写一下解题思路</p>
+<h2 id="金三胖"><a href="#金三胖" class="headerlink" title="金三胖"></a>金三胖</h2><p>选择analyze的frame browser</p>
+<h2 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">binwalk -e 1.png</span><br></pre></td></tr></table></figure>
+
+<p>只用zip密码爆破软件<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211013102808.png" alt="img" style="zoom:67%;"><br> <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211013103515.png" alt="img" style="zoom:67%;"></p>
+<h2 id="N种方式解决"><a href="#N种方式解决" class="headerlink" title="N种方式解决"></a>N种方式解决</h2><p>在网页中打开（写个html代码）</p>
+<h2 id="大白"><a href="#大白" class="headerlink" title="大白"></a>大白</h2><p>很显然啊 图片长宽不对<br>在010中打开 调整长高<br>18、19位是长，22、23是宽<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211013164208.png" alt="img" style="zoom:67%;"><br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211013164404.png" alt="img" style="zoom:67%;"></p>
+<h2 id="你竟然赶我走"><a href="#你竟然赶我走" class="headerlink" title="你竟然赶我走"></a>你竟然赶我走</h2><p>010中打开 搜索flag 或拉到底</p>
+<h2 id="基础破解-rar"><a href="#基础破解-rar" class="headerlink" title="基础破解 rar"></a>基础破解 rar</h2><p>使用rar破解工具</p>
+<h2 id="LSB"><a href="#LSB" class="headerlink" title="LSB"></a>LSB</h2><p>看到RGB中的0通道上面有一行内容</p>
+<p>先选择analyse -&gt;data extract-&gt;save bin保存为png 扫描一下<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211013172408.png" alt="img" style="zoom:67%;"><br> <img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211013172421.png" alt="img" style="zoom:67%;"></p>
+<h2 id="文件中的秘密"><a href="#文件中的秘密" class="headerlink" title="文件中的秘密"></a>文件中的秘密</h2><p>记事本打开（改后缀）</p>
+<h2 id="zip伪加密"><a href="#zip伪加密" class="headerlink" title="zip伪加密"></a>zip伪加密</h2><p>就是这个zip</p>
+<p>zip伪加密是在文件头的加密标志位做修改，进而再打开文件时识被别为加密压缩包</p>
+<p>一个 ZIP 文件由<strong>三个部分</strong>组成：</p>
+<p>压缩源文件数据区+压缩源文件目录区+压缩源文件目录结束标志</p>
+<p><strong>压缩源文件数据区</strong>：</p>
+<p>50 4B 03 04：这是头文件标记（0x04034b50）</p>
+<p>14 00：解压文件所需 pkware 版本</p>
+<p>00 00：全局方式位标记（有无加密）</p>
+<p>08 00：压缩方式</p>
+<p>5A 7E：最后修改文件时间</p>
+<p>F7 46：最后修改文件日期</p>
+<p>16 B5 80 14：CRC-32校验（1480B516）</p>
+<p>19 00 00 00：压缩后尺寸（25）</p>
+<p>17 00 00 00：未压缩尺寸（23）</p>
+<p>07 00：文件名长度</p>
+<p>00 00：扩展记录长度</p>
+<p><strong>压缩源文件目录区</strong>：</p>
+<p>50 4B 01 02：目录中文件文件头标记(0x02014b50)</p>
+<p>3F 00：压缩使用的 pkware 版本</p>
+<p>14 00：解压文件所需 pkware 版本</p>
+<p>00 00：全局方式位标记（有无加密，这个更改这里进行伪加密，改为09 00打开就会提示有密码了）</p>
+<p>08 00：压缩方式</p>
+<p>5A 7E：最后修改文件时间</p>
+<p>F7 46：最后修改文件日期</p>
+<p>16 B5 80 14：CRC-32校验（1480B516）</p>
+<p>19 00 00 00：压缩后尺寸（25）</p>
+<p>17 00 00 00：未压缩尺寸（23）</p>
+<p>07 00：文件名长度</p>
+<p>24 00：扩展字段长度</p>
+<p>00 00：文件注释长度</p>
+<p>00 00：磁盘开始号</p>
+<p>00 00：内部文件属性</p>
+<p>20 00 00 00：外部文件属性</p>
+<p>00 00 00 00：局部头部偏移量</p>
+<p><strong>压缩源文件目录结束标志</strong>：</p>
+<p>50 4B 05 06：目录结束标记</p>
+<p>00 00：当前磁盘编号</p>
+<p>00 00：目录区开始磁盘编号</p>
+<p>01 00：本磁盘上纪录总数</p>
+<p>01 00：目录区中纪录总数</p>
+<p>59 00 00 00：目录区尺寸大小</p>
+<p>3E 00 00 00：目录区对第一张磁盘的偏移量</p>
+<p>00 00：ZIP 文件注释长度</p>
+<p>因此，根据此题目来看： </p>
+<p>压缩源文件数据区：50 4B 03 04：这是头文件标记<br>然后我们直接搜索加密方式<br>0900 说明是有加密，0800说明无加密</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014141943.png" alt="img"></p>
+<p>接下来使用其他解压软件打开就行了，这里用得是winrar</p>
+<h2 id="被嗅探的流量"><a href="#被嗅探的流量" class="headerlink" title="被嗅探的流量"></a>被嗅探的流量</h2><p>直接搜索flag就行了</p>
+<h2 id="镜子里的世界"><a href="#镜子里的世界" class="headerlink" title="镜子里的世界"></a>镜子里的世界</h2><p>使用stegslove 打开，点击extract preview功能，选取最低0通道，<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014143253.png" alt="img" style="zoom: 80%;"><br>打开即可看到flag</p>
+<h2 id="ningen"><a href="#ningen" class="headerlink" title="ningen"></a>ningen</h2><p>在010editor中发现信息<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014143814.png" alt="img" style="zoom:67%;"></p>
+<p>使用分离工具分离一下<br>然后zip密码爆破一下</p>
+<h2 id="小明的保险箱"><a href="#小明的保险箱" class="headerlink" title="小明的保险箱"></a>小明的保险箱</h2><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014145956.png" alt="img" style="zoom:50%;">
+应该又是要分离一下文件，分离 以后需要密码，再回去看 发现010editor有说
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014153055.png" alt="img" style="zoom:67%;">
+
+<h2 id="escape-cap"><a href="#escape-cap" class="headerlink" title="escape cap"></a>escape cap</h2><p>追踪tcp流即可</p>
+<h2 id="另一个世界"><a href="#另一个世界" class="headerlink" title="另一个世界"></a>另一个世界</h2><p>文件尾巴，然后二进制转字符串即可z</p>
+<h2 id="隐藏的钥匙"><a href="#隐藏的钥匙" class="headerlink" title="隐藏的钥匙"></a>隐藏的钥匙</h2><p>图片隐写 使用010打开，直接点击搜索类型——text，然后点击搜索flag即可</p>
+<h2 id="FLAG"><a href="#FLAG" class="headerlink" title="FLAG"></a>FLAG</h2><p>steg打开，使用bin保存，然后保存为zip，解压以后得到的文件，使用010打开，然后搜索{<br>就可以找到flag<br><strong>这里说一下思路</strong>感觉没有提示，单纯让你就是硬试？所以小结一下</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>遇到图片——010editor打开试试，全局搜索flag、txt、zip等文件，如果有，就去分离，没有的话就考虑是否隐藏在LSB中，所以分离0通道导出为bin，然后尝试，也许是jpg，也许是txt，也许是zip，主要看文件头，像这题<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014160407.png" alt="img" style="zoom:67%;"><br>504b0304明显是zip的文件头，所以保存为zip</p>
+<h2 id="假如给我三天光明"><a href="#假如给我三天光明" class="headerlink" title="假如给我三天光明"></a>假如给我三天光明</h2><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014160952.png" alt="img" style="zoom: 67%;">
+下面应该是压缩包的密码，但是没看懂是干个啥
+原来是盲文表。。。对照一下:
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kmdonowg</span><br></pre></td></tr></table></figure>
+
+<p>得到了一个音频，听起来就是个莫斯电码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-.-. - …-. .-- .–. . … ----- —… --… …-- …— …–… …— …-- -… --…</span><br></pre></td></tr></table></figure>
+
+<p>flag{wpei08732?23dz}</p>
+<h2 id="神秘龙卷风"><a href="#神秘龙卷风" class="headerlink" title="神秘龙卷风"></a>神秘龙卷风</h2><p>爆破一下<br><a href="https://www.splitbrain.org/services/ook">https://www.splitbrain.org/services/ook</a><br>brainfuck加密，解密一下:</p>
+<h2 id="后门查杀"><a href="#后门查杀" class="headerlink" title="后门查杀"></a>后门查杀</h2><p>要我们找webshell文件，这里可以使用linux系统的查找文件内容指令，或者使用D盾，这里试一下D盾，因为D盾后续还可用于awd查找shell文件<br> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="img"><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014164727.png" alt="img" style="zoom:67%;"></p>
+<h2 id="数据包中的线索"><a href="#数据包中的线索" class="headerlink" title="数据包中的线索"></a>数据包中的线索</h2><p>在流量包中可以看到一个很长的东西，感觉是有问题的base64解码一下，可以发现是一个JFIF文件<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014173329.png" alt="img" style="zoom:67%;"></p>
+<p>此网站解码可以直接转成文件<br><a href="https://the-x.cn/base64">https://the-x.cn/base64</a></p>
+<img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014174450.jpg" alt="img" style="zoom:67%;">
+
+<h2 id="荷兰宽带数据泄露"><a href="#荷兰宽带数据泄露" class="headerlink" title="荷兰宽带数据泄露"></a>荷兰宽带数据泄露</h2><p>RouterPassView查看后，搜索username或者password</p>
+<h2 id="MISC-来首歌吧"><a href="#MISC-来首歌吧" class="headerlink" title="MISC 来首歌吧"></a>MISC 来首歌吧</h2><p>莫斯密码</p>
+<h2 id="面具下的flag"><a href="#面具下的flag" class="headerlink" title="面具下的flag"></a>面具下的flag</h2><p>binwalk分离一下文件，可以得到一个压缩文件，zip伪加密，然后将0900改为0800</p>
+<p><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014181310.png" alt="img"></p>
+<p>然后再linux解压这个文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">7z x flag.vmdk -o.&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>找到 key_part_one 里的 NUL文件 和 key_part_two 里的 where_is_flag_part_two.txt:flag_part_two_is_here.txt<br>注意:windows下解压不会有&lt;where_is_flag_part_two.txt:flag_part_two_is_here.txt这个文件 只有linux用命令解压才会有<a href="https://blog.csdn.net/weixin_45485719/article/details/107417878">https://blog.csdn.net/weixin_45485719/article/details/107417878</a><br>就可以发现有如下文件:<br><img src="https://raw.githubusercontent.com/Hwwg/myphoto/master/20211014181800.png" alt="img" style="zoom:67%;"></p>
+<p>这里是解密网址:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.splitbrain.org&#x2F;services&#x2F;ook</span><br></pre></td></tr></table></figure>
+
+<p>flag{N7F5_AD5_i5_funny!}</p>
+<h2 id="九连环"><a href="#九连环" class="headerlink" title="九连环"></a>九连环</h2><p>010打开，发现flag.txt，然后去kali分离一下得到一个压缩包需要密码</p>
+<p>然后又得到一张照片，，啥信息也没看到，原来是需要一个新的工具:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">steghide</span><br><span class="line">将secret.txt文件隐藏到text.jpg中：</span><br><span class="line"># steghide embed -cf test.jpg -ef secret.txt -p 123456</span><br><span class="line"></span><br><span class="line">从text.jpg解出secret.txt:</span><br><span class="line">#steghide extract -sf test.jpg -p 123456</span><br><span class="line">————————————————</span><br><span class="line">版权声明：本文为CSDN博主「Blood_Seeker」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。</span><br><span class="line">原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;Blood_Seeker&#x2F;article&#x2F;details&#x2F;81837571</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>为了校赛做了一下misc，单纯学一下基本操作:<br>1.压缩文件:zip:考虑zip爆破，或者zip伪加密<br>   rar:使用rar爆破密码工具<br>2.图片——隐写：<br>010打开，直接搜索flag、txt、jpg等，看看有没有隐藏，分离一下<br>steg工具，lsb的0通道合成一下导出为bin 看一下文件头是个啥，保存为特定的文件就行了</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>crypto-古典密码</title>
+    <url>/2021/10/15/crypto-%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>crypto-编码</title>
+    <url>/2021/10/14/crypto/</url>
+    <content><![CDATA[<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="ascii码"><a href="#ascii码" class="headerlink" title="ascii码"></a>ascii码</h2><h2 id="hex编码"><a href="#hex编码" class="headerlink" title="hex编码"></a>hex编码</h2><p>信息转为十六进制</p>
+<h2 id="base家族"><a href="#base家族" class="headerlink" title="base家族"></a>base家族</h2><p>ase64 用于编码邮件内容、网页图片，意在减少传输过程中可能出现的错误；Base58 是比特币地址使用的编码方法，旨在提高地址的辨识度；Base32 用在一些对大小写不敏感的文件系统中。每种 Base-x 的编码都有适合它们的应用场景。</p>
+<p>Base编码从底层来说就是对数据进行进制转换，Base64是64进制，Base32是32进制，Base16是16进制。而中间的过程是为了更好地进行传输数据</p>
+<h2 id="URL编码"><a href="#URL编码" class="headerlink" title="URL编码"></a>URL编码</h2><h2 id="HTML编码"><a href="#HTML编码" class="headerlink" title="HTML编码"></a>HTML编码</h2><h2 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h2><h2 id="Morse电码"><a href="#Morse电码" class="headerlink" title="Morse电码"></a>Morse电码</h2><h2 id="JSFuck"><a href="#JSFuck" class="headerlink" title="JSFuck"></a>JSFuck</h2><p>只需要“()+[]!”这6个字符组成的字符串。jsfuck的编码和解码与morsecode类似，只不过其表示的是<code>JavaScript</code>的语句。jsfuck源于一门编程语言brainfuck，其主要的思想就是只使用8种特定的符号来编写代码。jsfuck也是沿用了这个思想，它仅仅使用6种符号来编写代码。它们分别是<code>()+[]!</code></p>
+<p>JSFuck可以使用jsfuck官方的网站进行解密：<a href="http://www.jsfuck.com/">JSFuck - Write any JavaScript with 6 Characters: !+</a></p>
+<h2 id="Quoted-Printable编码"><a href="#Quoted-Printable编码" class="headerlink" title="Quoted-Printable编码"></a>Quoted-Printable编码</h2><p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">密码学</span><br></pre></td></tr></table></figure>
+
+<p>可以使用Quoted-printable编码为：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">=E5=AF=86=E7=A0=81=E5=AD=A6=0A=09=09=09=09=09</span><br></pre></td></tr></table></figure>
+
+<p>Quoted-printable的编码形式也比较容易辨认，基本上就是字符加等于号构成编码文段格式。</p>
+<h2 id="BrainFuck编码"><a href="#BrainFuck编码" class="headerlink" title="BrainFuck编码"></a>BrainFuck编码</h2><p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+
+<p>使用BrainFuck进行编码就会得到</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">+++++ +++[- &gt;++++ ++++&lt; ]&gt;+++ +++++ .&lt;+++ ++[-&gt; +++++ &lt;]&gt;++ ++.++ +++++</span><br><span class="line"></span><br><span class="line">..+++ .&lt;+++ +++++ [-&gt;-- ----- -&lt;]&gt;- ----- ----- ----. &lt;++++ +++[- &gt;++++</span><br><span class="line"></span><br><span class="line">+++&lt;] &gt;++++ ++.&lt;+ +++[- &gt;++++ &lt;]&gt;++ +++++ +.+++ .---- --.-- ----- -.&lt;++</span><br><span class="line"></span><br><span class="line">+++++ +[-&gt;- ----- --&lt;]&gt; ---.&lt; </span><br></pre></td></tr></table></figure>
+
+<p>可以使用<a href="https://www.splitbrain.org/services/ook">Brainfuck/Ook! Obfuscation/Encoding</a> 这个网站进行编码和解码</p>
+<h2 id="Ook编码"><a href="#Ook编码" class="headerlink" title="Ook编码"></a>Ook编码</h2><p>Ook也是一种小型的编程语言，Ook是为红毛猩猩设计的编程语言，设计思路和BrainFuck的设计思路基本类似，但是Ook采用了更少的元素进行编程，语句更加简单。由于Ook的特点，因此Ook也可以设计为一种特殊的编码方式。</p>
+<p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+
+<p>使用Ook编码后，得到</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook! Ook? Ook! Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook? Ook. Ook? Ook! Ook. Ook? Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook!</span><br><span class="line"></span><br><span class="line">Ook? Ook! Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook? Ook. Ook? Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook!</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook! Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook? Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook! Ook? Ook! Ook! Ook. Ook? Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook? Ook. Ook? Ook! Ook. Ook? Ook! Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook.</span><br><span class="line"></span><br><span class="line">Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook! Ook? Ook! Ook! Ook. Ook? Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook?</span><br><span class="line"></span><br><span class="line">Ook. Ook? Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook.</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.</span><br><span class="line"></span><br><span class="line">Ook. Ook. Ook. Ook. Ook. Ook! Ook? Ook! Ook! Ook. Ook? Ook! Ook! Ook! Ook!</span><br><span class="line"></span><br><span class="line">Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook? Ook. Ook?</span><br><span class="line"></span><br><span class="line">Ook! Ook. Ook? Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook? Ook. </span><br></pre></td></tr></table></figure>
+
+<p>非常长，进行Ook编码和解码的网站也是<a href="https://www.splitbrain.org/services/ook">Brainfuck/Ook! Obfuscation/Encoding</a></p>
+<h2 id="UUencode编码"><a href="#UUencode编码" class="headerlink" title="UUencode编码"></a>UUencode编码</h2><p>比如</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+
+<p>进行编码后得到：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">,2&amp;5L;&amp;\@5V]R;&amp;0A</span><br></pre></td></tr></table></figure>
+
+<h2 id="XXencode编码"><a href="#XXencode编码" class="headerlink" title="XXencode编码"></a>XXencode编码</h2><p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+
+<p>进行XXencode编码后，得到</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">BG4JgP4wUJqxmP4EV0U++</span><br></pre></td></tr></table></figure>
+
+<h2 id="JJencode编码"><a href="#JJencode编码" class="headerlink" title="JJencode编码"></a>JJencode编码</h2><p>算是JSFuck编码的前身，是由18种字符组成的编码格式。是针对JavaScript进行设计的编码方式。</p>
+<p>长谷川阳介（Yosuke Hasegawa）于2009年7月创建了一个名为“jjencode”的网络应用程序，可将一切的JavaScript代码混淆为!+,”$.:;_{}~=这十八个字符的排列组合。</p>
+<p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">alert(&quot;Hello, JavaScript&quot; )</span><br></pre></td></tr></table></figure>
+
+<p>进行jjencode编码，得到</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">$=~[];$=&#123;___:++$,$$$$:(![]+&quot;&quot;)[$],__$:++$,$_$_:(![]+&quot;&quot;)[$],_$_:++$,$_$$:(&#123;&#125;+&quot;&quot;)[$],$$_$:($[$]+&quot;&quot;)[$],_$$:++$,$$$_:(!&quot;&quot;+&quot;&quot;)[$],$__:++$,$_$:++$,$$__:(&#123;&#125;+&quot;&quot;)[$],$$_:++$,$$$:++$,$___:++$,$__$:++$&#125;;$.$_=($.$_=$+&quot;&quot;)[$.$_$]+($._$=$.$_[$.__$])+($.$$=($.$+&quot;&quot;)[$.__$])+((!$)+&quot;&quot;)[$._$$]+($.__=$.$_[$.$$_])+($.$=(!&quot;&quot;+&quot;&quot;)[$.__$])+($._=(!&quot;&quot;+&quot;&quot;)[$._$_])+$.$_[$.$_$]+$.__+$._$+$.$;$.$$=$.$+(!&quot;&quot;+&quot;&quot;)[$._$$]+$.__+$._+$.$+$.$$;$.$=($.___)[$.$_][$.$_];$.$($.$($.$$+&quot;\&quot;&quot;+$.$_$_+(![]+&quot;&quot;)[$._$_]+$.$$$_+&quot;\\&quot;+$.__$+$.$$_+$._$_+$.__+&quot;(\\\&quot;\\&quot;+$.__$+$.__$+$.___+$.$$$_+(![]+&quot;&quot;)[$._$_]+(![]+&quot;&quot;)[$._$_]+$._$+&quot;,\\&quot;+$.$__+$.___+&quot;\\&quot;+$.__$+$.__$+$._$_+$.$_$_+&quot;\\&quot;+$.__$+$.$$_+$.$$_+$.$_$_+&quot;\\&quot;+$.__$+$._$_+$._$$+$.$$__+&quot;\\&quot;+$.__$+$.$$_+$._$_+&quot;\\&quot;+$.__$+$.$_$+$.__$+&quot;\\&quot;+$.__$+$.$$_+$.___+$.__+&quot;\\\&quot;\\&quot;+$.$__+$.___+&quot;)&quot;+&quot;\&quot;&quot;)())();</span><br></pre></td></tr></table></figure>
+
+<h2 id="AAencode编码"><a href="#AAencode编码" class="headerlink" title="AAencode编码"></a>AAencode编码</h2><p>aaencode编码是一个比较有意思的编码形式，同样也是对于JavaScript语言设计的编码方式，是把JavaScript的代码编码成日本的表情包。</p>
+<p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">alert(&quot;Hello, JavaScript&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>通过aaencode编码，得到</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ﾟωﾟﾉ&#x3D; &#x2F;｀ｍ´）ﾉ ~┻━┻   &#x2F;&#x2F;*´∇｀*&#x2F; [&#39;_&#39;]; o&#x3D;(ﾟｰﾟ)  &#x3D;_&#x3D;3; c&#x3D;(ﾟΘﾟ) &#x3D;(ﾟｰﾟ)-(ﾟｰﾟ); (ﾟДﾟ) &#x3D;(ﾟΘﾟ)&#x3D; (o^_^o)&#x2F; (o^_^o);(ﾟДﾟ)&#x3D;&#123;ﾟΘﾟ: &#39;_&#39; ,ﾟωﾟﾉ : ((ﾟωﾟﾉ&#x3D;&#x3D;3) +&#39;_&#39;) [ﾟΘﾟ] ,ﾟｰﾟﾉ :(ﾟωﾟﾉ+ &#39;_&#39;)[o^_^o -(ﾟΘﾟ)] ,ﾟДﾟﾉ:((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;)[ﾟｰﾟ] &#125;; (ﾟДﾟ) [ﾟΘﾟ] &#x3D;((ﾟωﾟﾉ&#x3D;&#x3D;3) +&#39;_&#39;) [c^_^o];(ﾟДﾟ) [&#39;c&#39;] &#x3D; ((ﾟДﾟ)+&#39;_&#39;) [ (ﾟｰﾟ)+(ﾟｰﾟ)-(ﾟΘﾟ) ];(ﾟДﾟ) [&#39;o&#39;] &#x3D; ((ﾟДﾟ)+&#39;_&#39;) [ﾟΘﾟ];(ﾟoﾟ)&#x3D;(ﾟДﾟ) [&#39;c&#39;]+(ﾟДﾟ) [&#39;o&#39;]+(ﾟωﾟﾉ +&#39;_&#39;)[ﾟΘﾟ]+ ((ﾟωﾟﾉ&#x3D;&#x3D;3) +&#39;_&#39;) [ﾟｰﾟ] + ((ﾟДﾟ) +&#39;_&#39;) [(ﾟｰﾟ)+(ﾟｰﾟ)]+ ((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;) [ﾟΘﾟ]+((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;) [(ﾟｰﾟ) - (ﾟΘﾟ)]+(ﾟДﾟ) [&#39;c&#39;]+((ﾟДﾟ)+&#39;_&#39;) [(ﾟｰﾟ)+(ﾟｰﾟ)]+ (ﾟДﾟ) [&#39;o&#39;]+((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;) [ﾟΘﾟ];(ﾟДﾟ) [&#39;_&#39;] &#x3D;(o^_^o) [ﾟoﾟ] [ﾟoﾟ];(ﾟεﾟ)&#x3D;((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;) [ﾟΘﾟ]+ (ﾟДﾟ) .ﾟДﾟﾉ+((ﾟДﾟ)+&#39;_&#39;) [(ﾟｰﾟ) + (ﾟｰﾟ)]+((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;) [o^_^o -ﾟΘﾟ]+((ﾟｰﾟ&#x3D;&#x3D;3) +&#39;_&#39;) [ﾟΘﾟ]+ (ﾟωﾟﾉ +&#39;_&#39;) [ﾟΘﾟ]; (ﾟｰﾟ)+&#x3D;(ﾟΘﾟ); (ﾟДﾟ)[ﾟεﾟ]&#x3D;&#39;\\&#39;; (ﾟДﾟ).ﾟΘﾟﾉ&#x3D;(ﾟДﾟ+ ﾟｰﾟ)[o^_^o -(ﾟΘﾟ)];(oﾟｰﾟo)&#x3D;(ﾟωﾟﾉ +&#39;_&#39;)[c^_^o];(ﾟДﾟ) [ﾟoﾟ]&#x3D;&#39;\&quot;&#39;;(ﾟДﾟ) [&#39;_&#39;] ( (ﾟДﾟ) [&#39;_&#39;] (ﾟεﾟ+(ﾟДﾟ)[ﾟoﾟ]+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟΘﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟΘﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) +(o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (o^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (o^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟoﾟ]) (ﾟΘﾟ)) (&#39;_&#39;);</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>misc网站</title>
+    <url>/2021/10/14/misc%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[<p>brainfuck加密:<a href="https://www.splitbrain.org/services/ook">https://www.splitbrain.org/services/ook</a><br>base64解码后可以直接转文件:<a href="https://the-x.cn/base64">https://the-x.cn/base64</a><br>bugku解密网站:<a href="https://ctf.bugku.com/tools.html">https://ctf.bugku.com/tools.html</a></p>
+]]></content>
   </entry>
 </search>
